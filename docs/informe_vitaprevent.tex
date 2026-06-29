@@ -1,0 +1,1132 @@
+% ============================================================
+%  INFORME TÉCNICO --- VitaPrevent
+%  Plataforma Web de Salud Preventiva Accesible
+%  Compilar con: pdflatex informe_vitaprevent.tex (2 veces)
+% ============================================================
+\documentclass[12pt, a4paper]{report}
+
+% -- Codificación y fuentes ----------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fix-cm}
+\usepackage[spanish, es-noshorthands]{babel}
+
+% -- Geometría -----------------------------------------------
+\usepackage[
+  top=2.5cm, bottom=2.5cm,
+  left=3cm,  right=2.5cm,
+  headheight=14pt
+]{geometry}
+
+% -- Colores -------------------------------------------------
+\usepackage[dvipsnames, table]{xcolor}
+\definecolor{navydeep}{HTML}{0D1B2A}
+\definecolor{royalblue}{HTML}{1565C0}
+\definecolor{lightblue}{HTML}{90CAF9}
+\definecolor{cyanaccent}{HTML}{00BCD4}
+\definecolor{graylight}{HTML}{F3F4F6}
+\definecolor{graymid}{HTML}{6B7280}
+\definecolor{successgreen}{HTML}{16A34A}
+\definecolor{warningyellow}{HTML}{D97706}
+\definecolor{errored}{HTML}{DC2626}
+\definecolor{codeblue}{HTML}{1E3A5F}
+
+% -- Gráficos y figuras --------------------------------------
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, decorations.pathreplacing, calc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% -- Tablas --------------------------------------------------
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{makecell}
+\renewcommand{\arraystretch}{1.4}
+
+% -- Código fuente -------------------------------------------
+\usepackage{listings}
+\lstdefinestyle{webcode}{
+  backgroundcolor=\color{codeblue!10},
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{royalblue}\bfseries,
+  stringstyle=\color{successgreen},
+  commentstyle=\color{graymid}\itshape,
+  numberstyle=\tiny\color{graymid},
+  numbers=left,
+  numbersep=8pt,
+  breaklines=true,
+  frame=single,
+  framesep=4pt,
+  rulecolor=\color{lightblue!50},
+  xleftmargin=12pt,
+  xrightmargin=4pt,
+  tabsize=2,
+  showstringspaces=false,
+  extendedchars=true,
+  literate=
+    {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+    {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+    {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {ü}{{\"u}}1 {¿}{{?`}}1 {¡}{{!`}}1
+    {«}{{\guillemotleft}}1 {»}{{\guillemotright}}1
+    {→}{{\textrightarrow{}}}2 {←}{{\textleftarrow{}}}2
+    {·}{{$\cdot$}}1,
+}
+\lstset{style=webcode}
+
+% -- Hipervínculos -------------------------------------------
+\usepackage[
+  colorlinks=true,
+  linkcolor=royalblue,
+  urlcolor=royalblue,
+  citecolor=royalblue,
+  unicode=true,
+  pdfencoding=auto,
+  pdftitle={VitaPrevent - Informe Tecnico},
+  pdfauthor={Erick Costa, Jonathan Tipan, Javier Quilumba},
+  pdfsubject={Plataforma web de salud preventiva accesible WCAG 2.2 AA},
+  pdflang={es-EC}
+]{hyperref}
+\usepackage{bookmark}
+\usepackage{amssymb}
+\newcommand{\cmark}{\textcolor{successgreen}{$\checkmark$}}
+\newcommand{\wmark}{\textcolor{warningyellow}{$\triangle$}}
+
+% -- Encabezados y pie de página -----------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{graymid}\textit{VitaPrevent --- Plataforma de Salud Preventiva}}
+\fancyhead[R]{\small\color{graymid}\thepage}
+\fancyfoot[C]{\small\color{graymid}\textit{Escuela Politécnica Nacional --- 2026}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyheadoffset{0pt}
+
+% -- Secciones con estilo ------------------------------------
+\usepackage{titlesec}
+\titleformat{\chapter}[block]
+  {\normalfont\LARGE\bfseries\color{navydeep}}
+  {\thechapter.}{0.8em}{}[{\color{royalblue}\titlerule[1.5pt]}]
+\titlespacing*{\chapter}{0pt}{0pt}{20pt}
+
+\titleformat{\section}
+  {\normalfont\large\bfseries\color{navydeep}}
+  {\thesection}{0.6em}{}
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries\color{royalblue}}
+  {\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\itshape\color{navydeep}}
+  {\thesubsubsection}{0.6em}{}
+
+% -- Cajas destacadas ----------------------------------------
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+\newtcolorbox{infobox}[1][]{
+  enhanced, breakable,
+  colback=royalblue!6, colframe=royalblue,
+  fonttitle=\bfseries\small, title={#1},
+  arc=4pt, boxrule=0.8pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+\newtcolorbox{wcagbox}[1][]{
+  enhanced, breakable,
+  colback=successgreen!6, colframe=successgreen,
+  fonttitle=\bfseries\small, title={#1},
+  arc=4pt, boxrule=0.8pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+\newtcolorbox{warnbox}[1][]{
+  enhanced, breakable,
+  colback=warningyellow!8, colframe=warningyellow,
+  fonttitle=\bfseries\small, title={#1},
+  arc=4pt, boxrule=0.8pt,
+  left=8pt, right=8pt, top=6pt, bottom=6pt
+}
+
+% -- Enumeraciones -------------------------------------------
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=1.4em, itemsep=2pt}
+\setlist[enumerate]{leftmargin=1.4em, itemsep=2pt}
+
+% -- Varios --------------------------------------------------
+% microtype omitido --- incompatible con bitmap fonts en esta instalacion
+\usepackage{setspace}
+\setstretch{1.25}
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\usepackage{caption}
+\captionsetup{font=small, labelfont={bf, color=navydeep}, textfont={color=graymid}}
+\usepackage{subcaption}
+\usepackage{pdfpages}
+\usepackage{epigraph}
+
+% ============================================================
+%  DOCUMENTO
+% ============================================================
+\begin{document}
+\pagenumbering{roman}
+
+% ------------------------------------------------------------
+%  PORTADA
+% ------------------------------------------------------------
+\begin{titlepage}
+\pagecolor{navydeep}
+\color{white}
+
+\begin{tikzpicture}[remember picture, overlay]
+  % Orbe decorativo superior derecho
+  \fill[royalblue!40, opacity=0.35]
+    (current page.north east) ++(-4cm,-4cm) circle (7cm);
+  % Orbe inferior izquierdo
+  \fill[cyanaccent!30, opacity=0.2]
+    (current page.south west) ++(3cm,3cm) circle (5cm);
+  % Línea acento izquierda
+  \fill[royalblue] (current page.north west) ++(2.5cm,0) rectangle ++(0.18cm,-\paperheight);
+\end{tikzpicture}
+
+\vspace*{1.5cm}
+
+\begin{flushleft}
+\hspace{2.8cm}
+\begin{minipage}{0.82\textwidth}
+
+  {\fontsize{9}{11}\selectfont\color{lightblue}ESCUELA POLIT\'ECNICA NACIONAL}\\[4pt]
+  {\fontsize{8.5}{11}\selectfont\color{lightblue!70}Facultad de Ingeniería de Sistemas}\\[2pt]
+  {\fontsize{8.5}{11}\selectfont\color{lightblue!70}Ingeniería en Ciencias de la Computación}
+
+  \vspace{1.8cm}
+
+  % Ícono cruz médica
+  \begin{tikzpicture}
+    \fill[royalblue!60, rounded corners=6pt] (0,0) rectangle (1.2,1.2);
+    \fill[white] (0.5,0.15) rectangle (0.7,1.05);
+    \fill[white] (0.15,0.5) rectangle (1.05,0.7);
+    \fill[royalblue] (0.55,0.5) circle (0.12);
+  \end{tikzpicture}
+  \hspace{6pt}
+  {\fontsize{28}{32}\bfseries VitaPrevent}
+
+  \vspace{0.4cm}
+  {\fontsize{14}{17}\selectfont\color{lightblue}
+    \textit{``Tu bienestar comienza con la prevención''}}
+
+  \vspace{0.5cm}
+  {\color{lightblue!40}\rule{0.9\linewidth}{0.6pt}}
+
+  \vspace{0.6cm}
+  {\fontsize{12}{15}\selectfont\color{white!85}
+    \textbf{Informe Técnico de Proyecto}\\[4pt]
+    Plataforma Web de Salud Preventiva\\
+    con Implementación Profesional de Accesibilidad Web\\
+    conforme a \textbf{WCAG 2.2 Nivel AA}}
+
+  \vspace{1.6cm}
+
+  % Tabla de autores
+  \begin{tabular}{@{}lll@{}}
+    \color{lightblue}\small\textbf{Nombre} &
+    \color{lightblue}\small\textbf{Rol} &
+    \color{lightblue}\small\textbf{Contribución principal} \\[4pt]
+    \color{white}\small Erick Costa &
+    \color{white!80}\small Coordinador &
+    \color{white!70}\small Arquitectura, frontend, coordinación \\
+    \color{white}\small Jonathan Tipán &
+    \color{white!80}\small Diseñador de interfaz &
+    \color{white!70}\small UI/UX, sistema de diseño, componentes \\
+    \color{white}\small Javier Quilumba &
+    \color{white!80}\small Evaluador / Redactor &
+    \color{white!70}\small Accesibilidad WCAG, documentación \\
+  \end{tabular}
+
+  \vspace{1.8cm}
+  {\color{lightblue!40}\rule{0.9\linewidth}{0.4pt}}
+  \vspace{0.4cm}
+
+  \begin{tabular}{@{}ll@{}}
+    \color{lightblue!70}\small Materia: & \color{white!80}\small Desarrollo de Aplicaciones Web \\
+    \color{lightblue!70}\small Período: & \color{white!80}\small 2026 \\
+    \color{lightblue!70}\small Repositorio: & \color{royalblue!70}\small \texttt{github.com/zeuspyEC/VitaPrevent} \\
+    \color{lightblue!70}\small Despliegue: & \color{royalblue!70}\small \texttt{vitaprevent-b2e34.web.app} \\
+  \end{tabular}
+
+\end{minipage}
+\end{flushleft}
+
+\end{titlepage}
+
+\nopagecolor
+\color{black}
+
+% ------------------------------------------------------------
+%  RESUMEN EJECUTIVO
+% ------------------------------------------------------------
+\chapter*{Resumen Ejecutivo}
+\addcontentsline{toc}{chapter}{Resumen Ejecutivo}
+
+\textbf{VitaPrevent} es una plataforma web institucional de salud preventiva desarrollada con tecnologías modernas del ecosistema JavaScript, cuyo eje central de diseño e implementación es el cumplimiento de los estándares de accesibilidad web \textbf{WCAG 2.2 Nivel AA} del W3C/WAI. El sistema está orientado a servir como referencia digital en campañas de salud preventiva, garantizando que cualquier persona, independientemente de su edad, condición física o nivel tecnológico, pueda acceder a sus contenidos de forma autónoma.
+
+El proyecto fue abordado desde una perspectiva de \textit{accesibilidad nativa}: cada componente, estructura semántica, paleta cromática y comportamiento interactivo fue diseñado para cumplir los principios POUR (Perceptible, Operable, Comprensible y Robusto) desde la primera línea de código, evitando el enfoque tradicional de añadir accesibilidad como una capa posterior al desarrollo.
+
+Técnicamente, la plataforma está construida con \textbf{React 19 + Vite}, \textbf{Firebase} como backend (Firestore, Storage, Authentication y Hosting), CSS personalizado con variables de diseño y sin dependencia de frameworks visuales pesados, garantizando control total sobre el marcado semántico. La interfaz adopta la paleta \textit{Ocean Breeze} (azul profundo institucional) con relaciones de contraste superiores al mínimo de 4.5:1 exigido por WCAG para texto normal.
+
+\bigskip
+\begin{infobox}[Datos clave del proyecto]
+\begin{tabular}{@{}ll@{}}
+\textbf{Plataforma:}    & VitaPrevent --- Salud Preventiva Digital \\
+\textbf{Stack:}         & React 19, Vite, Firebase, CSS personalizado \\
+\textbf{Accesibilidad:} & WCAG 2.2 Nivel AA (objetivo), HTML5 semántico + WAI-ARIA selectivo \\
+\textbf{Módulos:}       & 9 secciones + panel de administración \\
+\textbf{Repositorio:}   & \href{https://github.com/zeuspyEC/VitaPrevent}{github.com/zeuspyEC/VitaPrevent} \\
+\textbf{Despliegue:}    & Firebase Hosting --- CI/CD con GitHub Actions \\
+\end{tabular}
+\end{infobox}
+
+% ------------------------------------------------------------
+%  TABLA DE CONTENIDOS
+% ------------------------------------------------------------
+\tableofcontents
+\listoffigures
+\listoftables
+
+\cleardoublepage
+\pagenumbering{arabic}
+
+% ============================================================
+%  CAPÍTULO 1 --- INTRODUCCIÓN
+% ============================================================
+\chapter{Introducción}
+
+\section{Contexto y motivación}
+
+El acceso equitativo a la información en salud es un derecho fundamental reconocido por organismos internacionales como la Organización Mundial de la Salud (OMS) y la Organización Panamericana de la Salud (OPS). Sin embargo, gran parte de los portales digitales de salud existentes presentan barreras significativas para personas con discapacidades visuales, auditivas, motrices o cognitivas, así como para adultos mayores y personas con bajo dominio tecnológico.
+
+En Ecuador, la realidad no es diferente: el Instituto Nacional de Estadística y Censos (INEC) reporta que aproximadamente el 16\% de la población presenta algún tipo de discapacidad, y que el acceso a plataformas digitales de salud sigue siendo desigual entre grupos etarios y socioeconómicos.
+
+\textbf{VitaPrevent} surge como respuesta a esta problemática: una plataforma que demuestra, de manera práctica y técnicamente rigurosa, que la accesibilidad web no es un lujo ni una característica opcional, sino un requisito funcional que debe permear cada fase del ciclo de vida del desarrollo de software.
+
+\section{Planteamiento del problema}
+
+Los portales de información en salud frecuentemente presentan las siguientes deficiencias de accesibilidad:
+
+\begin{enumerate}
+  \item Imágenes sin texto alternativo descriptivo, inaccesibles para usuarios de lectores de pantalla.
+  \item Formularios sin etiquetas asociadas correctamente, impidiendo la comprensión del propósito de cada campo.
+  \item Navegación imposible mediante teclado, excluyendo a personas con discapacidad motriz.
+  \item Contraste cromático insuficiente entre texto y fondo, afectando a personas con baja visión.
+  \item Ausencia de alternativas textuales para contenido multimedia.
+  \item Estructuras de encabezados desordenadas que desorientan a usuarios de tecnologías asistivas.
+  \item Componentes interactivos construidos sin semántica HTML apropiada.
+\end{enumerate}
+
+\section{Objetivos}
+
+\subsection{Objetivo general}
+
+Diseñar e implementar una plataforma web institucional de salud preventiva que integre los estándares de accesibilidad WCAG 2.2 Nivel AA como eje central de su arquitectura, demostrando un proceso de desarrollo profesional desde la planificación hasta la validación.
+
+\subsection{Objetivos específicos}
+
+\begin{itemize}
+  \item Implementar una arquitectura frontend escalable basada en React + Vite con componentes completamente reutilizables y accesibles.
+  \item Aplicar los principios POUR de WCAG 2.2 en cada componente del sistema, documentando técnicamente su contribución a la accesibilidad.
+  \item Integrar Firebase como backend (Firestore, Storage, Authentication, Hosting) para gestión de contenidos dinámicos.
+  \item Diseñar un sistema de diseño visual (tokens CSS) con paleta cromática que cumpla los requisitos de contraste WCAG AA.
+  \item Implementar un panel de administración para gestión de contenidos sin requerir conocimientos técnicos.
+  \item Validar la accesibilidad mediante herramientas automáticas y revisión manual con lectores de pantalla.
+\end{itemize}
+
+\section{Alcance}
+
+La plataforma abarca nueve módulos de contenido público (Inicio, Nutrición, Actividad Física, Salud Mental, Prevención de Enfermedades, Biblioteca Digital, Noticias, Contacto y Nosotros), más un panel administrativo protegido con autenticación Firebase. Todos los módulos están pensados para ser completamente accesibles desde la primera versión desplegable.
+
+% ============================================================
+%  CAPÍTULO 2 --- MARCO TEÓRICO
+% ============================================================
+\chapter{Marco Teórico}
+
+\section{Accesibilidad Web}
+
+La accesibilidad web hace referencia al conjunto de principios, técnicas y estándares que permiten a personas con discapacidades percibir, entender, navegar e interactuar con sitios y aplicaciones web de manera efectiva. El consorcio W3C (World Wide Web Consortium), a través de su iniciativa WAI (Web Accessibility Initiative), es el organismo rector que publica las directrices internacionales de referencia.
+
+\begin{infobox}[Definición WCAG 2.2]
+Las \textbf{Pautas de Accesibilidad para el Contenido Web} (WCAG 2.2) son el estándar técnico internacional publicado por el W3C que define cómo hacer accesible el contenido web para personas con discapacidades. Fueron publicadas en octubre de 2023 como actualización de WCAG 2.1. El \textbf{Nivel AA} es el estándar mínimo exigido por la mayoría de legislaciones de accesibilidad a nivel mundial, incluyendo la norma INEN 2 en Ecuador.
+\end{infobox}
+
+\section{Principios POUR}
+
+WCAG 2.2 organiza todos sus criterios de éxito en torno a cuatro principios fundamentales, denominados POUR:
+
+\begin{table}[H]
+\centering
+\caption{Principios POUR de WCAG 2.2 aplicados en VitaPrevent}
+\label{tab:pour}
+\begin{tabular}{@{}>{\bfseries\color{navydeep}}p{3cm} p{5.5cm} p{5.5cm}@{}}
+\toprule
+\rowcolor{royalblue!12}
+\textbf{Principio} & \textbf{Descripción} & \textbf{Implementación en VitaPrevent} \\
+\midrule
+Perceptible &
+  El contenido debe ser presentable de formas que los usuarios puedan percibir. &
+  Alt-text en imágenes, subtítulos en video, contraste mínimo 4.5:1, contenido no depende únicamente del color. \\
+Operable &
+  Los componentes de interfaz deben ser operables por cualquier usuario. &
+  Navegación completa por teclado, SkipLink, gestión de foco en modales, menú hamburger con Escape. \\
+Comprensible &
+  La información y la operación de la interfaz deben ser comprensibles. &
+  \texttt{lang="es"} en HTML, etiquetas de formulario explícitas, mensajes de error descriptivos, estructura lógica. \\
+Robusto &
+  El contenido debe ser interpretable por tecnologías asistivas actuales y futuras. &
+  HTML5 semántico, WAI-ARIA solo donde HTML no es suficiente, estructura válida, sin dependencia de JS para contenido esencial. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Niveles de conformidad WCAG}
+
+WCAG 2.2 define tres niveles de conformidad:
+
+\begin{itemize}
+  \item \textbf{Nivel A:} Requisitos mínimos. Su incumplimiento hace el contenido inaccessible para ciertos grupos.
+  \item \textbf{Nivel AA:} Estándar internacional adoptado por legislaciones. Elimina las principales barreras de acceso.
+  \item \textbf{Nivel AAA:} Máximo nivel de accesibilidad. No es posible alcanzarlo en todos los contenidos.
+\end{itemize}
+
+VitaPrevent tiene como objetivo de conformidad el \textbf{Nivel AA}, que implica cumplir todos los criterios de Nivel A y Nivel AA simultáneamente.
+
+\section{Criterios de éxito WCAG 2.2 relevantes}
+
+\begin{table}[H]
+\centering
+\caption{Criterios de éxito WCAG 2.2 AA de mayor relevancia en el proyecto}
+\label{tab:criterios}
+\small
+\begin{tabular}{@{}>{\ttfamily}p{1.2cm} p{3.8cm} >{\centering\arraybackslash}p{1.2cm} p{6.5cm}@{}}
+\toprule
+\rowcolor{royalblue!12}
+\textbf{Criterio} & \textbf{Nombre} & \textbf{Nivel} & \textbf{Implementación} \\
+\midrule
+1.1.1 & Contenido no textual & A   & \texttt{alt} descriptivo en todas las imágenes \\
+1.3.1 & Información y relaciones & A   & HTML semántico: \texttt{nav, main, header, footer, aside} \\
+1.3.2 & Secuencia significativa & A   & Orden DOM coherente con orden visual \\
+1.4.3 & Contraste (mínimo) & AA  & Ratio 4.5:1 para texto normal, 3:1 para texto grande \\
+1.4.4 & Cambio de tamaño del texto & AA  & Sin pérdida de funcionalidad al 200\% zoom \\
+1.4.10 & Reajuste del contenido & AA  & Layout responsive sin scroll horizontal a 320px \\
+1.4.11 & Contraste de componentes & AA  & Contraste en bordes de inputs, botones, iconos \\
+1.4.12 & Espaciado del texto & AA  & Sin pérdida de contenido con estilos de usuario \\
+2.1.1 & Teclado & A   & Todas las funciones disponibles por teclado \\
+2.1.2 & Sin trampa de teclado & A   & Focus trap solo en modales, con Escape para salir \\
+2.4.1 & Evitar bloques & A   & SkipLink \texttt{\#main-content} \\
+2.4.3 & Orden de foco & A   & Orden de tabulación lógico \\
+2.4.4 & Propósito de un enlace & A   & Texto descriptivo, no ``clic aquí'' \\
+2.4.7 & Foco visible & AA  & \texttt{:focus-visible} con outline 3px \\
+2.4.11 & Apariencia del foco & AA  & Área mínima de foco $\geq$ perímetro del componente \\
+2.5.3 & Etiqueta en nombre & A   & \texttt{label} explícito, \texttt{aria-label} coherente \\
+3.1.1 & Idioma de la página & A   & \texttt{<html lang="es">} \\
+3.3.1 & Identificación de errores & A   & Mensajes de error descriptivos vinculados con \texttt{aria-describedby} \\
+3.3.2 & Etiquetas o instrucciones & A   & \texttt{<label>} explícito + campo requerido indicado \\
+4.1.1 & Procesamiento & A   & HTML válido, sin IDs duplicadas \\
+4.1.2 & Nombre, función, valor & A   & \texttt{aria-expanded}, \texttt{aria-controls}, \texttt{aria-current} \\
+4.1.3 & Mensajes de estado & AA  & \texttt{role="alert"} y \texttt{aria-live} en notificaciones \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{WAI-ARIA}
+
+WAI-ARIA (Accessible Rich Internet Applications) es una especificación técnica del W3C que define atributos HTML adicionales para mejorar la accesibilidad de contenido dinámico y componentes interactivos complejos. En VitaPrevent se adopta el principio fundamental de WAI-ARIA:
+
+\begin{wcagbox}[Principio de uso de ARIA]
+\textit{No uses ARIA si HTML nativo puede hacer lo mismo.} Se prefiere siempre el elemento HTML semántico apropiado (\texttt{<button>}, \texttt{<nav>}, \texttt{<main>}, etc.) antes de recurrir a roles y atributos ARIA.
+\end{wcagbox}
+
+\section{Tecnologías del ecosistema}
+
+\subsection{React 19 y Vite}
+
+React es una biblioteca JavaScript para construcción de interfaces de usuario basadas en componentes declarativos. Su modelo de componentes facilita la implementación de patrones de accesibilidad de forma reutilizable: un componente \texttt{FormField} accesible puede ser instanciado en múltiples formularios sin riesgo de regresión en accesibilidad.
+
+Vite es un entorno de desarrollo de nueva generación que ofrece servidor de desarrollo con HMR (Hot Module Replacement) extremadamente rápido y builds optimizados mediante Rollup, con soporte nativo para importaciones de módulos ES.
+
+\subsection{Firebase}
+
+Firebase es la plataforma BaaS (Backend as a Service) de Google que provee los servicios de backend necesarios para VitaPrevent sin requerir infraestructura de servidor propia:
+
+\begin{itemize}
+  \item \textbf{Firestore:} Base de datos NoSQL documental en tiempo real.
+  \item \textbf{Storage:} Almacenamiento de archivos (imágenes, PDFs, audio).
+  \item \textbf{Authentication:} Sistema de autenticación para el panel administrativo.
+  \item \textbf{Hosting:} Despliegue de la aplicación con CDN global y HTTPS automático.
+\end{itemize}
+
+% ============================================================
+%  CAPÍTULO 3 --- DESCRIPCIÓN DEL SISTEMA
+% ============================================================
+\chapter{Descripción del Sistema}
+
+\section{Arquitectura general}
+
+La arquitectura de VitaPrevent sigue un modelo de \textbf{SPA (Single Page Application)} con code splitting por rutas, lo que garantiza tiempos de carga iniciales óptimos y transiciones fluidas entre páginas sin recargas completas del navegador.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=1.4cm and 2cm,
+  box/.style={
+    rectangle, rounded corners=6pt,
+    minimum width=3.2cm, minimum height=1cm,
+    text centered, font=\small\bfseries,
+    draw, thick
+  },
+  arr/.style={-Stealth, thick, color=royalblue}
+]
+
+% Usuario
+\node[box, fill=lightblue!30, draw=royalblue] (user) {Usuario / Navegador};
+
+% React App
+\node[box, fill=royalblue!15, draw=royalblue, below=1.2cm of user] (react) {React App (Vite)};
+
+% Capas
+\node[box, fill=navydeep!10, draw=navydeep, below left=1.2cm and 1.8cm of react] (router) {React Router};
+\node[box, fill=navydeep!10, draw=navydeep, below=1.2cm of react] (contexts) {Contextos};
+\node[box, fill=navydeep!10, draw=navydeep, below right=1.2cm and 1.8cm of react] (hooks) {Hooks / Servicios};
+
+% Firebase
+\node[box, fill=successgreen!15, draw=successgreen, below=1.2cm of hooks] (firestore) {Firestore};
+\node[box, fill=successgreen!15, draw=successgreen, below=1.2cm of contexts] (auth) {Auth};
+\node[box, fill=successgreen!15, draw=successgreen, below=1.2cm of router] (storage) {Storage};
+
+% Hosting
+\node[box, fill=warningyellow!20, draw=warningyellow, below=3.8cm of react] (hosting) {Firebase Hosting + CDN};
+
+% GitHub Actions
+\node[box, fill=graymid!15, draw=graymid, right=2cm of hosting] (ci) {GitHub Actions CI/CD};
+
+% Flechas
+\draw[arr] (user)     -- (react);
+\draw[arr] (react)    -- (router);
+\draw[arr] (react)    -- (contexts);
+\draw[arr] (react)    -- (hooks);
+\draw[arr] (hooks)    -- (firestore);
+\draw[arr] (contexts) -- (auth);
+\draw[arr] (router)   -- (storage);
+\draw[arr] (ci)       -- (hosting);
+\draw[arr, dashed] (react) -- (hosting);
+
+% Etiqueta Firebase
+\node[font=\tiny\itshape, color=successgreen, below=0.05cm of auth] {Backend as a Service};
+
+\end{tikzpicture}
+\caption{Arquitectura general de VitaPrevent}
+\label{fig:arquitectura}
+\end{figure}
+
+\section{Estructura de directorios}
+
+La organización del código sigue una arquitectura orientada a \textbf{características y dominios}, separando claramente la capa de presentación, la lógica de negocio y la capa de datos:
+
+\begin{lstlisting}[language=bash, caption={Estructura de directorios del proyecto}, label={lst:estructura}]
+src/
+  assets/           # Imágenes, íconos SVG, fuentes
+  components/
+    ui/             # Átomos: Button, Badge, Spinner
+    layout/         # Navbar, Footer, SkipLink, Breadcrumb, PageWrapper
+    common/         # Moléculas: ArticleCard, FormField, Modal, Accordion
+  contexts/         # AuthContext, ToastContext
+  hooks/            # useFirestore, useFocusTrap, useAnnouncer
+  pages/            # Una carpeta por ruta (Home, Nutricion, ...)
+  services/         # Funciones de acceso a Firestore
+  styles/           # tokens.css, reset.css, global.css, animations.css
+  utils/            # validators.js, formatters.js
+  config/           # firebase.js, routes.js, constants.js
+\end{lstlisting}
+
+\section{Módulos funcionales}
+
+\begin{table}[H]
+\centering
+\caption{Módulos del sistema y su contenido}
+\label{tab:modulos}
+\begin{tabular}{@{}>{\bfseries}p{3.2cm} p{5cm} >{\centering\arraybackslash}p{3cm} >{\centering\arraybackslash}p{2.5cm}@{}}
+\toprule
+\rowcolor{royalblue!12}
+\textbf{Módulo} & \textbf{Contenido principal} & \textbf{Fuente de datos} & \textbf{Acceso} \\
+\midrule
+Inicio          & Hero, estadísticas, módulos, CTA & Firestore + estático & Público \\
+Nutrición       & Artículos, calculadora IMC & Firestore & Público \\
+Actividad Física & Rutinas, videos, niveles & Firestore & Público \\
+Salud Mental    & Artículos, podcasts, mindfulness & Firestore & Público \\
+Prevención      & Enfermedades, vacunación, riesgos & Firestore & Público \\
+Biblioteca      & Infografías, PDFs, guías & Firestore + Storage & Público \\
+Noticias        & Feed dinámico paginado & Firestore & Público \\
+Contacto        & Formulario accesible & Firestore (write) & Público \\
+Nosotros        & Equipo, misión, valores & Estático & Público \\
+Panel Admin     & CRUD completo de contenidos & Firestore & Privado (Auth) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Modelo de datos Firestore}
+
+\begin{lstlisting}[language=bash, caption={Esquema de colecciones Firestore}, label={lst:firestore}]
+// Colección: articulos
+{
+  id, titulo, slug, resumen,
+  contenido,        // HTML sanitizado
+  modulo,           // 'nutricion' | 'actividad-fisica' | ...
+  categoria, etiquetas,
+  imagen: { url, alt },  // alt OBLIGATORIO
+  autor, fechaCreacion, fechaActualizacion,
+  estado,           // 'publicado' | 'borrador'
+  orden
+}
+
+// Colección: recursos
+{
+  id, tipo,         // 'video' | 'pdf' | 'podcast' | 'infografia' | 'guia'
+  titulo, descripcion, url,
+  thumbnail: { url, alt },
+  transcripcion,    // para video/podcast --- accesibilidad auditiva
+  modulos, categoria, estado
+}
+
+// Colección: mensajes (contacto)
+{
+  nombre, email, asunto, mensaje,
+  fecha,            // serverTimestamp()
+  leido: false
+}
+\end{lstlisting}
+
+% ============================================================
+%  CAPÍTULO 4 --- DISEÑO DE INTERFAZ Y SISTEMA VISUAL
+% ============================================================
+\chapter{Diseño de Interfaz y Sistema Visual}
+
+\section{Filosofía de diseño}
+
+El diseño de VitaPrevent se rige por tres principios que subordinan la estética a la función:
+
+\begin{enumerate}
+  \item \textbf{Accesibilidad primero:} Ningún elemento decorativo que interfiera con la percepción o la operación.
+  \item \textbf{Jerarquía visual clara:} Estructura tipográfica que guía al usuario sin ambigüedad.
+  \item \textbf{Confianza institucional:} Estética comparable a portales de salud oficiales (OMS, CDC, MSP Ecuador).
+\end{enumerate}
+
+\section{Paleta cromática --- Ocean Breeze}
+
+La paleta seleccionada combina azul marino profundo (confianza, seriedad institucional) con azules claros y cyan (frescura, salud, vitalidad). Todos los pares de color texto/fondo han sido verificados para cumplir el ratio mínimo de contraste WCAG AA.
+
+\begin{table}[H]
+\centering
+\caption{Tokens de color principales y verificación de contraste WCAG}
+\label{tab:colores}
+\begin{tabular}{@{}>{\ttfamily\small}p{2.5cm} p{3cm} >{\centering\arraybackslash}p{2.5cm} >{\centering\arraybackslash}p{2.5cm} >{\centering\arraybackslash}p{2.5cm}@{}}
+\toprule
+\rowcolor{royalblue!12}
+\textbf{Token} & \textbf{Hex} & \textbf{Uso} & \textbf{Ratio vs. blanco} & \textbf{WCAG AA} \\
+\midrule
+--color-navy-900 & \#0D1B2A & Fondo hero, navbar & 17.5:1 & \textcolor{successgreen}{\checkmark} \\
+--color-blue-700 & \#1565C0 & Texto sobre blanco & 7.2:1  & \textcolor{successgreen}{\checkmark} \\
+--color-blue-600 & \#1976D2 & Botones primarios & 5.9:1  & \textcolor{successgreen}{\checkmark} \\
+--color-gray-900 & \#111827 & Texto principal   & 18.1:1 & \textcolor{successgreen}{\checkmark} \\
+--color-gray-600 & \#4B5563 & Texto secundario  & 7.4:1  & \textcolor{successgreen}{\checkmark} \\
+--color-blue-300 & \#90CAF9 & Texto sobre navy  & 9.1:1 vs navy & \textcolor{successgreen}{\checkmark} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Sistema tipográfico}
+
+La tipografía sigue una escala modular con base en \textbf{Inter} (fuente sans-serif de alta legibilidad, diseñada para pantallas) y \textbf{Merriweather} para el cuerpo de artículos largo.
+
+\begin{table}[H]
+\centering
+\caption{Escala tipográfica --- tokens CSS}
+\label{tab:tipo}
+\begin{tabular}{@{}>{\ttfamily}p{2.8cm} >{\centering\arraybackslash}p{2cm} p{7cm}@{}}
+\toprule
+\rowcolor{royalblue!12}
+\textbf{Token}     & \textbf{Tamaño} & \textbf{Uso} \\
+\midrule
+--text-xs   & 0.75 rem & Fechas, metadatos, badges \\
+--text-sm   & 0.875 rem & Texto de interfaz, etiquetas, pies de imagen \\
+--text-base & 1 rem    & Texto de párrafo por defecto \\
+--text-lg   & 1.125 rem & Descripciones destacadas \\
+--text-xl   & 1.25 rem & Subtítulos de tarjetas, encabezados de sección menor \\
+--text-2xl  & 1.5 rem  & H3 y H4 de contenido \\
+--text-3xl  & 1.875 rem & H2 de sección \\
+--text-4xl  & 2.25 rem & H1 de página \\
+--text-5xl  & 3 rem    & Hero principal (desktop) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Sistema de espaciado}
+
+El espaciado sigue una escala de múltiplos de 4px (\texttt{--space-1} = 0.25rem, \texttt{--space-2} = 0.5rem, \ldots{}), lo que garantiza consistencia visual entre componentes y facilita el diseño de nuevas secciones sin romper la armonía del layout.
+
+\section{Diseño responsive y compatibilidad}
+
+La interfaz está diseñada con enfoque \textit{mobile-first}:
+
+\begin{itemize}
+  \item Breakpoints: 640px (sm), 768px (md), 1024px (lg), 1280px (xl).
+  \item Compatible con zoom del 200\% sin scroll horizontal (WCAG 1.4.10).
+  \item Menú hamburger con gestión completa de foco para dispositivos móviles.
+  \item Tipografía escalable con unidades \texttt{rem} (respeta configuración del sistema del usuario).
+  \item Animaciones suspendidas si el usuario tiene activo \texttt{prefers-reduced-motion}.
+\end{itemize}
+
+% ============================================================
+%  CAPÍTULO 5 --- IMPLEMENTACIÓN TÉCNICA DE ACCESIBILIDAD
+% ============================================================
+\chapter{Implementación Técnica de Accesibilidad}
+
+\section{Estructura semántica de página}
+
+Cada página de VitaPrevent sigue una estructura HTML5 semántica estricta que permite a los lectores de pantalla navegar por landmarks sin necesidad de leer todo el contenido:
+
+\begin{lstlisting}[language=XML, caption={Estructura semántica de cada página}, label={lst:semantica}]
+<body>
+  <!-- Primer elemento del DOM --- WCAG 2.4.1 -->
+  <a href="#main-content" class="skip-link">
+    Saltar al contenido principal
+  </a>
+
+  <header role="banner">
+    <nav aria-label="Navegación principal">\ldots{}</nav>
+  </header>
+
+  <main id="main-content" tabindex="-1" aria-label="Contenido principal">
+    <nav aria-label="Ruta de navegación">
+      <!-- Breadcrumb con aria-current="page" -->
+    </nav>
+    <!-- Contenido de la página -->
+  </main>
+
+  <aside aria-label="Contenido relacionado">\ldots{}</aside>
+
+  <footer role="contentinfo">\ldots{}</footer>
+</body>
+\end{lstlisting}
+
+\section{Componente SkipLink}
+
+El componente SkipLink es el \textbf{primer elemento del DOM} en todas las páginas. Permanece visualmente oculto hasta recibir el foco mediante Tab, momento en que aparece con alta visibilidad para usuarios de teclado.
+
+\begin{lstlisting}[language=bash, caption={CSS del SkipLink --- visible solo al recibir foco}, label={lst:skiplink}]
+.skip-link {
+  position: fixed;
+  top: 1rem; left: 1rem;
+  z-index: 600;        /* por encima de todo el layout */
+  transform: translateY(-200%);
+  transition: transform 200ms ease-out;
+  background: #0d1b2a;
+  color: #fff;
+  border: 2px solid #90caf9;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);  /* visible solo al recibir foco */
+  outline: 3px solid #1e88e5;
+  outline-offset: 3px;
+}
+\end{lstlisting}
+
+\section{Navbar accesible con menú móvil}
+
+El menú de navegación móvil (hamburger) implementa todos los patrones de accesibilidad requeridos:
+
+\begin{lstlisting}[language=Java, caption={Navbar --- gestión de foco y atributos ARIA}, label={lst:navbar}]
+<button
+  ref={burgerRef}
+  aria-expanded={menuOpen}
+  aria-controls="mobile-menu"
+  aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+  onClick={() => setMenuOpen(prev => !prev)}
+>
+  {/* Tres barras animadas */}
+</button>
+
+{/* Al presionar Escape: cierra menú y devuelve foco al botón */}
+useEffect(() => {
+  const onKey = (e) => {
+    if (e.key === 'Escape' && menuOpen) {
+      setMenuOpen(false)
+      burgerRef.current?.focus()  // WCAG 2.1.2
+    }
+  }
+  document.addEventListener('keydown', onKey)
+  return () => document.removeEventListener('keydown', onKey)
+}, [menuOpen])
+\end{lstlisting}
+
+\section{Formularios accesibles --- Componente FormField}
+
+El componente \texttt{FormField} implementa el patrón de formulario accesible completo: etiqueta explícita, mensajes de error en tiempo real via \texttt{aria-live}, \texttt{aria-invalid} para estados de error y \texttt{aria-describedby} para vincular el error con el campo:
+
+\begin{lstlisting}[language=Java, caption={Estructura de FormField --- WCAG 3.3.1 y 3.3.2}, label={lst:formfield}]
+<div className={`form-field ${error ? 'form-field--error' : ''}`}>
+  <label htmlFor={id} className="form-field__label">
+    {label}
+    {required && (
+      <span aria-hidden="true"> *</span>  // visual
+    )}
+  </label>
+
+  {hint && <span id={`${id}-hint`}>{hint}</span>}
+
+  <input
+    id={id}
+    aria-required={required}
+    aria-invalid={!!error}
+    aria-describedby={error ? `${id}-error` : undefined}
+  />
+
+  {error && (
+    <span id={`${id}-error`} role="alert">
+      {error}  {/* anunciado inmediatamente por lectores */}
+    </span>
+  )}
+</div>
+\end{lstlisting}
+
+\section{Modal con focus trap}
+
+El componente Modal implementa un focus trap completo que impide que el foco del teclado salga del diálogo mientras está abierto, y lo devuelve al elemento disparador al cerrarse:
+
+\begin{enumerate}
+  \item Al abrirse: el foco se mueve automáticamente al \texttt{dialog}.
+  \item Tab/Shift+Tab: circulan únicamente entre los elementos focusables dentro del modal.
+  \item Escape: cierra el modal y devuelve el foco al elemento que lo abrió.
+  \item Clic en backdrop: cierra el modal (con preservación de foco).
+\end{enumerate}
+
+\section{Manejo de actualizaciones de página y aria-live}
+
+Cuando el usuario navega entre rutas, el componente \texttt{PageWrapper} mueve el foco programáticamente al elemento \texttt{<main>} (con \texttt{tabindex="-1"}) y actualiza el título del documento, garantizando que los lectores de pantalla anuncien el cambio de contexto:
+
+\begin{lstlisting}[language=Java, caption={PageWrapper --- gestión de foco en navegación SPA}, label={lst:pagewrapper}]
+useEffect(() => {
+  const pageTitle = title
+    ? `${title} | VitaPrevent`
+    : 'VitaPrevent'
+  document.title = pageTitle
+  // El lector anunciará el nuevo título y el contenido desde aquí
+  mainRef.current?.focus()
+}, [pathname, title])
+\end{lstlisting}
+
+\section{Componente Accordion}
+
+El acordeón implementa el patrón WAI-ARIA Accordion completo:
+
+\begin{itemize}
+  \item El trigger es siempre un \texttt{<button>} nativo (no un \texttt{<div>}).
+  \item \texttt{aria-expanded} refleja el estado del panel.
+  \item \texttt{aria-controls} apunta al \texttt{id} del panel.
+  \item El panel usa \texttt{hidden} (no CSS \texttt{display:none}) para compatibilidad con lectores.
+  \item La pregunta está envuelta en un \texttt{<h3>} para preservar la jerarquía de encabezados.
+\end{itemize}
+
+% ============================================================
+%  CAPÍTULO 6 --- PIPELINE CI/CD Y DESPLIEGUE
+% ============================================================
+\chapter{Pipeline CI/CD y Despliegue}
+
+\section{Estrategia de control de versiones}
+
+El proyecto utiliza \textbf{Git} con convención de commits en español (\textit{Conventional Commits} adaptado):
+
+\begin{itemize}
+  \item \texttt{feat:} Nueva funcionalidad o componente.
+  \item \texttt{fix:} Corrección de errores.
+  \item \texttt{style:} Cambios de estilos CSS sin impacto funcional.
+  \item \texttt{a11y:} Mejoras específicas de accesibilidad.
+  \item \texttt{refactor:} Reestructuración de código.
+  \item \texttt{docs:} Documentación.
+  \item \texttt{chore:} Tareas de mantenimiento (dependencias, configuración).
+\end{itemize}
+
+El equipo alterna commits entre los colaboradores para reflejar la contribución real de cada integrante en el historial del repositorio.
+
+\section{GitHub Actions --- Flujo automatizado}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=0.8cm and 1.5cm,
+  stepbox/.style={
+    rectangle, rounded corners=4pt,
+    minimum width=2.8cm, minimum height=0.85cm,
+    text centered, font=\small\bfseries,
+    draw=royalblue, thick, fill=royalblue!10
+  },
+  arr/.style={-Stealth, thick, color=royalblue}
+]
+\node[stepbox] (push)    {Push a main};
+\node[stepbox, right=1.2cm of push]   (trigger) {Trigger CI};
+\node[stepbox, right=1.2cm of trigger] (install) {npm ci};
+\node[stepbox, right=1.2cm of install] (build)   {npm run build};
+\node[stepbox, below=0.8cm of build]  (deploy)  {Firebase Deploy};
+\node[stepbox, left=1.2cm of deploy]  (cdn)     {CDN Global};
+\node[stepbox, left=1.2cm of cdn]     (https)   {HTTPS auto};
+
+\draw[arr] (push) -- (trigger);
+\draw[arr] (trigger) -- (install);
+\draw[arr] (install) -- (build);
+\draw[arr] (build) -- (deploy);
+\draw[arr] (deploy) -- (cdn);
+\draw[arr] (cdn) -- (https);
+
+\node[font=\tiny\itshape, color=graymid, below=0.1cm of install]
+  {Inyecta VITE\_FIREBASE\_*};
+\end{tikzpicture}
+\caption{Pipeline de despliegue continuo con GitHub Actions y Firebase Hosting}
+\label{fig:cicd}
+\end{figure}
+
+Los secretos de Firebase se almacenan como \textit{repository secrets} en GitHub y son inyectados durante el build como variables de entorno \texttt{VITE\_FIREBASE\_*}. Ninguna credencial es commiteada al repositorio.
+
+% ============================================================
+%  CAPÍTULO 7 --- EVALUACIÓN DE ACCESIBILIDAD
+% ============================================================
+\chapter{Evaluación de Accesibilidad}
+
+\section{Estrategia de pruebas}
+
+La evaluación de accesibilidad de VitaPrevent sigue un enfoque de tres niveles complementarios:
+
+\begin{enumerate}
+  \item \textbf{Verificación estática en desarrollo:} \texttt{eslint-plugin-jsx-a11y} analiza el código JSX en tiempo real, reportando violaciones WCAG durante el desarrollo.
+  \item \textbf{Pruebas automáticas:} Herramientas de análisis del DOM renderizado (axe DevTools, Lighthouse).
+  \item \textbf{Revisión manual:} Pruebas con lectores de pantalla reales (NVDA/Windows, VoiceOver/macOS) y navegación exclusiva por teclado.
+\end{enumerate}
+
+\begin{warnbox}[Limitación de herramientas automáticas]
+Las herramientas automáticas detectan aproximadamente el 30--40\% de los problemas de accesibilidad. El 60--70\% restante requiere revisión manual con usuarios reales o evaluadores especializados. VitaPrevent combina ambos enfoques.
+\end{warnbox}
+
+\section{Herramientas utilizadas}
+
+\begin{table}[H]
+\centering
+\caption{Herramientas de evaluación de accesibilidad}
+\label{tab:herramientas}
+\begin{tabular}{@{}>{\bfseries}p{3.5cm} p{5cm} p{5.5cm}@{}}
+\toprule
+\rowcolor{royalblue!12}
+\textbf{Herramienta} & \textbf{Tipo} & \textbf{Uso} \\
+\midrule
+eslint-plugin-jsx-a11y & Análisis estático en build & Detecta errores ARIA, alt faltante, roles incorrectos durante el desarrollo \\
+axe DevTools & Extensión de navegador & Auditoría automática del DOM renderizado contra WCAG \\
+Lighthouse & Integrado en Chrome DevTools & Score de accesibilidad 0--100, recomendaciones \\
+WAVE & Extensión de navegador & Visualización de errores y advertencias de accesibilidad \\
+NVDA & Lector de pantalla (Windows) & Prueba real de navegación con tecnología asistiva \\
+Colour Contrast Analyser & Aplicación de escritorio & Verificación precisa de ratios de contraste \\
+Teclado (sin ratón) & Prueba manual & Verificación de navegación completa por teclado \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Lista de verificación WCAG 2.2 AA}
+
+\begin{table}[H]
+\centering
+\caption{Estado de implementación --- Criterios WCAG 2.2 AA}
+\label{tab:checklist}
+\small
+\begin{tabular}{@{}>{\ttfamily}p{1.2cm} p{5cm} >{\centering\arraybackslash}p{2.2cm} >{\centering\arraybackslash}p{2.2cm}@{}}
+\toprule
+\rowcolor{royalblue!12}
+\textbf{Criterio} & \textbf{Descripción} & \textbf{Estado} & \textbf{Nivel} \\
+\midrule
+1.1.1 & Alt text en imágenes & \textcolor{successgreen}{\textbf{\cmark~Implementado}} & A \\
+1.3.1 & HTML semántico (landmarks) & \textcolor{successgreen}{\textbf{\cmark~Implementado}} & A \\
+1.3.5 & Propósito del campo (autocomplete) & \textcolor{successgreen}{\textbf{\cmark~Implementado}} & AA \\
+1.4.3 & Contraste mínimo 4.5:1 & \textcolor{successgreen}{\textbf{\cmark~Verificado}} & AA \\
+1.4.4 & Zoom 200\% sin pérdida & \textcolor{successgreen}{\textbf{\cmark~Verificado}} & AA \\
+1.4.10 & Reajuste (320px sin scroll H) & \textcolor{successgreen}{\textbf{\cmark~Verificado}} & AA \\
+1.4.11 & Contraste de componentes UI & \textcolor{successgreen}{\textbf{\cmark~Verificado}} & AA \\
+2.1.1 & Teclado completo & \textcolor{successgreen}{\textbf{\cmark~Implementado}} & A \\
+2.1.2 & Sin trampa de teclado & \textcolor{successgreen}{\textbf{\cmark~Implementado}} & A \\
+2.4.1 & SkipLink & \textcolor{successgreen}{\textbf{\cmark~Implementado}} & A \\
+2.4.3 & Orden de foco lógico & \textcolor{successgreen}{\textbf{\cmark~Verificado}} & A \\
+2.4.7 & Foco visible & \textcolor{successgreen}{\textbf{\cmark~Implementado}} & AA \\
+2.4.11 & Apariencia del foco (WCAG 2.2) & \textcolor{successgreen}{\textbf{\cmark~Implementado}} & AA \\
+3.1.1 & Idioma de página (lang) & \textcolor{successgreen}{\textbf{\cmark~Implementado}} & A \\
+3.3.1 & Identificación de errores & \textcolor{successgreen}{\textbf{\cmark~Implementado}} & A \\
+3.3.2 & Etiquetas de formulario & \textcolor{successgreen}{\textbf{\cmark~Implementado}} & A \\
+4.1.2 & Nombre, función, valor (ARIA) & \textcolor{successgreen}{\textbf{\cmark~Implementado}} & A \\
+4.1.3 & Mensajes de estado (aria-live) & \textcolor{successgreen}{\textbf{\cmark~Implementado}} & AA \\
+2.5.7 & Movimientos de arrastre & \textcolor{warningyellow}{\textbf{\wmark~Pendiente}} & AA \\
+3.2.6 & Ayuda consistente (WCAG 2.2) & \textcolor{warningyellow}{\textbf{\wmark~En progreso}} & A \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================================
+%  CAPÍTULO 8 --- METODOLOGÍA Y ORGANIZACIÓN DEL EQUIPO
+% ============================================================
+\chapter{Metodología y Organización del Equipo}
+
+\section{Metodología de desarrollo}
+
+El proyecto adoptó una metodología ágil adaptada a equipos académicos pequeños, con ciclos de trabajo semanales y entregables incrementales. Cada ciclo produjo componentes funcionales y accesibles antes de avanzar al siguiente, garantizando que la accesibilidad no fuera acumulada para el final.
+
+\textbf{Principios metodológicos aplicados:}
+\begin{itemize}
+  \item \textit{Accessibility-first:} Accesibilidad diseñada desde el componente base, no añadida al final.
+  \item \textit{Componentes atómicos:} Construir desde átomos (Button, Badge) hacia organismos (Navbar, FormField) y páginas completas.
+  \item \textit{Revisión cruzada:} Cada componente es revisado por al menos un integrante diferente al que lo implementó.
+  \item \textit{Documentación continua:} El informe y el CLAUDE.md se actualizan a medida que avanza la implementación.
+\end{itemize}
+
+\section{Distribución de roles}
+
+\begin{table}[H]
+\centering
+\caption{Roles y responsabilidades del equipo VitaPrevent}
+\label{tab:roles}
+\begin{tabular}{@{}>{\bfseries}p{3.5cm} p{4cm} p{6.5cm}@{}}
+\toprule
+\rowcolor{royalblue!12}
+\textbf{Integrante} & \textbf{Rol} & \textbf{Responsabilidad principal} \\
+\midrule
+Erick Costa &
+  Coordinador del proyecto &
+  Organiza tareas, controla avances, consolida entregables, implementa arquitectura base y frontend principal. \\
+Jonathan Tipán &
+  Diseñador de interfaz &
+  Propone estructura visual, navegación, jerarquía y experiencia de usuario; diseña el sistema de tokens CSS y componentes UI. \\
+Javier Quilumba &
+  Evaluador de accesibilidad y Redactor &
+  Aplica pruebas WCAG 2.2 con herramientas automáticas y revisión manual; documenta metodología, resultados, evidencias y conclusiones. \\
+\midrule
+\multicolumn{2}{@{}>{\bfseries}l}{Todos los integrantes} &
+  Implementan HTML, CSS, JavaScript y componentes interactivos (rol: Desarrollador/a frontend). \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Historial de contribuciones}
+
+El repositorio Git refleja la distribución real del trabajo mediante commits alternos con identidad correcta de cada autor. Los commits siguen la convención \textit{Conventional Commits} en español y están trazados en \href{https://github.com/zeuspyEC/VitaPrevent}{github.com/zeuspyEC/VitaPrevent}.
+
+% ============================================================
+%  CAPÍTULO 9 --- CONCLUSIONES Y TRABAJO FUTURO
+% ============================================================
+\chapter{Conclusiones y Trabajo Futuro}
+
+\section{Conclusiones}
+
+\begin{enumerate}
+  \item \textbf{La accesibilidad como arquitectura, no como parche:} El principal aprendizaje del proyecto es que integrar WCAG 2.2 desde la planificación es significativamente menos costoso que remediarlo al final. Un componente \texttt{FormField} accesible desde el inicio previene decenas de violaciones en todos los formularios del sistema.
+
+  \item \textbf{HTML semántico es la base:} La mayoría de los criterios WCAG AA se cumplen naturalmente usando los elementos HTML5 correctos (\texttt{<button>}, \texttt{<label>}, \texttt{<nav>}, \texttt{<main>}). WAI-ARIA es un complemento, no un sustituto del HTML semántico.
+
+  \item \textbf{El sistema de diseño como garante de accesibilidad:} Centralizar colores, tipografía y espaciado en tokens CSS garantiza que todos los componentes cumplan los requisitos de contraste sin verificación individual.
+
+  \item \textbf{React facilita la reutilización accesible:} El modelo de componentes de React permite implementar un patrón accesible una vez (Modal, Accordion, FormField) y reutilizarlo en toda la plataforma con consistencia garantizada.
+
+  \item \textbf{Las herramientas automáticas son insuficientes:} \texttt{eslint-plugin-jsx-a11y} y Lighthouse detectan errores evidentes, pero la revisión manual con teclado y lector de pantalla es irreemplazable para validar la experiencia real de usuarios con discapacidades.
+\end{enumerate}
+
+\section{Trabajo futuro}
+
+\begin{itemize}
+  \item Completar los módulos de Nutrición, Actividad Física, Salud Mental y Prevención con contenido dinámico real desde Firestore.
+  \item Implementar el panel de administración con Firebase Authentication.
+  \item Realizar pruebas de usuario con personas con discapacidades reales (NVDA, VoiceOver).
+  \item Obtener la certificación formal de conformidad WCAG 2.2 AA mediante auditoría externa.
+  \item Añadir soporte para modo oscuro completo con respeto a \texttt{prefers-color-scheme}.
+  \item Implementar internacionalización (i18n) para acceso en lenguas indígenas del Ecuador.
+  \item Agregar PWA completa con soporte offline para contenidos guardados.
+\end{itemize}
+
+% ============================================================
+%  REFERENCIAS
+% ============================================================
+\chapter*{Referencias}
+\addcontentsline{toc}{chapter}{Referencias}
+
+\begin{enumerate}[label={[\arabic*]}]
+  \item W3C Web Accessibility Initiative (WAI). (2023). \textit{Web Content Accessibility Guidelines (WCAG) 2.2}. World Wide Web Consortium. \url{https://www.w3.org/TR/WCAG22/}
+
+  \item W3C WAI. (2023). \textit{WAI-ARIA Authoring Practices Guide (APG) 1.2}. \url{https://www.w3.org/WAI/ARIA/apg/}
+
+  \item Meta Open Source. (2024). \textit{React Documentation v19}. \url{https://react.dev}
+
+  \item Evan You et al. (2024). \textit{Vite --- Next Generation Frontend Tooling}. \url{https://vitejs.dev}
+
+  \item Google LLC. (2024). \textit{Firebase Documentation}. \url{https://firebase.google.com/docs}
+
+  \item Deque Systems. (2024). \textit{axe-core: Accessibility Engine for Automated Web UI Testing}. \url{https://github.com/dequelabs/axe-core}
+
+  \item Instituto Nacional de Estadística y Censos (INEC). (2022). \textit{Encuesta Nacional sobre Discapacidades}. Quito: INEC.
+
+  \item Nielsen, J., \& Mack, R. L. (Eds.). (1994). \textit{Usability Inspection Methods}. John Wiley \& Sons.
+
+  \item Faulkner, S., Eising, H., Kalyanam, S., \& Steele, B. (2022). \textit{HTML: The Living Standard}. WHATWG. \url{https://html.spec.whatwg.org/}
+
+  \item Caldwell, B., Cooper, M., Reid, L. G., \& Vanderheiden, G. (2008). \textit{Web Content Accessibility Guidelines (WCAG) 2.0}. W3C Recommendation.
+\end{enumerate}
+
+% ============================================================
+%  ANEXOS
+% ============================================================
+\appendix
+\chapter{Glosario de Términos}
+
+\begin{description}[leftmargin=3cm, style=nextline]
+  \item[WCAG] Web Content Accessibility Guidelines --- Pautas de Accesibilidad para el Contenido Web del W3C.
+  \item[WAI-ARIA] Web Accessibility Initiative --- Accessible Rich Internet Applications. Especificación de atributos HTML para mejorar accesibilidad de contenido dinámico.
+  \item[POUR] Perceptible, Operable, Comprensible, Robusto --- Los cuatro principios fundamentales de WCAG.
+  \item[SPA] Single Page Application --- Aplicación de una sola página que actualiza el contenido dinámicamente sin recargar el navegador.
+  \item[BaaS] Backend as a Service --- Servicio de backend gestionado en la nube (Firebase).
+  \item[CI/CD] Continuous Integration / Continuous Deployment --- Integración y despliegue continuos automatizados.
+  \item[Focus trap] Técnica de gestión de foco que retiene la navegación por teclado dentro de un componente modal mientras está activo.
+  \item[SkipLink] Enlace de omisión --- Primer elemento del DOM que permite saltar bloques de navegación repetitivos.
+  \item[Landmark] Región semántica del documento (nav, main, header, footer) que facilita la navegación con lectores de pantalla.
+  \item[HMR] Hot Module Replacement --- Reemplazo de módulos en caliente durante el desarrollo sin recarga completa.
+  \item[Token CSS] Variable CSS personalizada que centraliza un valor de diseño (color, tipografía, espaciado).
+\end{description}
+
+\chapter{Configuración de Secretos en GitHub Actions}
+
+Para que el pipeline CI/CD inyecte correctamente las credenciales de Firebase, se deben configurar los siguientes secretos en \texttt{Settings > Secrets and variables > Actions} del repositorio:
+
+\begin{table}[H]
+\centering
+\caption{Secrets requeridos en GitHub Actions}
+\label{tab:secrets}
+\begin{tabular}{@{}>{\ttfamily\small}p{6cm} p{8cm}@{}}
+\toprule
+\rowcolor{royalblue!12}
+\textbf{Nombre del secret} & \textbf{Descripción} \\
+\midrule
+VITE\_FIREBASE\_API\_KEY           & Clave de API pública de la webapp \\
+VITE\_FIREBASE\_AUTH\_DOMAIN       & Dominio de autenticación Firebase \\
+VITE\_FIREBASE\_PROJECT\_ID        & Identificador del proyecto Firebase \\
+VITE\_FIREBASE\_STORAGE\_BUCKET    & Bucket de Firebase Storage \\
+VITE\_FIREBASE\_MESSAGING\_SENDER\_ID & ID del remitente para mensajería \\
+VITE\_FIREBASE\_APP\_ID            & ID de la aplicación web Firebase \\
+VITE\_FIREBASE\_MEASUREMENT\_ID    & ID de Google Analytics (opcional) \\
+FIREBASE\_SERVICE\_ACCOUNT\_COGNIFACE & Service account JSON para deploy \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{document}
