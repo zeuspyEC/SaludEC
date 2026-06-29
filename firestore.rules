@@ -3,10 +3,16 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Solo el admin puede operar (verificado por email, no por email_verified)
+    // Admin = UID en la colección /admins (sin emails quemados, escalable)
     function esAdmin() {
       return request.auth != null &&
-             request.auth.token.email == 'admin@vitaprevent.com';
+             exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    // Colección de administradores: solo un admin puede gestionar otros admins
+    match /admins/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if esAdmin();
     }
 
     // Artículos: lectura pública, escritura solo admin
