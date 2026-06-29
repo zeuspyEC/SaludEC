@@ -3,10 +3,10 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Solo admins autenticados pueden escribir
+    // Solo el admin puede operar (verificado por email, no por email_verified)
     function esAdmin() {
       return request.auth != null &&
-             request.auth.token.email_verified == true;
+             request.auth.token.email == 'admin@vitaprevent.com';
     }
 
     // Artículos: lectura pública, escritura solo admin
