@@ -1,0 +1,86 @@
+.search-bar {
+  display: flex;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: 600px;
+}
+
+.search-bar__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-4);
+  transition: border-color var(--duration-base), box-shadow var(--duration-base);
+}
+
+.search-bar__inner:focus-within {
+  border-color: var(--color-blue-500);
+  box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.15);
+}
+
+.search-bar__icon {
+  color: var(--color-gray-400);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.search-bar__input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background: transparent;
+  min-width: 0;
+}
+
+.search-bar__input::placeholder {
+  color: var(--color-text-subtle);
+}
+
+/* Oculta el botón nativo del campo search */
+.search-bar__input::-webkit-search-cancel-button { display: none; }
+
+.search-bar__clear {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-gray-200);
+  color: var(--color-gray-600);
+  font-size: var(--text-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background-color var(--duration-base);
+}
+
+.search-bar__clear:hover { background: var(--color-gray-300); }
+
+.search-bar__clear:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
+.search-bar__btn {
+  padding: var(--space-2) var(--space-5);
+  background-color: var(--color-blue-600);
+  color: var(--color-white);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  transition: background-color var(--duration-base);
+}
+
+.search-bar__btn:hover { background-color: var(--color-blue-700); }
+
+.search-bar__btn:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-outline-offset);
+}
