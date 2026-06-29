@@ -29,28 +29,49 @@ function HeroCube({ noticias }) {
       rafRef.current = requestAnimationFrame(tick)
     }
     rafRef.current = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(rafRef.current)
+
+    const onMove = (e) => {
+      const dd = drag.current
+      if (!dd.active) return
+      const cx = e.touches ? e.touches[0].clientX : e.clientX
+      const cy = e.touches ? e.touches[0].clientY : e.clientY
+      if (Math.hypot(cx - dd.startX, cy - dd.startY) > 5) dd.moved = true
+      dd.rotY += (cx - dd.lastX) * 0.6
+      dd.rotX  = Math.max(-70, Math.min(30, dd.rotX - (cy - dd.lastY) * 0.6))
+      dd.lastX = cx; dd.lastY = cy
+    }
+    const onUp = () => { drag.current.active = false }
+
+    document.addEventListener('mousemove', onMove)
+    document.addEventListener('mouseup',   onUp)
+    document.addEventListener('touchmove', onMove, { passive: true })
+    document.addEventListener('touchend',  onUp)
+
+    return () => {
+      cancelAnimationFrame(rafRef.current)
+      document.removeEventListener('mousemove', onMove)
+      document.removeEventListener('mouseup',   onUp)
+      document.removeEventListener('touchmove', onMove)
+      document.removeEventListener('touchend',  onUp)
+    }
   }, [])
 
-  const onPointerDown = (e) => {
+  const onMouseDown = (e) => {
+    if (e.button !== 0) return
     const d = drag.current
-    d.active = true
-    d.moved = false
+    d.active = true; d.moved = false
     d.startX = e.clientX; d.startY = e.clientY
     d.lastX  = e.clientX; d.lastY  = e.clientY
-    e.currentTarget.setPointerCapture(e.pointerId)
+    e.preventDefault()
   }
 
-  const onPointerMove = (e) => {
+  const onTouchStart = (e) => {
+    const t = e.touches[0]
     const d = drag.current
-    if (!d.active) return
-    if (Math.hypot(e.clientX - d.startX, e.clientY - d.startY) > 6) d.moved = true
-    d.rotY += (e.clientX - d.lastX) * 0.6
-    d.rotX  = Math.max(-70, Math.min(30, d.rotX - (e.clientY - d.lastY) * 0.6))
-    d.lastX = e.clientX; d.lastY = e.clientY
+    d.active = true; d.moved = false
+    d.startX = t.clientX; d.startY = t.clientY
+    d.lastX  = t.clientX; d.lastY  = t.clientY
   }
-
-  const onPointerUp = () => { drag.current.active = false }
 
   const onClickCapture = (e) => { if (drag.current.moved) e.stopPropagation() }
 
@@ -67,10 +88,8 @@ function HeroCube({ noticias }) {
   return (
     <div
       className="hero-cube"
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={onPointerUp}
-      onPointerLeave={onPointerUp}
+      onMouseDown={onMouseDown}
+      onTouchStart={onTouchStart}
       onClickCapture={onClickCapture}
     >
       <div className="hero-cube__scene" ref={sceneRef}>

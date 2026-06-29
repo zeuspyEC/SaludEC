@@ -282,11 +282,11 @@ Técnicamente, la plataforma está construida con \textbf{React 19 + Vite}, \tex
 \begin{infobox}[Datos clave del proyecto]
 \begin{tabular}{@{}ll@{}}
 \textbf{Plataforma:}    & VitaPrevent --- Salud Preventiva Digital \\
-\textbf{Stack:}         & React 19, Vite, Firebase, CSS personalizado \\
-\textbf{Accesibilidad:} & WCAG 2.2 Nivel AA (objetivo), HTML5 semántico + WAI-ARIA selectivo \\
-\textbf{Módulos:}       & 9 secciones + panel de administración \\
+\textbf{Stack:}         & React 19, Vite 6, Firebase Firestore/Auth/Hosting, CSS personalizado \\
+\textbf{Accesibilidad:} & WCAG 2.2 Nivel AA, HTML5 semántico + WAI-ARIA selectivo \\
+\textbf{Módulos:}       & 9 secciones públicas implementadas + contenido real en Firestore \\
 \textbf{Repositorio:}   & \href{https://github.com/zeuspyEC/VitaPrevent}{github.com/zeuspyEC/VitaPrevent} \\
-\textbf{Despliegue:}    & Firebase Hosting --- CI/CD con GitHub Actions \\
+\textbf{Despliegue:}    & \href{https://vitaprevent-b2e34.web.app}{vitaprevent-b2e34.web.app} --- Firebase Hosting / GitHub Actions \\
 \end{tabular}
 \end{infobox}
 
@@ -559,21 +559,37 @@ src/
 \begin{tabular}{@{}>{\bfseries}p{3.2cm} p{5cm} >{\centering\arraybackslash}p{3cm} >{\centering\arraybackslash}p{2.5cm}@{}}
 \toprule
 \rowcolor{royalblue!12}
-\textbf{Módulo} & \textbf{Contenido principal} & \textbf{Fuente de datos} & \textbf{Acceso} \\
+\textbf{Módulo} & \textbf{Contenido principal} & \textbf{Fuente de datos} & \textbf{Estado} \\
 \midrule
-Inicio          & Hero, estadísticas, módulos, CTA & Firestore + estático & Público \\
-Nutrición       & Artículos, calculadora IMC & Firestore & Público \\
-Actividad Física & Rutinas, videos, niveles & Firestore & Público \\
-Salud Mental    & Artículos, podcasts, mindfulness & Firestore & Público \\
-Prevención      & Enfermedades, vacunación, riesgos & Firestore & Público \\
-Biblioteca      & Infografías, PDFs, guías & Firestore + Storage & Público \\
-Noticias        & Feed dinámico paginado & Firestore & Público \\
-Contacto        & Formulario accesible & Firestore (write) & Público \\
-Nosotros        & Equipo, misión, valores & Estático & Público \\
-Panel Admin     & CRUD completo de contenidos & Firestore & Privado (Auth) \\
+Inicio          & Hero 3D interactivo, estadísticas, módulos, noticias & Firestore + estático & \cmark~Implementado \\
+Nutrición       & Artículos por categoría con renderizado Markdown & Firestore & \cmark~Implementado \\
+Actividad Física & Artículos de rutinas y ejercicio & Firestore & \cmark~Implementado \\
+Salud Mental    & Artículos de bienestar emocional & Firestore & \cmark~Implementado \\
+Prevención      & Artículos de prevención de enfermedades & Firestore & \cmark~Implementado \\
+Biblioteca      & Recursos digitales enlazados & Firestore & \cmark~Implementado \\
+Noticias        & Feed paginado de noticias de salud & Firestore & \cmark~Implementado \\
+Contacto        & Formulario accesible con validación & Firestore (write) & \cmark~Implementado \\
+Nosotros        & Equipo, misión, valores & Estático & \cmark~Implementado \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\section{Componente Hero 3D interactivo}
+
+La sección hero de la página de inicio incorpora un cubo tridimensional implementado íntegramente con CSS 3D y JavaScript nativo, sin dependencias externas. El cubo cuenta con seis caras: cuatro representan los módulos de salud (Nutrición, Actividad Física, Salud Mental y Prevención) y dos muestran las noticias más recientes recuperadas en tiempo real de Firestore.
+
+\textbf{Características técnicas:}
+\begin{itemize}
+  \item \textbf{Renderizado 3D puro en CSS:} \texttt{transform-style: preserve-3d} con \texttt{perspective: 700px} en el contenedor padre. Las seis caras se posicionan mediante \texttt{rotateY}/\texttt{rotateX} + \texttt{translateZ(130px)}.
+  \item \textbf{Animación vía \texttt{requestAnimationFrame}:} La rotación automática se controla desde JavaScript, evitando el uso de animaciones CSS (\texttt{@keyframes}) que son incompatibles con \texttt{filter} y con el control manual de la rotación.
+  \item \textbf{Caras de vidrio:} \texttt{backface-visibility: visible} en el panel exterior permite ver el interior del cubo al girarlo. El contenido (ícono + texto) usa \texttt{backface-visibility: hidden} para mostrarse únicamente desde el frente, evitando que el texto aparezca invertido desde el interior.
+  \item \textbf{Arrastre con mouse y touch:} Los eventos \texttt{mousedown}/\texttt{touchstart} en el contenedor inician el arrastre. Los manejadores globales \texttt{document.addEventListener('mousemove')} y \texttt{mouseup} controlan la rotación durante y al terminar el gesto, sin bloquear los clicks en los enlaces de cada cara.
+  \item \textbf{Glow de neón por módulo:} Cada cara tiene un \texttt{box-shadow} con el color característico del módulo (verde, naranja, morado, azul, cyan), generado mediante variables CSS personalizadas (\texttt{--face-glow}).
+\end{itemize}
+
+\begin{warnbox}[Consideración WCAG 2.5.7 --- Movimientos de arrastre]
+El cubo 3D usa movimiento de arrastre para la rotación manual. WCAG 2.5.7 (Nivel AA, WCAG 2.2) exige una alternativa que no requiera arrastre. El contenido de cada cara es también accesible desde la navegación principal del sitio, y el cubo gira automáticamente sin intervención del usuario.
+\end{warnbox}
 
 \section{Modelo de datos Firestore}
 
@@ -1047,13 +1063,12 @@ El repositorio Git refleja la distribución real del trabajo mediante commits al
 \section{Trabajo futuro}
 
 \begin{itemize}
-  \item Completar los módulos de Nutrición, Actividad Física, Salud Mental y Prevención con contenido dinámico real desde Firestore.
-  \item Implementar el panel de administración con Firebase Authentication.
-  \item Realizar pruebas de usuario con personas con discapacidades reales (NVDA, VoiceOver).
+  \item Implementar el panel de administración completo con Firebase Authentication para gestión de contenidos sin código.
+  \item Realizar pruebas de usuario con personas con discapacidades reales (NVDA, VoiceOver) y documentar los hallazgos.
   \item Obtener la certificación formal de conformidad WCAG 2.2 AA mediante auditoría externa.
-  \item Añadir soporte para modo oscuro completo con respeto a \texttt{prefers-color-scheme}.
-  \item Implementar internacionalización (i18n) para acceso en lenguas indígenas del Ecuador.
-  \item Agregar PWA completa con soporte offline para contenidos guardados.
+  \item Implementar internacionalización (i18n) para acceso en lenguas indígenas del Ecuador (kichwa, shuar).
+  \item Agregar PWA completa con soporte offline para contenidos guardados por el usuario.
+  \item Completar el criterio WCAG 2.5.7 (movimientos de arrastre) documentando la alternativa de teclado para el cubo 3D del hero.
 \end{itemize}
 
 % ============================================================
