@@ -1,0 +1,5 @@
+.page-wrapper {
+  flex: 1;
+  outline: none; /* El foco es funcional, no visual, en este elemento */
+  min-height: calc(100vh - var(--navbar-height));
+}

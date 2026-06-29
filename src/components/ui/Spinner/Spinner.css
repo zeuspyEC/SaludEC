@@ -1,0 +1,20 @@
+.spinner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner__ring {
+  border-radius: 50%;
+  border-style: solid;
+  border-color: var(--color-blue-200) var(--color-blue-200) var(--color-blue-200) var(--color-blue-600);
+  animation: spin 0.75s linear infinite;
+}
+
+.spinner--sm .spinner__ring { width: 20px; height: 20px; border-width: 2px; }
+.spinner--md .spinner__ring { width: 36px; height: 36px; border-width: 3px; }
+.spinner--lg .spinner__ring { width: 56px; height: 56px; border-width: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner__ring { animation: none; border-color: var(--color-blue-400); }
+}
