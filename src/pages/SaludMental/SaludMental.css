@@ -1,0 +1,49 @@
+@import '@styles/modules.css';
+
+/* Señales de alerta */
+.alert-signals {
+  margin-block: var(--space-10) var(--space-14);
+}
+
+.signals-intro {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-6);
+  max-width: 68ch;
+}
+
+.signals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-6);
+}
+
+.signal-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid #7c3aed;
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: var(--leading-snug);
+}
+
+.signal-item__icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.signals-note {
+  background: var(--color-warning-100);
+  border: 1px solid var(--color-warning-300);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  font-size: var(--text-sm);
+  color: var(--color-warning-800);
+}
