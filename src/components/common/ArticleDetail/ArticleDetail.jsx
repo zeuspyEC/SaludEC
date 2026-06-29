@@ -1,19 +1,36 @@
 import { Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import PropTypes from 'prop-types'
 import Breadcrumb from '@components/layout/Breadcrumb/Breadcrumb'
 import Badge from '@components/ui/Badge/Badge'
 import PageWrapper from '@components/layout/PageWrapper/PageWrapper'
 import './ArticleDetail.css'
 
-export default function ArticleDetail({ articulo, volverRuta, volverLabel }) {
+const MODULO_LABEL = {
+  'nutricion': 'Nutrición',
+  'actividad-fisica': 'Actividad Física',
+  'salud-mental': 'Salud Mental',
+  'prevencion': 'Prevención',
+}
+
+export default function ArticleDetail({ articulo, volverRuta, volverLabel, moduloPath }) {
   const fecha = articulo.actualizadoEn?.toDate?.() ?? articulo.creadoEn?.toDate?.()
   const fechaStr = fecha?.toLocaleDateString('es-EC', { year: 'numeric', month: 'long', day: 'numeric' })
+
+  const breadcrumbItems = [
+    { label: 'Inicio', path: '/' },
+    { label: volverLabel.replace('Volver a ', ''), path: volverRuta },
+    { label: articulo.titulo, path: moduloPath ?? volverRuta },
+  ]
+
+  // Evita mostrar fuentes duplicadas si el contenido ya las incluye al final
+  const contenidoLimpio = (articulo.contenido || '').replace(/\n\*\*Fuentes:\*\*.*$/s, '')
 
   return (
     <PageWrapper title={articulo.titulo} description={articulo.resumen}>
       <div className="article-detail container">
-        <Breadcrumb />
+        <Breadcrumb customItems={breadcrumbItems} />
 
         <article aria-labelledby="articulo-titulo">
           {articulo.imagen?.url && (
@@ -32,14 +49,14 @@ export default function ArticleDetail({ articulo, volverRuta, volverLabel }) {
           <header className="article-detail__header">
             <div className="article-detail__meta">
               {articulo.modulo && (
-                <Badge variant="primary" size="sm">{articulo.modulo.replace('-', ' ')}</Badge>
+                <Badge variant="primary" size="sm">{MODULO_LABEL[articulo.modulo] ?? articulo.modulo}</Badge>
               )}
               {articulo.categoria && (
                 <Badge variant="info" size="sm">{articulo.categoria}</Badge>
               )}
               {fechaStr && (
                 <time dateTime={fecha.toISOString()} className="article-detail__fecha">
-                  Actualizado: {fechaStr}
+                  <span className="sr-only">Actualizado el </span>{fechaStr}
                 </time>
               )}
             </div>
@@ -54,13 +71,24 @@ export default function ArticleDetail({ articulo, volverRuta, volverLabel }) {
           </header>
 
           <div className="prose article-detail__body">
-            <ReactMarkdown>{articulo.contenido || ''}</ReactMarkdown>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{contenidoLimpio}</ReactMarkdown>
           </div>
 
           {articulo.fuentes && (
             <aside className="article-detail__fuentes" aria-label="Fuentes y referencias del artículo">
               <h2 className="article-detail__fuentes-title">Fuentes y referencias</h2>
               <p className="article-detail__fuentes-text">{articulo.fuentes}</p>
+              {articulo.fuenteUrl && (
+                <a
+                  href={articulo.fuenteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="article-detail__fuente-link"
+                  aria-label={`Ver fuente original de este artículo (abre en nueva pestaña)`}
+                >
+                  Ver fuente original →<span className="sr-only"> (abre en nueva pestaña)</span>
+                </a>
+              )}
             </aside>
           )}
 
@@ -82,6 +110,7 @@ ArticleDetail.propTypes = {
     contenido: PropTypes.string,
     imagen: PropTypes.shape({ url: PropTypes.string, alt: PropTypes.string }),
     fuentes: PropTypes.string,
+    fuenteUrl: PropTypes.string,
     modulo: PropTypes.string,
     categoria: PropTypes.string,
     actualizadoEn: PropTypes.object,
@@ -89,4 +118,5 @@ ArticleDetail.propTypes = {
   }).isRequired,
   volverRuta: PropTypes.string.isRequired,
   volverLabel: PropTypes.string.isRequired,
+  moduloPath: PropTypes.string,
 }

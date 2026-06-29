@@ -54,7 +54,7 @@ a:not([class]):hover {
   font-family: var(--font-serif);
   font-size: var(--text-lg);
   line-height: var(--leading-loose);
-  color: var(--color-gray-800);
+  color: var(--color-text);
   max-width: none;
 }
 
@@ -67,7 +67,7 @@ a:not([class]):hover {
 .prose ul li { list-style: disc; margin-bottom: var(--space-2); }
 .prose ol li { list-style: decimal; margin-bottom: var(--space-2); }
 .prose li > ul, .prose li > ol { margin-top: var(--space-2); margin-bottom: 0; }
-.prose strong { font-weight: var(--font-bold); color: var(--color-text); }
+.prose strong { font-weight: var(--font-bold); color: inherit; }
 .prose em { font-style: italic; }
 .prose a { color: var(--color-primary); text-decoration: underline; text-underline-offset: 3px; }
 .prose a:hover { color: var(--color-primary-dark); }

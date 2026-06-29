@@ -88,6 +88,23 @@
   line-height: var(--leading-relaxed);
   font-style: italic;
   max-width: none;
+  margin-bottom: var(--space-3);
+}
+
+.article-detail__fuente-link {
+  display: inline-block;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.article-detail__fuente-link:hover { text-decoration: underline; }
+
+.article-detail__fuente-link:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 /* ── Footer ── */

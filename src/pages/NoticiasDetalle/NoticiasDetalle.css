@@ -82,3 +82,25 @@
   outline-offset: 2px;
   border-radius: 2px;
 }
+
+.noticia-articulo__fuente {
+  margin-top: var(--space-8);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  border-left: 4px solid var(--color-primary);
+}
+
+.noticia-fuente-link {
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-primary);
+  text-decoration: none;
+}
+.noticia-fuente-link:hover { text-decoration: underline; }
+.noticia-fuente-link:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+  border-radius: 2px;
+}

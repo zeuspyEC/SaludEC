@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import PageWrapper from '@components/layout/PageWrapper/PageWrapper'
 import Breadcrumb from '@components/layout/Breadcrumb/Breadcrumb'
 import Badge from '@components/ui/Badge/Badge'
@@ -41,10 +42,16 @@ export default function NoticiasDetalle() {
   const imgUrl = typeof noticia.imagen === 'string' ? noticia.imagen : noticia.imagen?.url
   const imgAlt = typeof noticia.imagen === 'string' ? noticia.titulo : (noticia.imagen?.alt || noticia.titulo)
 
+  const breadcrumbItems = [
+    { label: 'Inicio', path: '/' },
+    { label: 'Noticias', path: '/noticias' },
+    { label: noticia.titulo, path: `/noticias/${id}` },
+  ]
+
   return (
     <PageWrapper title={noticia.titulo} description={noticia.resumen}>
       <div className="noticias-detalle container">
-        <Breadcrumb />
+        <Breadcrumb customItems={breadcrumbItems} />
 
         <article className="noticia-articulo" aria-labelledby="noticia-titulo">
           {imgUrl && (
@@ -81,8 +88,21 @@ export default function NoticiasDetalle() {
 
           {noticia.contenido && (
             <div className="prose noticia-articulo__body">
-              <ReactMarkdown>{noticia.contenido}</ReactMarkdown>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{noticia.contenido}</ReactMarkdown>
             </div>
+          )}
+
+          {noticia.fuenteUrl && (
+            <aside className="noticia-articulo__fuente" aria-label="Fuente original de la noticia">
+              <a
+                href={noticia.fuenteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="noticia-fuente-link"
+              >
+                Ver fuente original →<span className="sr-only"> (abre en nueva pestaña)</span>
+              </a>
+            </aside>
           )}
 
           <footer className="noticia-articulo__footer">
