@@ -1,0 +1,31 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function esAdmin() {
+      return request.auth != null &&
+             request.auth.token.email_verified == true;
+    }
+
+    // Imágenes de artículos/noticias: lectura pública, subida solo admin
+    match /articulos/{allPaths=**} {
+      allow read: if true;
+      allow write: if esAdmin()
+                   && request.resource.size < 5 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+    }
+
+    match /noticias/{allPaths=**} {
+      allow read: if true;
+      allow write: if esAdmin()
+                   && request.resource.size < 5 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+    }
+
+    // Denegar todo lo demás
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

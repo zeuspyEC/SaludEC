@@ -1,0 +1,45 @@
+{
+  "name": "VitaPrevent — Salud Preventiva",
+  "short_name": "VitaPrevent",
+  "description": "Plataforma de salud preventiva con información confiable sobre nutrición, actividad física, salud mental y prevención de enfermedades.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0D1B2A",
+  "theme_color": "#1565C0",
+  "lang": "es-EC",
+  "dir": "ltr",
+  "orientation": "portrait-primary",
+  "categories": ["health", "medical", "education"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Nutrición",
+      "url": "/nutricion",
+      "description": "Ir a la sección de nutrición saludable"
+    },
+    {
+      "name": "Biblioteca",
+      "url": "/biblioteca",
+      "description": "Acceder a la biblioteca de recursos"
+    },
+    {
+      "name": "Contacto",
+      "url": "/contacto",
+      "description": "Enviar un mensaje al equipo"
+    }
+  ]
+}

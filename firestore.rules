@@ -1,0 +1,51 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Solo admins autenticados pueden escribir
+    function esAdmin() {
+      return request.auth != null &&
+             request.auth.token.email_verified == true;
+    }
+
+    // Artículos: lectura pública, escritura solo admin
+    match /articulos/{docId} {
+      allow read: if resource.data.publicado == true || esAdmin();
+      allow create, update, delete: if esAdmin();
+    }
+
+    // Noticias: lectura pública (publicadas), escritura solo admin
+    match /noticias/{docId} {
+      allow read: if resource.data.publicado == true || esAdmin();
+      allow create, update, delete: if esAdmin();
+    }
+
+    // Recursos (biblioteca): lectura pública, escritura solo admin
+    match /recursos/{docId} {
+      allow read: if true;
+      allow create, update, delete: if esAdmin();
+    }
+
+    // FAQs: lectura pública, escritura solo admin
+    match /faqs/{docId} {
+      allow read: if true;
+      allow create, update, delete: if esAdmin();
+    }
+
+    // Mensajes de contacto: cualquiera puede crear, solo admin puede leer/eliminar
+    match /mensajes/{docId} {
+      allow create: if request.resource.data.nombre is string
+                    && request.resource.data.email is string
+                    && request.resource.data.mensaje is string
+                    && request.resource.data.nombre.size() >= 2
+                    && request.resource.data.mensaje.size() >= 10;
+      allow read, update, delete: if esAdmin();
+    }
+
+    // Denegar todo lo demás por defecto
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
