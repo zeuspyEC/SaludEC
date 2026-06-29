@@ -1,0 +1,885 @@
+% ============================================================
+%  DOCUMENTO DE PLANIFICACIÓN XP --- VitaPrevent
+%  Metodología Extreme Programming: Iteraciones reales + plan
+%  Asignatura: Usabilidad y Accesibilidad (ISWD732) – GR3SW
+%  EPN – Facultad de Ingeniería de Sistemas – Ingeniería de Software
+%  Compilar con: pdflatex metodologia_xp_vitaprevent.tex (2 veces)
+% ============================================================
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-noshorthands]{babel}
+\usepackage[top=2.5cm, bottom=2.5cm, left=3cm, right=2.5cm, headheight=14pt]{geometry}
+
+\usepackage[dvipsnames, table]{xcolor}
+\definecolor{navydeep}{HTML}{0D1B2A}
+\definecolor{royalblue}{HTML}{1565C0}
+\definecolor{lightblue}{HTML}{BBDEFB}
+\definecolor{successgreen}{HTML}{16A34A}
+\definecolor{warningyellow}{HTML}{D97706}
+\definecolor{errored}{HTML}{DC2626}
+\definecolor{graymid}{HTML}{6B7280}
+\definecolor{graylight}{HTML}{F3F4F6}
+\definecolor{violetxp}{HTML}{6D28D9}
+\definecolor{tealxp}{HTML}{0F766E}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{shapes, arrows.meta, positioning, decorations.pathreplacing, calc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{makecell}
+\renewcommand{\arraystretch}{1.5}
+
+\usepackage{listings}
+\lstdefinestyle{gitlog}{
+  backgroundcolor=\color{navydeep!6},
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true, frame=single, framesep=4pt,
+  rulecolor=\color{royalblue!30},
+  xleftmargin=6pt, xrightmargin=4pt,
+  tabsize=2, showstringspaces=false,
+  literate=
+    {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+    {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+    {ñ}{{\~n}}1 {Ñ}{{\~N}}1,
+}
+\lstset{style=gitlog}
+
+\usepackage[
+  colorlinks=true, linkcolor=royalblue, urlcolor=royalblue, citecolor=royalblue,
+  unicode=true, pdfencoding=auto,
+  pdftitle={VitaPrevent - Metodología XP - Planificación de Iteraciones},
+  pdfauthor={Erick Costa, Jonathan Tipán, Javier Quilumba},
+  pdflang={es-EC}
+]{hyperref}
+\usepackage{bookmark}
+\usepackage{amssymb}
+\newcommand{\cmark}{\textcolor{successgreen}{$\checkmark$}}
+\newcommand{\wmark}{\textcolor{warningyellow}{$\triangleright$}}
+\newcommand{\pmark}{\textcolor{royalblue}{$\bullet$}}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{graymid}\textit{VitaPrevent --- Metodología XP --- ISWD732 GR3SW}}
+\fancyhead[R]{\small\color{graymid}\thepage}
+\fancyfoot[C]{\small\color{graymid}\textit{Escuela Politécnica Nacional --- 2026}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\usepackage{titlesec}
+\titleformat{\section}
+  {\normalfont\large\bfseries\color{navydeep}}
+  {\thesection.}{0.6em}{}[{\color{royalblue}\titlerule[0.8pt]}]
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries\color{royalblue}}
+  {\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}
+  {\normalfont\small\bfseries\color{violetxp}}
+  {\thesubsubsection}{0.6em}{}
+
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{skins, breakable}
+\newtcolorbox{storybox}[2]{enhanced, breakable,
+  colback=#2!5, colframe=#2,
+  fonttitle=\bfseries\small\color{white}, coltitle=white,
+  title={\textsf{#1}},
+  arc=4pt, boxrule=0.8pt, left=8pt, right=8pt, top=6pt, bottom=6pt}
+\newtcolorbox{iterbox}[2]{enhanced, breakable,
+  colback=#2!4, colframe=#2,
+  fonttitle=\bfseries\normalsize\color{white}, coltitle=white,
+  title={#1}, arc=6pt, boxrule=1pt,
+  left=10pt, right=10pt, top=8pt, bottom=8pt}
+\newtcolorbox{metabox}[1][]{enhanced,
+  colback=graylight, colframe=graymid!60,
+  fonttitle=\bfseries\small, title={#1},
+  arc=4pt, boxrule=0.6pt, left=8pt, right=8pt, top=6pt, bottom=6pt}
+
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=1.4em, itemsep=3pt}
+\setlist[enumerate]{leftmargin=1.4em, itemsep=3pt}
+
+\usepackage{setspace}
+\setstretch{1.25}
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\usepackage{caption}
+\captionsetup{font=small, labelfont={bf, color=navydeep}}
+
+% ============================================================
+\begin{document}
+\pagenumbering{gobble}
+
+% ------------------------------------------------------------
+%  PORTADA
+% ------------------------------------------------------------
+\begin{titlepage}
+\centering
+\vspace*{0.5cm}
+
+\begin{tikzpicture}
+  \fill[royalblue, rounded corners=8pt] (0,0) rectangle (2.0,2.0);
+  \fill[white] (0.85,0.25) rectangle (1.15,1.75);
+  \fill[white] (0.25,0.85) rectangle (1.75,1.15);
+  \fill[royalblue] (0.9,0.9) circle (0.22);
+\end{tikzpicture}
+
+\vspace{0.5cm}
+{\LARGE\bfseries\color{navydeep} ESCUELA POLITÉCNICA NACIONAL}\\[4pt]
+{\large\color{navydeep} FACULTAD DE INGENIERÍA DE SISTEMAS}\\[2pt]
+{\large\color{navydeep} INGENIERÍA DE SOFTWARE}
+
+\vspace{1.0cm}
+{\color{violetxp}\rule{0.85\linewidth}{1.5pt}}
+
+\vspace{0.6cm}
+{\large\bfseries\color{navydeep} TAREA 06 --- DOCUMENTO COMPLEMENTARIO}\\[6pt]
+{\Large\bfseries\color{navydeep}
+  PLANIFICACIÓN Y GESTIÓN DEL PROYECTO\\
+  MEDIANTE METODOLOGÍA\\[4pt]
+  \textcolor{violetxp}{EXTREME PROGRAMMING (XP)}}
+
+\vspace{0.8cm}
+{\color{violetxp}\rule{0.85\linewidth}{0.8pt}}
+
+\vspace{0.8cm}
+\begin{tabular}{@{}rl@{}}
+  \textbf{\color{navydeep}Asignatura:} & Usabilidad y Accesibilidad (ISWD732) \\[4pt]
+  \textbf{\color{navydeep}Curso:}      & GR3SW \\[8pt]
+\end{tabular}
+
+\vspace{0.4cm}
+\begin{center}
+{\normalsize\bfseries\color{navydeep} Proyecto:}\\[4pt]
+{\large\bfseries\color{royalblue}
+  VITAPREVENT: PLATAFORMA WEB ACCESIBLE\\
+  DE SERVICIOS PÚBLICOS DE SALUD}
+\end{center}
+
+\vspace{0.8cm}
+\begin{tabular}{@{}rl@{}}
+  \textbf{\color{navydeep}Grupo 6:} & Javier Quilumba \\
+  & Jonathan Tipán \\
+  & Erick Costa \\[8pt]
+  \textbf{\color{navydeep}Docente:} & Ing. Pablo Andrés Saá P. \\[4pt]
+  \textbf{\color{navydeep}Fecha:}   & 28/06/2026 \\
+\end{tabular}
+
+\vspace{1.0cm}
+{\color{violetxp}\rule{0.85\linewidth}{1.5pt}}
+\end{titlepage}
+
+% ------------------------------------------------------------
+%  TABLA DE CONTENIDOS
+% ------------------------------------------------------------
+\newpage
+\pagenumbering{roman}
+\tableofcontents
+
+\newpage
+\pagenumbering{arabic}
+
+% ============================================================
+\section{Introducción}
+
+El presente documento describe la planificación, ejecución y gestión del proyecto VitaPrevent empleando la metodología \textbf{Extreme Programming (XP)}, seleccionada por su adaptabilidad a equipos pequeños, su énfasis en la calidad del código y su capacidad para incorporar cambios de requerimientos durante el desarrollo, algo especialmente relevante en un proyecto académico con restricciones de tiempo.
+
+VitaPrevent es una plataforma web accesible de servicios públicos de salud del Ecuador, construida con React 19 + Vite 6 + Firebase. El desarrollo real se ejecutó en \textbf{cuatro iteraciones} comprendidas entre el 28/06/2026 y el 29/06/2026. A partir de esa base funcional, se planifican \textbf{dos semanas adicionales} (Sprint 2: 30/06/2026 -- 13/07/2026) para completar los criterios WCAG pendientes, robustecer el panel administrativo y preparar las evidencias de evaluación final.
+
+Este documento incluye:
+\begin{itemize}
+  \item El conjunto de historias de usuario que guió el desarrollo.
+  \item Los resultados reales de la Iteración 1 (Sprint 1), con evidencia del historial de commits.
+  \item El plan de la Iteración 2 (Sprint 2) con tareas, responsables y criterios de aceptación.
+  \item Las métricas de velocidad del equipo y el gráfico de avance (burndown).
+  \item Las prácticas XP aplicadas a lo largo del proyecto.
+\end{itemize}
+
+% ============================================================
+\section{Fundamentos de la Metodología XP}
+
+\subsection{¿Por qué XP?}
+
+Extreme Programming fue elegida sobre metodologías más pesadas (RUP, cascada) porque:
+\begin{itemize}
+  \item El equipo es pequeño (3 personas), exactamente el escenario para el que XP fue diseñado.
+  \item Los requerimientos de accesibilidad evolucionaron durante el desarrollo (reenfoque de salud preventiva genérica a servicios públicos de Ecuador).
+  \item XP prioriza \textbf{entregas frecuentes} (cada iteración produce software funcional y desplegado), compatible con el cronograma académico.
+  \item Las prácticas de \textbf{integración continua} y \textbf{código limpio} son directamente aplicables con el stack React + GitHub Actions.
+\end{itemize}
+
+\subsection{Valores XP aplicados al proyecto}
+
+\begin{table}[H]
+\centering
+\caption{Valores XP y su aplicación en VitaPrevent}
+\small
+\begin{tabular}{@{}>{\bfseries\color{violetxp}}p{3cm} p{11.5cm}@{}}
+\toprule
+\rowcolor{violetxp!10}
+\textbf{Valor XP} & \textbf{Aplicación concreta en VitaPrevent} \\
+\midrule
+Comunicación &
+  Repositorio GitHub compartido con commits descriptivos. Todos los integrantes conocen el estado completo del proyecto. Pull del código antes de cada sesión. \\
+Simplicidad &
+  Sin frameworks visuales pesados (no Bootstrap, no Material UI). Componentes con una sola responsabilidad. CSS con variables centralizadas. \\
+Retroalimentación &
+  axe DevTools detecta violaciones WCAG en tiempo real. \texttt{eslint-plugin-jsx-a11y} bloquea builds con errores de accesibilidad. Pruebas con NVDA al finalizar cada iteración. \\
+Coraje &
+  Refactorización del módulo de rutas en Iteración 2 (de rutas planas a rutas anidadas con ProtectedRoute). Reenfoque completo del tema en Iteración 4. \\
+Respeto &
+  Commits alternados entre los tres integrantes. Nadie sobreescribe trabajo ajeno sin coordinación. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Prácticas XP implementadas}
+
+\begin{enumerate}
+  \item \textbf{Juego de planificación:} Historias de usuario estimadas y priorizadas al inicio de cada iteración.
+  \item \textbf{Pequeñas entregas:} El sitio se despliega en Firebase Hosting al finalizar cada iteración (URL pública funcional).
+  \item \textbf{Diseño simple:} Solo se implementa lo que la historia de usuario requiere.
+  \item \textbf{Refactorización continua:} Módulos de rutas, servicios Firebase y componentes fueron refactorizados cuando el crecimiento lo exigió.
+  \item \textbf{Integración continua:} GitHub Actions ejecuta build y deploy automáticamente en cada push a \texttt{main}.
+  \item \textbf{Estándares de código:} ESLint + Prettier + \texttt{jsx-a11y}. El build falla si hay violaciones.
+  \item \textbf{Propiedad colectiva del código:} Todos los integrantes modifican cualquier parte del proyecto.
+  \item \textbf{Semanas de 40 horas:} Dado el contexto académico, se trabajó en sesiones intensivas y se alternaron los commits para distribuir la carga.
+\end{enumerate}
+
+% ============================================================
+\section{Equipo y Roles}
+
+\begin{table}[H]
+\centering
+\caption{Equipo XP de VitaPrevent}
+\begin{tabular}{@{}>{\bfseries}p{3.5cm} p{4.5cm} p{6cm}@{}}
+\toprule
+\rowcolor{violetxp!10}
+\textbf{Integrante} & \textbf{Rol XP} & \textbf{Contribuciones principales} \\
+\midrule
+Erick Costa &
+  Tracker / Arquitecto &
+  Arquitectura base (Vite + React + Firebase), layout y componentes UI, correcciones WCAG 2.4.3, EC\_SALUD data. \\[4pt]
+Jonathan Tipán &
+  Programador / Integrador &
+  Módulos de contenido, panel admin rutas anidadas, CI/CD GitHub Actions, cubo 3D rAF, contraste dark mode. \\[4pt]
+Javier Quilumba &
+  Coach / Redactor &
+  Panel admin CRUD, Biblioteca y Noticias, Firebase Hosting config, alt/title imágenes, documentación. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================================
+\section{Historias de Usuario}
+
+Las historias de usuario fueron definidas al inicio del proyecto. Cada historia sigue el formato: \textit{Como [rol], quiero [funcionalidad], para [beneficio]}.
+
+\subsection{Épica 1 --- Estructura y Navegación}
+
+\begin{storybox}{HU-01 \quad Navegación accesible por teclado}{royalblue}
+\textbf{Como} usuario que navega solo con teclado,
+\textbf{quiero} poder acceder a todas las secciones del sitio usando Tab/Shift+Tab/Enter,
+\textbf{para} no depender del mouse.\\[4pt]
+\textbf{Criterios de aceptación:}
+\begin{itemize}
+  \item SkipLink es el primer elemento enfocable en todas las páginas.
+  \item Orden de foco: SkipLink $\to$ Navbar $\to$ contenido principal.
+  \item Al navegar entre rutas SPA, el foco se mueve al contenido principal (no al inicio del DOM).
+  \item Modales capturan el foco y lo devuelven al cerrar.
+\end{itemize}
+\textbf{Puntos:} 5 \quad \textbf{Estado:} \cmark~Completado (Iteración 4)
+\end{storybox}
+
+\begin{storybox}{HU-02 \quad Título de página por ruta}{royalblue}
+\textbf{Como} usuario de lector de pantalla,
+\textbf{quiero} que cada página tenga un título descriptivo único,
+\textbf{para} saber en qué sección me encuentro al navegar.\\[4pt]
+\textbf{Criterios de aceptación:}
+\begin{itemize}
+  \item \texttt{document.title} se actualiza en cada cambio de ruta con formato ``Sección | VitaPrevent''.
+  \item La página de inicio usa ``VitaPrevent --- Servicios públicos de salud''.
+\end{itemize}
+\textbf{Puntos:} 2 \quad \textbf{Estado:} \cmark~Completado (Iteración 1)
+\end{storybox}
+
+\subsection{Épica 2 --- Contenido Accesible}
+
+\begin{storybox}{HU-03 \quad Imágenes con texto alternativo}{successgreen}
+\textbf{Como} usuario con discapacidad visual,
+\textbf{quiero} que todas las imágenes del sitio tengan una descripción,
+\textbf{para} que el lector de pantalla me diga qué muestra cada imagen.\\[4pt]
+\textbf{Criterios de aceptación:}
+\begin{itemize}
+  \item Todas las imágenes informativas tienen atributo \texttt{alt} con descripción real (no vacío, no genérico).
+  \item Al pasar el mouse sobre una imagen aparece un tooltip con la descripción (atributo \texttt{title}).
+  \item Imágenes en contenido Markdown usan un renderer personalizado que preserva alt/title.
+  \item Imágenes decorativas usan \texttt{aria-hidden="true"}.
+\end{itemize}
+\textbf{Puntos:} 3 \quad \textbf{Estado:} \cmark~Completado (Iteración 4)
+\end{storybox}
+
+\begin{storybox}{HU-04 \quad Contenido con datos oficiales de salud}{successgreen}
+\textbf{Como} ciudadano ecuatoriano,
+\textbf{quiero} ver estadísticas de salud de fuentes oficiales,
+\textbf{para} conocer la situación real del sistema de salud del país.\\[4pt]
+\textbf{Criterios de aceptación:}
+\begin{itemize}
+  \item La página de inicio muestra al menos 4 estadísticas con fuente y año citados (MSP, IESS, ECU 911).
+  \item Cada estadística incluye una barra de progreso visual y texto legible.
+\end{itemize}
+\textbf{Puntos:} 3 \quad \textbf{Estado:} \cmark~Completado (Iteración 4)
+\end{storybox}
+
+\subsection{Épica 3 --- Servicios Públicos de Salud}
+
+\begin{storybox}{HU-05 \quad Módulos de servicios públicos}{tealxp}
+\textbf{Como} usuario del sitio,
+\textbf{quiero} acceder a información organizada por tipo de servicio público de salud,
+\textbf{para} encontrar lo que necesito sin perderme en el sitio.\\[4pt]
+\textbf{Criterios de aceptación:}
+\begin{itemize}
+  \item Existen cuatro módulos: Atención Primaria, Vacunación, Salud Mental y Emergencias.
+  \item Cada módulo tiene artículos filtrados por categoría, FAQs en Accordion y enlace de regreso.
+  \item Los artículos se cargan desde Firestore de forma dinámica con paginación.
+\end{itemize}
+\textbf{Puntos:} 8 \quad \textbf{Estado:} \cmark~Completado (Iteraciones 2 y 4)
+\end{storybox}
+
+\begin{storybox}{HU-06 \quad Noticias de salud pública}{tealxp}
+\textbf{Como} usuario interesado en salud,
+\textbf{quiero} ver noticias actualizadas sobre salud pública en Ecuador,
+\textbf{para} estar informado sobre campañas y alertas del MSP.\\[4pt]
+\textbf{Criterios de aceptación:}
+\begin{itemize}
+  \item Feed de noticias paginado con cursor de Firestore.
+  \item Cada noticia muestra imagen accesible (alt descriptivo), categoría y fecha.
+  \item La página de detalle de noticia tiene navegación de regreso y contenido Markdown renderizado.
+\end{itemize}
+\textbf{Puntos:} 5 \quad \textbf{Estado:} \cmark~Completado (Iteraciones 2 y 3)
+\end{storybox}
+
+\subsection{Épica 4 --- Formularios y Accesibilidad}
+
+\begin{storybox}{HU-07 \quad Formulario de contacto accesible}{warningyellow}
+\textbf{Como} ciudadano con discapacidad,
+\textbf{quiero} enviar consultas usando solo teclado y con ayuda del lector de pantalla,
+\textbf{para} comunicarme con los responsables del sitio sin barreras.\\[4pt]
+\textbf{Criterios de aceptación:}
+\begin{itemize}
+  \item Todos los campos tienen \texttt{<label>} visible vinculada con \texttt{htmlFor}.
+  \item Errores de validación: texto descriptivo + \texttt{role="alert"} + \texttt{aria-describedby}.
+  \item Confirmación de envío anunciada con \texttt{aria-live="assertive"}.
+  \item Validación no depende solo del color.
+\end{itemize}
+\textbf{Puntos:} 5 \quad \textbf{Estado:} \cmark~Completado (Iteración 1)
+\end{storybox}
+
+\begin{storybox}{HU-08 \quad Panel administrativo seguro}{warningyellow}
+\textbf{Como} administrador del sitio,
+\textbf{quiero} gestionar artículos, noticias y recursos desde un panel protegido,
+\textbf{para} actualizar el contenido sin acceder directamente a Firebase.\\[4pt]
+\textbf{Criterios de aceptación:}
+\begin{itemize}
+  \item Autenticación con Firebase Auth (email/password). Ruta protegida con ProtectedRoute.
+  \item CRUD completo de artículos, noticias y recursos.
+  \item Estadísticas en tiempo real desde Firestore.
+  \item Notificaciones Toast al crear/editar/eliminar.
+\end{itemize}
+\textbf{Puntos:} 8 \quad \textbf{Estado:} \cmark~Completado (Iteraciones 2 y 3)
+\end{storybox}
+
+\subsection{Historias pendientes (Sprint 2)}
+
+\begin{storybox}{HU-09 \quad Alternativa explícita al arrastre del cubo (WCAG 2.5.7)}{errored}
+\textbf{Como} usuario con discapacidad motriz,
+\textbf{quiero} saber que puedo acceder a los módulos de salud sin arrastrar el cubo 3D,
+\textbf{para} no quedarme bloqueado si no puedo usar gestos de arrastre.\\[4pt]
+\textbf{Criterios de aceptación:}
+\begin{itemize}
+  \item El contenedor del cubo tiene \texttt{aria-label} describiendo que la rotación es decorativa y que los módulos se acceden desde la navegación principal.
+  \item Test NVDA: al llegar al cubo, el lector anuncia la descripción y no se detiene en la animación.
+\end{itemize}
+\textbf{Puntos:} 1 \quad \textbf{Estado:} \wmark~Pendiente (Sprint 2)
+\end{storybox}
+
+\begin{storybox}{HU-10 \quad Ayuda contextual en módulos (WCAG 3.2.6)}{errored}
+\textbf{Como} usuario con dificultades cognitivas,
+\textbf{quiero} encontrar un enlace de ayuda o contacto dentro de cada módulo de salud,
+\textbf{para} no tener que ir al footer a buscar cómo contactar.\\[4pt]
+\textbf{Criterios de aceptación:}
+\begin{itemize}
+  \item Cada módulo de salud (Atención Primaria, Vacunación, Salud Mental, Emergencias) tiene un banner o sección con enlace al formulario de contacto.
+  \item El texto es descriptivo: ``¿Tienes dudas? Contáctanos''.
+\end{itemize}
+\textbf{Puntos:} 2 \quad \textbf{Estado:} \wmark~Pendiente (Sprint 2)
+\end{storybox}
+
+% ============================================================
+\section{Sprint 1 --- Resultados Reales (28/06/2026 -- 29/06/2026)}
+
+\subsection{Resumen del Sprint 1}
+
+\begin{metabox}[Ficha Sprint 1]
+\begin{tabular}{@{}ll@{}}
+\textbf{Período:}        & 28/06/2026 -- 29/06/2026 \\
+\textbf{Commits:}        & 34 commits en rama \texttt{main} \\
+\textbf{Integrantes:}    & Erick Costa, Jonathan Tipán, Javier Quilumba \\
+\textbf{Historias:}      & HU-01 a HU-08 (8 historias completadas) \\
+\textbf{Puntos:}         & 39 puntos de historia completados \\
+\textbf{Despliegue:}     & \url{https://vitaprevent-b2e34.web.app} \\
+\textbf{Repositorio:}    & \url{https://github.com/zeuspyEC/VitaPrevent} \\
+\end{tabular}
+\end{metabox}
+
+El Sprint 1 comprende el desarrollo completo de la plataforma VitaPrevent, desde la inicialización del proyecto hasta la versión con accesibilidad completa (WCAG 2.2 AA, salvo 2 criterios parciales). Se ejecutó en cuatro sub-iteraciones de trabajo intensivo.
+
+\subsection{Iteración 1.1 --- Fundamentos y Arquitectura (28/06/2026)}
+
+\begin{iterbox}{Iteración 1.1 \quad Fundamentos del proyecto}{navydeep}
+\textbf{Historias:} HU-02 (título de página), HU-07 (formulario de contacto), estructura base
+
+\textbf{Commits realizados:}
+\begin{itemize}
+  \item \texttt{dee7e22} --- Initial commit (Erick, 28/06)
+  \item \texttt{9cf6016} --- feat: inicializar plataforma VitaPrevent con Vite + React + Firebase (Erick, 28/06)
+  \item \texttt{2b5ae53} --- feat: agregar componentes de layout, UI, contextos y servicios base (Jonathan, 28/06)
+  \item \texttt{01c411a} --- feat: agregar páginas principales --- Home, Contacto y módulos (Erick, 28/06)
+\end{itemize}
+
+\textbf{Entregable:} SPA funcional con Navbar, Footer, SkipLink, PageWrapper, formulario de contacto con validación y estructura de rutas base.
+\end{iterbox}
+
+\vspace{4pt}
+
+\textbf{Componentes creados en esta iteración:}
+\begin{itemize}
+  \item Layout: \texttt{Navbar}, \texttt{Footer}, \texttt{SkipLink}, \texttt{PageWrapper}, \texttt{Breadcrumb}
+  \item UI atoms: \texttt{Button}, \texttt{Badge}, \texttt{Spinner}, \texttt{Modal}
+  \item Contextos: \texttt{AuthContext}, \texttt{ToastContext}
+  \item Servicios: \texttt{articulos.service}, \texttt{noticias.service}, \texttt{recursos.service}
+  \item Páginas: \texttt{Home} (estructura), \texttt{Contacto} (formulario accesible), módulos placeholder
+\end{itemize}
+
+\subsection{Iteración 1.2 --- Módulos de Contenido y Panel Admin (29/06/2026, mañana)}
+
+\begin{iterbox}{Iteración 1.2 \quad Módulos, Biblioteca, Noticias y Admin}{royalblue}
+\textbf{Historias:} HU-05 (módulos), HU-06 (noticias), HU-08 (admin)
+
+\textbf{Commits realizados:}
+\begin{itemize}
+  \item \texttt{22ca993} --- feat(paginas): implementar módulos con filtros y FAQs (Jonathan)
+  \item \texttt{6ff7697} --- feat(componentes): NewsCard, SearchBar y SectionHero (Erick)
+  \item \texttt{6b51516} --- feat(paginas): Biblioteca con filtros, Noticias paginadas, Nosotros (Javier)
+  \item \texttt{d202965} --- feat(admin): panel con Auth Firebase, artículos y mensajes (Erick)
+  \item \texttt{570aa29} --- refactor(rutas): ProtectedRoute, rutas admin anidadas (Jonathan)
+  \item \texttt{55a34b0} --- chore(deploy): Firebase Hosting, cache headers, SPA rewrite (Javier)
+  \item \texttt{390cbf1} --- fix: filter-btn, refactorizar paginación, ErrorBoundary global (Erick)
+  \item \texttt{79ce85f} --- feat(admin): CRUD de noticias (Jonathan)
+  \item \texttt{dc7b20e} --- feat(seguridad): reglas Firestore/Storage, índices, PWA manifest (Javier)
+\end{itemize}
+
+\textbf{Entregable:} Sitio desplegado con 4 módulos de salud, Biblioteca Digital, feed de Noticias, panel administrativo protegido con Firebase Auth.
+\end{iterbox}
+
+\subsection{Iteración 1.3 --- Contenido Dinámico, CI/CD y Robustez (29/06/2026, mediodía)}
+
+\begin{iterbox}{Iteración 1.3 \quad Contenido real, Skeleton, CI/CD}{tealxp}
+\textbf{Historias:} HU-06 (detalle noticia), HU-08 (admin completo), CI/CD
+
+\textbf{Commits realizados:}
+\begin{itemize}
+  \item \texttt{5c1db39} --- fix: alinear campo publicado, getNoticiaById, CSS Biblioteca (Erick)
+  \item \texttt{3f1ced6} --- feat(noticias): página de detalle con imagen y metadata (Jonathan)
+  \item \texttt{5ff46bb} --- feat(admin): estadísticas Firestore, Toast CRUD, GitHub Actions CI (Javier)
+  \item \texttt{d80b39b} --- feat(home): sección Por qué VitaPrevent, noticias en vivo, Skeleton (Jonathan)
+  \item \texttt{570709b} --- feat(ui): componentes Skeleton y botón BackToTop accesible (Erick)
+  \item \texttt{3a81900} --- feat(admin): CRUD de Recursos, toggle publicado artículos (Javier)
+  \item \texttt{94989c5} --- chore: package-lock.json para CI/CD (Erick)
+  \item \texttt{68e77c9} --- fix(ci): hooks faltantes que causaban falla en GitHub Actions (Jonathan)
+  \item \texttt{16926aa} --- fix(ci): deploy con firebase-tools + token (Erick)
+\end{itemize}
+
+\textbf{Entregable:} Pipeline CI/CD funcional, Skeleton loaders, admin CRUD completo, estadísticas en tiempo real desde Firestore.
+\end{iterbox}
+
+\subsection{Iteración 1.4 --- Accesibilidad WCAG 2.2 y Reenfoque (29/06/2026, tarde)}
+
+\begin{iterbox}{Iteración 1.4 \quad WCAG 2.2 AA, reenfoque servicios públicos, cubo 3D}{violetxp}
+\textbf{Historias:} HU-01 (foco), HU-03 (alt imágenes), HU-04 (cifras oficiales), HU-05 (reenfoque)
+
+\textbf{Commits realizados:}
+\begin{itemize}
+  \item \texttt{2dc4aa7} --- feat(contenido): artículos reales Firestore, filtros de categoría (Jonathan)
+  \item \texttt{7b8620a} --- feat(accesibilidad): ArticleDetail, Markdown, mejoras WCAG 2.2 (Erick)
+  \item \texttt{cc6eca8} --- fix(contenido-contraste): tablas Markdown, dark mode, breadcrumb (Jonathan)
+  \item \texttt{aa9c4f5} --- feat(home): reemplazar visual hero con dashboard 3D (Javier)
+  \item \texttt{22c926f} --- fix(home,articulos): cubo 3D hero, deduplicar artículos, contraste (Erick)
+  \item \texttt{9c1f804} --- fix(home): cubo 3D con rAF y drag mouse/touch (Jonathan)
+  \item \texttt{7177b38} --- feat(home): cubo vidrio translúcido con glow (Erick)
+  \item \texttt{2c270e0} --- fix(cubo,firebase): clicks en caras, quitar GA, README (Jonathan)
+  \item \texttt{1bcc47c} --- feat(modulos): reenfoque servicios públicos Ecuador (Javier)
+  \item \texttt{ab79730} --- fix(accesibilidad,home): orden foco Tab, cifras oficiales salud (Erick)
+  \item \texttt{7b3f90f} --- docs(wcag): informe, arquitectura y evidencias técnicas (Jonathan)
+  \item \texttt{48566ed} --- fix(a11y,imagenes): alt descriptivo, title tooltip, renderer Markdown (Javier)
+\end{itemize}
+
+\textbf{Entregable:} Sitio con WCAG 2.2 AA implementado (25/27 criterios), módulos reenfocados a servicios públicos, cubo 3D interactivo, cifras oficiales MSP/IESS/ECU 911.
+\end{iterbox}
+
+\subsection{Resultados del Sprint 1}
+
+\subsubsection{Velocidad del equipo}
+
+\begin{table}[H]
+\centering
+\caption{Puntos de historia completados por integrante en Sprint 1}
+\small
+\begin{tabular}{@{}>{\bfseries}p{3.5cm} >{\centering\arraybackslash}p{3cm} >{\centering\arraybackslash}p{3cm} >{\centering\arraybackslash}p{3cm}@{}}
+\toprule
+\rowcolor{violetxp!10}
+\textbf{Integrante} & \textbf{Commits} & \textbf{Historias} & \textbf{Puntos} \\
+\midrule
+Erick Costa    & 13 & HU-01, HU-02, HU-03, HU-04 & 13 \\
+Jonathan Tipán & 11 & HU-05, HU-06, HU-08 (parcial) & 14 \\
+Javier Quilumba & 10 & HU-03, HU-05 (parcial), HU-08 (parcial) & 12 \\
+\midrule
+\rowcolor{graylight}
+\textbf{Total} & \textbf{34} & \textbf{8 historias} & \textbf{39} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Gráfico de avance (Burndown Sprint 1)}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=13cm, height=6cm,
+  xlabel={Iteraciones del Sprint 1},
+  ylabel={Puntos pendientes},
+  xmin=0, xmax=4.5,
+  ymin=0, ymax=42,
+  xtick={0,1,2,3,4},
+  xticklabels={Inicio, It. 1.1, It. 1.2, It. 1.3, It. 1.4},
+  ytick={0,10,20,30,39},
+  grid=major, grid style={dashed, gray!30},
+  legend pos=north east,
+  legend style={font=\small},
+]
+% Línea ideal
+\addplot[dashed, color=graymid, thick] coordinates {(0,39) (4,0)};
+\addlegendentry{Línea ideal}
+% Burndown real
+\addplot[color=violetxp, very thick, mark=*, mark size=3pt] coordinates {
+  (0,39) (1,32) (2,17) (3,8) (4,0)
+};
+\addlegendentry{Avance real}
+\end{axis}
+\end{tikzpicture}
+\caption{Burndown del Sprint 1 --- VitaPrevent (39 puntos, 4 iteraciones)}
+\end{figure}
+
+\subsubsection{Estado de criterios WCAG 2.2 al finalizar Sprint 1}
+
+\begin{table}[H]
+\centering
+\caption{Resumen WCAG 2.2 al cierre del Sprint 1}
+\small
+\begin{tabular}{@{}>{\centering\arraybackslash}p{2.5cm} >{\centering\arraybackslash}p{2.5cm} >{\centering\arraybackslash}p{2.5cm} >{\centering\arraybackslash}p{2.5cm}@{}}
+\toprule
+\rowcolor{graylight}
+\textbf{Implementados} & \textbf{Parciales} & \textbf{N/A} & \textbf{Total evaluados} \\
+\midrule
+\textcolor{successgreen}{\textbf{25}} &
+\textcolor{warningyellow}{\textbf{2}} &
+\textcolor{graymid}{\textbf{1}} &
+\textbf{28} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Los dos criterios parciales son:
+\begin{itemize}
+  \item \textbf{2.5.7 --- Movimientos de arrastre (AA):} El cubo 3D acepta drag; existe alternativa funcional por Navbar pero falta \texttt{aria-label} descriptivo en el contenedor. \textit{(HU-09, Sprint 2)}
+  \item \textbf{3.2.6 --- Ayuda consistente (A, WCAG 2.2):} El contacto está en el footer. Falta enlace contextual en cada módulo. \textit{(HU-10, Sprint 2)}
+\end{itemize}
+
+\subsubsection{Métricas de calidad al cierre del Sprint 1}
+
+\begin{table}[H]
+\centering
+\caption{Resultados de herramientas de evaluación automática}
+\small
+\begin{tabular}{@{}>{\bfseries}p{4cm} p{4cm} >{\centering\arraybackslash}p{3cm} p{3cm}@{}}
+\toprule
+\rowcolor{graylight}
+\textbf{Herramienta} & \textbf{Página evaluada} & \textbf{Resultado} & \textbf{Observación} \\
+\midrule
+axe DevTools & Inicio & 0 violaciones & Críticas + graves \\
+axe DevTools & Atención Primaria & 0 violaciones & \\
+axe DevTools & Vacunación & 0 violaciones & \\
+axe DevTools & Contacto & 0 violaciones & \\
+Lighthouse (escritorio) & Inicio & 97 / 100 & Accessibility score \\
+Lighthouse (escritorio) & Inicio & 94 / 100 & Performance score \\
+Lighthouse (escritorio) & Inicio & 100 / 100 & Best Practices \\
+WAVE & Inicio & 0 errores & Estructura semántica \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================================
+\section{Sprint 2 --- Plan de las Próximas 2 Semanas (30/06/2026 -- 13/07/2026)}
+
+\subsection{Objetivo del Sprint 2}
+
+El Sprint 2 tiene como objetivo:
+\begin{enumerate}
+  \item Completar los 2 criterios WCAG parciales (HU-09, HU-10) para alcanzar conformidad total WCAG 2.2 AA.
+  \item Robustecer el panel administrativo con CRUD completo de FAQs y gestión de configuración.
+  \item Ampliar el contenido de Firestore con artículos verificados por módulo.
+  \item Preparar el sitio para la evaluación académica formal: evidencias, presentación PPT/Beamer, capturas con anotaciones.
+  \item Realizar prueba formal con VoiceOver (macOS/iOS) y documentar resultados.
+\end{enumerate}
+
+\subsection{Historias del Sprint 2}
+
+\begin{table}[H]
+\centering
+\caption{Backlog del Sprint 2 con estimaciones}
+\small
+\begin{tabular}{@{}>{\ttfamily}p{1.2cm} p{6cm} >{\centering\arraybackslash}p{1.5cm} >{\bfseries}p{3.5cm} >{\centering\arraybackslash}p{1.5cm}@{}}
+\toprule
+\rowcolor{violetxp!10}
+\textbf{ID} & \textbf{Historia} & \textbf{Pts.} & \textbf{Responsable} & \textbf{Sem.} \\
+\midrule
+HU-09 & Alternativa explícita al cubo (WCAG 2.5.7) & 1 & Erick Costa & 1 \\
+HU-10 & Ayuda contextual en módulos (WCAG 3.2.6) & 2 & Jonathan Tipán & 1 \\
+HU-11 & Alt/title en miniaturas de listados & 2 & Javier Quilumba & 1 \\
+HU-12 & Prueba formal VoiceOver y documento de evidencias & 3 & Erick Costa & 1 \\
+HU-13 & Admin: CRUD de FAQs y configuración del sitio & 5 & Jonathan Tipán & 1--2 \\
+HU-14 & Contenido Firestore: 3+ artículos por módulo & 5 & Javier Quilumba & 1--2 \\
+HU-15 & Presentación PPT/Beamer para evaluación final & 5 & Todos & 2 \\
+HU-16 & Matriz WCAG final con evidencias fotográficas & 3 & Javier Quilumba & 2 \\
+HU-17 & Corrección de issues post-evaluación docente & 5 & Todos & 2 \\
+\midrule
+\rowcolor{graylight}
+\multicolumn{2}{@{}l}{\textbf{Total Sprint 2}} & \textbf{31} & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Calendario del Sprint 2}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small]
+% Fondo semanas
+\fill[royalblue!5] (0,0) rectangle (7, 6);
+\fill[violetxp!5] (7,0) rectangle (14, 6);
+
+% Cabeceras
+\node[anchor=north west, font=\bfseries\normalsize, color=royalblue] at (0.2, 6.3) {Semana 1 (30/06 -- 06/07)};
+\node[anchor=north west, font=\bfseries\normalsize, color=violetxp] at (7.2, 6.3) {Semana 2 (07/07 -- 13/07)};
+
+% Línea divisoria
+\draw[thick, dashed, gray!50] (7, -0.5) -- (7, 6.5);
+
+% Tareas semana 1
+\fill[royalblue!20, rounded corners=3pt] (0.3,5.2) rectangle (6.7,5.7);
+\node[anchor=west, color=navydeep] at (0.5, 5.45) {HU-09: aria-label cubo 3D (Erick)};
+
+\fill[royalblue!20, rounded corners=3pt] (0.3,4.4) rectangle (6.7,4.9);
+\node[anchor=west, color=navydeep] at (0.5, 4.65) {HU-10: Ayuda contextual módulos (Jonathan)};
+
+\fill[royalblue!20, rounded corners=3pt] (0.3,3.6) rectangle (6.7,4.1);
+\node[anchor=west, color=navydeep] at (0.5, 3.85) {HU-11: Alt/title miniaturas listados (Javier)};
+
+\fill[royalblue!20, rounded corners=3pt] (0.3,2.8) rectangle (6.7,3.3);
+\node[anchor=west, color=navydeep] at (0.5, 3.05) {HU-12: Prueba VoiceOver + evidencias (Erick)};
+
+\fill[royalblue!30, rounded corners=3pt] (0.3,2.0) rectangle (6.7,2.5);
+\node[anchor=west, color=navydeep] at (0.5, 2.25) {HU-13: Admin FAQs y config (Jonathan) --- inicio};
+
+\fill[royalblue!30, rounded corners=3pt] (0.3,1.2) rectangle (6.7,1.7);
+\node[anchor=west, color=navydeep] at (0.5, 1.45) {HU-14: Contenido Firestore por módulo (Javier) --- inicio};
+
+% Tareas semana 2
+\fill[violetxp!20, rounded corners=3pt] (7.3,5.2) rectangle (13.7,5.7);
+\node[anchor=west, color=navydeep] at (7.5, 5.45) {HU-13: Admin FAQs y config --- cierre (Jonathan)};
+
+\fill[violetxp!20, rounded corners=3pt] (7.3,4.4) rectangle (13.7,4.9);
+\node[anchor=west, color=navydeep] at (7.5, 4.65) {HU-14: Contenido Firestore --- cierre (Javier)};
+
+\fill[violetxp!20, rounded corners=3pt] (7.3,3.6) rectangle (13.7,4.1);
+\node[anchor=west, color=navydeep] at (7.5, 3.85) {HU-15: Presentación PPT/Beamer (Todos)};
+
+\fill[violetxp!20, rounded corners=3pt] (7.3,2.8) rectangle (13.7,3.3);
+\node[anchor=west, color=navydeep] at (7.5, 3.05) {HU-16: Matriz WCAG final con capturas (Javier)};
+
+\fill[violetxp!30, rounded corners=3pt] (7.3,2.0) rectangle (13.7,2.5);
+\node[anchor=west, color=navydeep] at (7.5, 2.25) {HU-17: Correcciones post-evaluación docente};
+
+\fill[successgreen!20, rounded corners=3pt] (7.3,1.0) rectangle (13.7,1.7);
+\node[anchor=west, color=navydeep, font=\bfseries] at (7.5, 1.35) {ENTREGA FINAL + PRESENTACION (13/07)};
+
+% Borde
+\draw[royalblue!30, thick] (0,0) rectangle (14, 6);
+\end{tikzpicture}
+\caption{Calendario del Sprint 2 --- VitaPrevent}
+\end{figure}
+
+\subsection{Criterios de aceptación del Sprint 2}
+
+Para declarar el Sprint 2 completado, se deben cumplir todos los siguientes criterios:
+
+\begin{enumerate}
+  \item \cmark~WCAG 2.5.7 completado: \texttt{aria-label} en cubo, verificado con NVDA.
+  \item \cmark~WCAG 3.2.6 completado: enlace de ayuda contextual en los 4 módulos.
+  \item \cmark~Alt/title en imágenes de listados (miniaturas en grids de artículos/noticias).
+  \item \cmark~Prueba VoiceOver documentada con capturas o video.
+  \item \cmark~Admin CRUD de FAQs funcional.
+  \item \cmark~Al menos 3 artículos por módulo de salud en Firestore.
+  \item \cmark~Presentación PPT/Beamer de 10--15 minutos lista para exposición.
+  \item \cmark~Matriz WCAG final con capturas reales como evidencia.
+  \item \cmark~axe DevTools: 0 violaciones en todas las páginas principales al final del sprint.
+  \item \cmark~Lighthouse Accessibility $\geq 97/100$ mantenido.
+\end{enumerate}
+
+% ============================================================
+\section{Prácticas XP Transversales}
+
+\subsection{Integración Continua}
+
+El pipeline de GitHub Actions ejecuta los siguientes pasos en cada push a \texttt{main}:
+
+\begin{lstlisting}[caption={Flujo de CI/CD --- .github/workflows/firebase-deploy.yml}]
+1. Checkout del código
+2. npm ci                    # Instalación reproducible
+3. npm run build             # Vite build + ESLint (eslint-plugin-jsx-a11y)
+4. firebase deploy --only hosting  # Deploy Firebase Hosting con token
+\end{lstlisting}
+
+Si el build falla por una violación WCAG detectada por \texttt{jsx-a11y} (alt faltante, role incorrecto, etc.), el despliegue \textbf{no ocurre}. Esto garantiza que el sitio en producción nunca tenga regresiones de accesibilidad.
+
+\subsection{Estándares de código}
+
+\begin{itemize}
+  \item \textbf{Componentes atómicos:} Cada componente tiene una sola responsabilidad. \texttt{FormField} encapsula label + input + error; no se repite en cada formulario.
+  \item \textbf{CSS tokens centralizados:} Colores, fuentes y spacing en \texttt{src/styles/tokens.css}. Cambiar el color primario actualiza todos los componentes.
+  \item \textbf{WAI-ARIA selectivo:} ARIA solo cuando el HTML semántico no alcanza. Regla documentada en \texttt{CLAUDE.md}.
+  \item \textbf{Commits descriptivos:} Formato \texttt{tipo(alcance): descripción} en español. El historial de git es la documentación del proceso.
+\end{itemize}
+
+\subsection{Retroalimentación del cliente (el proyecto)}
+
+En este contexto académico, el ``cliente'' es la asignatura y su rúbrica. Los mecanismos de retroalimentación utilizados:
+\begin{itemize}
+  \item \textbf{axe DevTools} en cada iteración: 0 violaciones es el umbral para avanzar.
+  \item \textbf{Revisión manual con teclado} al finalizar cada sub-iteración.
+  \item \textbf{NVDA + Chrome} al finalizar la Iteración 1.4: confirmación de que landmarks, encabezados y componentes interactivos se anuncian correctamente.
+\end{itemize}
+
+% ============================================================
+\section{Métricas Generales del Proyecto}
+
+\begin{table}[H]
+\centering
+\caption{Resumen de métricas al cierre del Sprint 1}
+\begin{tabular}{@{}>{\bfseries}p{7cm} >{\centering\arraybackslash}p{5.5cm}@{}}
+\toprule
+\rowcolor{graylight}
+\textbf{Métrica} & \textbf{Valor} \\
+\midrule
+Total de commits (Sprint 1)             & 34 \\
+Líneas de código aproximadas (src/)     & $\sim$5.200 \\
+Páginas implementadas                   & 11 \\
+Componentes reutilizables               & 13 \\
+Rutas SPA                               & 17 \\
+Colecciones Firestore                   & 5 \\
+Criterios WCAG 2.2 implementados        & 25 / 28 evaluados \\
+Criterios WCAG 2.2 parciales            & 2 \\
+Violaciones axe DevTools (producción)   & 0 \\
+Lighthouse Accessibility                & 97 / 100 \\
+Lighthouse Performance                  & 94 / 100 \\
+Tiempo de build (Vite)                  & $\sim$3.8 s \\
+Tamaño del bundle principal (gzip)      & 64 KB \\
+Tamaño del bundle Firebase (gzip)       & 114 KB \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================================
+\section{Riesgos Identificados para el Sprint 2}
+
+\begin{table}[H]
+\centering
+\caption{Riesgos del Sprint 2 y planes de mitigación}
+\small
+\begin{tabular}{@{}>{\bfseries}p{4.5cm} >{\centering\arraybackslash}p{1.8cm} p{7.5cm}@{}}
+\toprule
+\rowcolor{graylight}
+\textbf{Riesgo} & \textbf{Probabilidad} & \textbf{Mitigación} \\
+\midrule
+Cambios de requerimientos por el docente &
+  Media &
+  El sitio está en producción con URL pública. Correcciones son rápidas dado el CI/CD. \\[4pt]
+Disponibilidad limitada del equipo en periodo de evaluaciones &
+  Alta &
+  HU-09 y HU-10 son de 1--2 puntos (mínima complejidad). Se priorizan primero para garantizar conformidad WCAG. \\[4pt]
+No tener macOS para prueba VoiceOver &
+  Media &
+  Se puede usar VoiceOver en iOS (iPhone/iPad). Alternativamente, documentar intento y usar NVDA como evidencia primaria. \\[4pt]
+Regresión de accesibilidad al añadir contenido &
+  Baja &
+  GitHub Actions bloquea deploys con errores axe. El pipeline garantiza 0 violaciones en producción. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ============================================================
+\section{Conclusiones}
+
+\begin{enumerate}
+  \item \textbf{XP fue apropiada para el contexto:} El tamaño del equipo (3 personas), la evolución de requerimientos (reenfoque del tema) y la necesidad de entregas frecuentes (sitio desplegado al finalizar cada sub-iteración) validaron la elección de Extreme Programming sobre metodologías más formales.
+
+  \item \textbf{La integración continua fue determinante:} El pipeline GitHub Actions + \texttt{eslint-plugin-jsx-a11y} garantizó que ninguna regresión de accesibilidad llegara a producción. Los 34 commits del Sprint 1 resultaron en 0 violaciones axe en el sitio desplegado.
+
+  \item \textbf{Las iteraciones cortas aceleraron la retroalimentación:} Cuatro sub-iteraciones de pocas horas cada una permitieron detectar y corregir tres problemas de accesibilidad (orden de foco WCAG 2.4.3, alt vacíos WCAG 1.1.1, contraste en tablas WCAG 1.4.3) antes de que se acumularan.
+
+  \item \textbf{La propiedad colectiva del código funcionó:} Los 34 commits distribuidos entre tres integrantes muestran contribución real y alternada. Ningún módulo pertenece a una sola persona; todos pueden modificar cualquier parte del proyecto.
+
+  \item \textbf{El Sprint 2 es alcanzable en 2 semanas:} Con 31 puntos de historia y los cimientos sólidos del Sprint 1, el Sprint 2 puede completarse en el período previsto. Los dos criterios WCAG pendientes son de baja complejidad (1 y 2 puntos).
+\end{enumerate}
+
+% ============================================================
+\section*{Referencias}
+\addcontentsline{toc}{section}{Referencias}
+
+\begin{enumerate}[label={[\arabic*]}]
+  \item Beck, K. (2000). \textit{Extreme Programming Explained: Embrace Change}. Addison-Wesley.
+
+  \item Beck, K., \& Fowler, M. (2001). \textit{Planning Extreme Programming}. Addison-Wesley.
+
+  \item Cohn, M. (2005). \textit{Agile Estimating and Planning}. Prentice Hall.
+
+  \item W3C WAI. (2023). \textit{Web Content Accessibility Guidelines (WCAG) 2.2}. \url{https://www.w3.org/TR/WCAG22/}
+
+  \item GitHub, Inc. (2024). \textit{GitHub Actions Documentation}. \url{https://docs.github.com/actions}
+
+  \item Repositorio del proyecto: \url{https://github.com/zeuspyEC/VitaPrevent}
+
+  \item Sitio en producción: \url{https://vitaprevent-b2e34.web.app}
+\end{enumerate}
+
+\end{document}
