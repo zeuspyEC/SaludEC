@@ -468,35 +468,48 @@
    Hero Cube — cubo 3D interactivo
 ══════════════════════════════════════════════ */
 .hero-cube {
-  --cube: 240px;
-  --cube-half: 120px;
+  --cube: 260px;
+  --cube-half: 130px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-4);
-  padding: 48px 40px;
-  perspective: 900px;
+  padding: 60px 40px 32px;
+  perspective: 700px;
   perspective-origin: 50% 45%;
   width: 100%;
+  position: relative;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
 }
 
-/* ── Scene (el objeto que rota) ── */
+.hero-cube:active { cursor: grabbing; }
+
+/* Sombra del cubo (NO en el scene, para no romper preserve-3d) */
+.hero-cube::after {
+  content: '';
+  position: absolute;
+  bottom: 42px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 24px;
+  background: rgba(21, 101, 192, 0.45);
+  filter: blur(18px);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* ── Scene — JS controla el transform vía requestAnimationFrame ── */
 .hero-cube__scene {
   width: var(--cube);
   height: var(--cube);
   position: relative;
   transform-style: preserve-3d;
-  animation: cubeRotate 18s linear infinite;
-  filter: drop-shadow(0 20px 60px rgba(21, 101, 192, 0.35));
-}
-
-.hero-cube__scene--paused {
-  animation-play-state: paused;
-}
-
-@keyframes cubeRotate {
-  from { transform: rotateX(-22deg) rotateY(0deg); }
-  to   { transform: rotateX(-22deg) rotateY(360deg); }
+  transform: rotateX(-25deg) rotateY(0deg);
+  will-change: transform;
+  /* Sin animation CSS ni filter — ambos rompen preserve-3d */
 }
 
 /* ── Caras del cubo ── */

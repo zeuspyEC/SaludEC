@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import PageWrapper from '@components/layout/PageWrapper/PageWrapper'
 import NewsCard from '@components/common/NewsCard/NewsCard'
@@ -15,25 +15,65 @@ const CUBE_MODS = [
 ]
 
 function HeroCube({ noticias }) {
-  const [paused, setPaused] = useState(false)
+  const sceneRef = useRef(null)
+  const rafRef = useRef(null)
+  const drag = useRef({ active: false, moved: false, startX: 0, startY: 0, lastX: 0, lastY: 0, rotX: -25, rotY: 0 })
+
+  useEffect(() => {
+    const d = drag.current
+    const tick = () => {
+      if (!d.active) d.rotY += 360 / (18 * 60)
+      if (sceneRef.current) {
+        sceneRef.current.style.transform = `rotateX(${d.rotX}deg) rotateY(${d.rotY}deg)`
+      }
+      rafRef.current = requestAnimationFrame(tick)
+    }
+    rafRef.current = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [])
+
+  const onPointerDown = (e) => {
+    const d = drag.current
+    d.active = true
+    d.moved = false
+    d.startX = e.clientX; d.startY = e.clientY
+    d.lastX  = e.clientX; d.lastY  = e.clientY
+    e.currentTarget.setPointerCapture(e.pointerId)
+  }
+
+  const onPointerMove = (e) => {
+    const d = drag.current
+    if (!d.active) return
+    if (Math.hypot(e.clientX - d.startX, e.clientY - d.startY) > 6) d.moved = true
+    d.rotY += (e.clientX - d.lastX) * 0.6
+    d.rotX  = Math.max(-70, Math.min(30, d.rotX - (e.clientY - d.lastY) * 0.6))
+    d.lastX = e.clientX; d.lastY = e.clientY
+  }
+
+  const onPointerUp = () => { drag.current.active = false }
+
+  const onClickCapture = (e) => { if (drag.current.moved) e.stopPropagation() }
 
   const topFace = noticias[0]
-    ? { pos: 'top',    icon: '📰', title: noticias[0].titulo?.slice(0, 26) + (noticias[0].titulo?.length > 26 ? '…' : ''), sub: 'Última noticia',   path: `/noticias/${noticias[0].id}`, bg: 'rgba(8,145,178,0.22)',  glow: '#22d3ee' }
-    : { pos: 'top',    icon: '📋', title: 'Noticias',        sub: 'Actualidad en salud', path: ROUTES.NOTICIAS,               bg: 'rgba(8,145,178,0.22)',  glow: '#22d3ee' }
+    ? { pos: 'top',    icon: '📰', title: noticias[0].titulo?.slice(0, 26) + (noticias[0].titulo?.length > 26 ? '…' : ''), sub: 'Última noticia',   path: `/noticias/${noticias[0].id}`, bg: 'rgba(8,145,178,0.22)', glow: '#22d3ee' }
+    : { pos: 'top',    icon: '📋', title: 'Noticias',   sub: 'Actualidad en salud', path: ROUTES.NOTICIAS,    bg: 'rgba(8,145,178,0.22)', glow: '#22d3ee' }
 
   const bottomFace = noticias[1]
-    ? { pos: 'bottom', icon: '🔔', title: noticias[1].titulo?.slice(0, 26) + (noticias[1].titulo?.length > 26 ? '…' : ''), sub: 'Noticia reciente', path: `/noticias/${noticias[1].id}`, bg: 'rgba(8,145,178,0.22)',  glow: '#22d3ee' }
-    : { pos: 'bottom', icon: '📚', title: 'Biblioteca',      sub: 'Recursos digitales',  path: ROUTES.BIBLIOTECA,             bg: 'rgba(8,145,178,0.22)',  glow: '#22d3ee' }
+    ? { pos: 'bottom', icon: '🔔', title: noticias[1].titulo?.slice(0, 26) + (noticias[1].titulo?.length > 26 ? '…' : ''), sub: 'Noticia reciente', path: `/noticias/${noticias[1].id}`, bg: 'rgba(8,145,178,0.22)', glow: '#22d3ee' }
+    : { pos: 'bottom', icon: '📚', title: 'Biblioteca', sub: 'Recursos digitales',  path: ROUTES.BIBLIOTECA,  bg: 'rgba(8,145,178,0.22)', glow: '#22d3ee' }
 
   const faces = [...CUBE_MODS, topFace, bottomFace]
 
   return (
     <div
       className="hero-cube"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onPointerLeave={onPointerUp}
+      onClickCapture={onClickCapture}
     >
-      <div className={`hero-cube__scene${paused ? ' hero-cube__scene--paused' : ''}`}>
+      <div className="hero-cube__scene" ref={sceneRef}>
         {faces.map((f) => (
           <Link
             key={f.pos}
@@ -48,7 +88,7 @@ function HeroCube({ noticias }) {
           </Link>
         ))}
       </div>
-      <p className="hero-cube__hint">Pausa al pasar el mouse · clic para explorar</p>
+      <p className="hero-cube__hint">Arrastra para rotar · clic en una cara para explorar</p>
     </div>
   )
 }
