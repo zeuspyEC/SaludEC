@@ -1,39 +1,52 @@
-import { useState, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import PageWrapper from '@components/layout/PageWrapper/PageWrapper'
 import Breadcrumb from '@components/layout/Breadcrumb/Breadcrumb'
 import SectionHero from '@components/common/SectionHero/SectionHero'
 import NewsCard from '@components/common/NewsCard/NewsCard'
 import Spinner from '@components/ui/Spinner/Spinner'
 import Button from '@components/ui/Button/Button'
-import { useAsync } from '@hooks/useAsync'
 import { getNoticias } from '@services/noticias.service'
 import './Noticias.css'
 
 const PAGE_SIZE = 9
 
 export default function Noticias() {
+  const [noticias, setNoticias] = useState([])
   const [cursor, setCursor] = useState(null)
-  const [acumuladas, setAcumuladas] = useState([])
-  const [hasMore, setHasMore] = useState(true)
+  const [hasMore, setHasMore] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [loadingMore, setLoadingMore] = useState(false)
+  const [error, setError] = useState(null)
+  const isFirstLoad = useRef(true)
 
-  const fetchPage = useCallback(
-    () =>
-      getNoticias(cursor, PAGE_SIZE).then(({ docs, lastDoc, hasMore: more }) => {
-        setAcumuladas((prev) => (cursor ? [...prev, ...docs] : docs))
+  // Carga inicial
+  useEffect(() => {
+    setLoading(true)
+    setError(null)
+    getNoticias(null, PAGE_SIZE)
+      .then(({ docs, lastDoc, hasMore: more }) => {
+        setNoticias(docs)
         setCursor(lastDoc)
         setHasMore(more)
-        return docs
-      }),
-    [cursor],
-  )
-
-  const { loading, error } = useAsync(fetchPage, true)
+      })
+      .catch(() => setError(true))
+      .finally(() => { setLoading(false); isFirstLoad.current = false })
+  }, [])
 
   const cargarMas = () => {
-    if (!loading && hasMore) fetchPage()
+    if (loadingMore || !hasMore) return
+    setLoadingMore(true)
+    getNoticias(cursor, PAGE_SIZE)
+      .then(({ docs, lastDoc, hasMore: more }) => {
+        setNoticias((prev) => [...prev, ...docs])
+        setCursor(lastDoc)
+        setHasMore(more)
+      })
+      .catch(() => setError(true))
+      .finally(() => setLoadingMore(false))
   }
 
-  const [primero, ...resto] = acumuladas
+  const [primero, ...resto] = noticias
 
   return (
     <PageWrapper title="Noticias de Salud" description="Últimas noticias, investigaciones y actualizaciones sobre salud preventiva y bienestar.">
@@ -54,9 +67,9 @@ export default function Noticias() {
           </div>
         )}
 
-        {loading && acumuladas.length === 0 ? (
+        {loading ? (
           <div className="noticias-loading"><Spinner size="lg" label="Cargando noticias…" /></div>
-        ) : acumuladas.length === 0 ? (
+        ) : noticias.length === 0 ? (
           <div className="empty-state">
             <div className="empty-state__icon">📰</div>
             <h2>Próximamente</h2>
@@ -67,10 +80,7 @@ export default function Noticias() {
             <h2 id="noticias-title" className="sr-only">Listado de noticias</h2>
 
             <div className="noticias-grid">
-              {/* Noticia destacada */}
               {primero && <NewsCard noticia={primero} featured />}
-
-              {/* Resto */}
               {resto.map((n) => <NewsCard key={n.id} noticia={n} />)}
             </div>
 
@@ -80,15 +90,15 @@ export default function Noticias() {
                   variant="outline"
                   size="lg"
                   onClick={cargarMas}
-                  loading={loading}
+                  loading={loadingMore}
                   aria-label="Cargar más noticias"
                 >
-                  {loading ? 'Cargando…' : 'Cargar más noticias'}
+                  {loadingMore ? 'Cargando…' : 'Cargar más noticias'}
                 </Button>
               </div>
             )}
 
-            {!hasMore && acumuladas.length > 0 && (
+            {!hasMore && noticias.length > 0 && (
               <p className="noticias-end" role="status">Has visto todas las noticias disponibles.</p>
             )}
           </section>

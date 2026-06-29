@@ -1,5 +1,69 @@
 /* Estilos compartidos para todas las páginas de módulo */
 
+/* ── Botones de filtro ── */
+.filter-btn {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  transition: all var(--duration-base);
+  cursor: pointer;
+}
+
+.filter-btn:hover {
+  border-color: var(--color-blue-300);
+  color: var(--color-primary);
+  background: var(--color-blue-50);
+}
+
+.filter-btn--active {
+  background: var(--color-blue-600);
+  border-color: var(--color-blue-600);
+  color: var(--color-white);
+  font-weight: var(--font-semibold);
+}
+
+.filter-btn:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
+/* ── Tipo tab (biblioteca, admin) ── */
+.tipo-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  transition: all var(--duration-base);
+  cursor: pointer;
+}
+
+.tipo-tab:hover {
+  background: var(--color-bg-subtle);
+  color: var(--color-text);
+}
+
+.tipo-tab--active {
+  background: var(--color-navy-900);
+  border-color: var(--color-navy-900);
+  color: var(--color-white);
+  font-weight: var(--font-semibold);
+}
+
+.tipo-tab:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
 .module-page {
   padding-block: var(--space-8) var(--space-20);
 }
