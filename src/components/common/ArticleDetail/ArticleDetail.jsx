@@ -106,7 +106,7 @@ export default function ArticleDetail({ articulo, volverRuta, volverLabel, modul
                   className="article-detail__fuente-link"
                   aria-label={`Ver fuente original de este artículo (abre en nueva pestaña)`}
                 >
-                  Ver fuente original →<span className="sr-only"> (abre en nueva pestaña)</span>
+                  Ver fuente original<span aria-hidden="true"> →</span><span className="sr-only"> (abre en nueva pestaña)</span>
                 </a>
               )}
             </aside>

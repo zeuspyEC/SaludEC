@@ -378,7 +378,7 @@ export default function Home() {
                   <p className="feature-card__desc">{f.desc}</p>
                   {f.link && (
                     <Link to={f.link} className="feature-card__link">
-                      {f.linkLabel} →
+                      {f.linkLabel}<span aria-hidden="true"> →</span>
                     </Link>
                   )}
                 </div>
@@ -397,7 +397,7 @@ export default function Home() {
               <h2 id="news-home-title" className="section__title">Últimas noticias de salud</h2>
             </div>
             <Link to={ROUTES.NOTICIAS} className="section__link">
-              Ver todas las noticias →
+              Ver todas las noticias<span aria-hidden="true"> →</span>
             </Link>
           </header>
 

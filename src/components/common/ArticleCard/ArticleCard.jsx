@@ -14,7 +14,7 @@ export default function ArticleCard({ articulo, moduloBase }) {
   const href = `/${moduloBase}/${slug}`
 
   return (
-    <article className="article-card" title={imagen?.alt || titulo}>
+    <article className="article-card">
       {imagen?.url && (
         <Link to={href} tabIndex={-1} aria-hidden="true" className="article-card__img-link">
           <img

@@ -118,7 +118,7 @@ export default function NoticiasDetalle() {
                 rel="noopener noreferrer"
                 className="noticia-fuente-link"
               >
-                Ver fuente original →<span className="sr-only"> (abre en nueva pestaña)</span>
+                Ver fuente original<span aria-hidden="true"> →</span><span className="sr-only"> (abre en nueva pestaña)</span>
               </a>
             </aside>
           )}
