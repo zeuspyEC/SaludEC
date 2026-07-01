@@ -24,54 +24,55 @@ function slugify(str) {
 const BASE = 'https://images.unsplash.com/'
 const W = '?w=700&auto=format&fit=crop'
 
-// IDs de Unsplash verificados manualmente para cada tema de salud
+// IDs de Unsplash verificados visualmente para cada tema de salud
 const IMG = {
   // Nutrición
-  mediterranea:   ['photo-1498837167922-ddd27525d352', 'Ensalada mediterránea con aceitunas y aceite de oliva'],
-  plato_saludable:['photo-1512621776951-a57141f2eefd', 'Plato saludable con vegetales coloridos y proteínas'],
-  antiinflamatorio:['photo-1490645935967-10de6ba17061', 'Alimentos antiinflamatorios: frutos rojos y verduras'],
-  azucar:         ['photo-1558961363-fa8fdf82db35', 'Cucharas con diferentes tipos de azúcar'],
-  fibra:          ['photo-1571748982800-fa51082c2224', 'Alimentos integrales ricos en fibra dietética'],
-  macronutrientes:['photo-1490818387583-1baba5e638af', 'Alimentos con macronutrientes: proteínas y carbohidratos'],
-  superalimentos: ['photo-1490818387583-1baba5e638af', 'Superalimentos: semillas, bayas y vegetales'],
-  embarazo:       ['photo-1555252333-9f8e92e65df9', 'Mujer embarazada con frutas y alimentación saludable'],
-  hidratacion:    ['photo-1548839140-29a749e1cf4d', 'Vaso de agua cristalina con fruta fresca'],
-  alimentacion:   ['photo-1512621776951-a57141f2eefd', 'Alimentación balanceada con vegetales y proteínas'],
+  mediterranea:    ['photo-1498837167922-ddd27525d352', 'Mesa con verduras y ensaladas variadas — patrón de dieta mediterránea'],
+  plato_saludable: ['photo-1512621776951-a57141f2eefd', 'Plato con aguacate, tomates, garbanzos y vegetales coloridos — alimentación balanceada'],
+  antiinflamatorio:['photo-1490645935967-10de6ba17061', 'Bowl con huevo, aguacate, tomates y brotes — dieta antiinflamatoria'],
+  azucar:          ['photo-1490818387583-1baba5e638af', 'Fresas, moras, ruibarbo y naranja — azúcares naturales en frutas frescas'],
+  fibra:           ['photo-1579113800032-c38bd7635818', 'Zanahoria, calabacín, pimiento y rábanos — verduras ricas en fibra dietética'],
+  macronutrientes: ['photo-1490645935967-10de6ba17061', 'Bowl con proteínas, carbohidratos y grasas saludables — macronutrientes esenciales'],
+  superalimentos:  ['photo-1505576399279-565b52d4ac71', 'Ensalada colorida en frasco de vidrio — superalimentos y nutrientes esenciales'],
+  embarazo:        ['photo-1493894473891-10fc1e5dbd22', 'Mujer embarazada formando corazón con sus manos — alimentación saludable en el embarazo'],
+  hidratacion:     ['photo-1548839140-29a749e1cf4d', 'Agua cristalina vertiéndose en vaso — hidratación diaria recomendada'],
+  alimentacion:    ['photo-1512621776951-a57141f2eefd', 'Plato con vegetales coloridos y proteínas — guía de alimentación saludable'],
   // Atención primaria
-  consulta_msp:   ['photo-1576091160399-112ba8d25d1d', 'Médico atendiendo a paciente en centro de salud del MSP'],
-  hospital:       ['photo-1586773860418-d37222d8fce3', 'Pasillo de hospital público con equipamiento médico'],
-  iess:           ['photo-1519494026892-80bbd2d6fd0d', 'Edificio institucional de salud pública'],
+  consulta_msp:    ['photo-1576091160399-112ba8d25d1d', 'Médico con estetoscopio revisando información — consulta en centro de salud público MSP'],
+  hospital:        ['photo-1586773860418-d37222d8fce3', 'Edificio moderno de hospital público con amplia fachada — sistema de salud pública'],
+  iess:            ['photo-1519494026892-80bbd2d6fd0d', 'Recepción de clínica con señalización de servicios — atención en unidades del IESS'],
   // Ejercicio
-  hiit:           ['photo-1571019614242-c5c5dee9f50b', 'Persona realizando entrenamiento de alta intensidad HIIT'],
-  yoga:           ['photo-1544367567-0f2fcb009e0b', 'Persona practicando yoga en postura de equilibrio al atardecer'],
-  caminar:        ['photo-1571008887538-b36bb32f4571', 'Persona caminando con zapatillas deportivas al aire libre'],
-  correr:         ['photo-1552674605-db6ffd4facb5', 'Persona corriendo en parque urbano con buena postura'],
-  fuerza_mayor:   ['photo-1574680096145-d05b474e2155', 'Adulto mayor haciendo ejercicio de fuerza con pesas'],
-  fuerza:         ['photo-1581009146145-b5ef050c2e1e', 'Persona en gimnasio realizando press de banca'],
-  sedentarismo:   ['photo-1498049794561-7780e7231661', 'Persona sentada frente al computador en postura sedentaria'],
-  fitt:           ['photo-1581009146145-b5ef050c2e1e', 'Persona en gimnasio siguiendo el principio FITT para estructurar su entrenamiento'],
-  ejercicio_diab: ['photo-1571019613454-1cb2f99b2d8b', 'Persona controlando glucosa antes de hacer ejercicio'],
-  principiante:   ['photo-1534438327276-14e5300c3a48', 'Persona ejercitándose en casa con ropa deportiva'],
+  hiit:            ['photo-1517836357463-d25dfeac3438', 'Persona realizando peso muerto en el gimnasio — entrenamiento HIIT de alta intensidad'],
+  yoga:            ['photo-1544367567-0f2fcb009e0b', 'Silueta de persona en posición de loto al atardecer — práctica de yoga y meditación'],
+  caminar:         ['photo-1477332552946-cfb384aeaf1c', 'Persona caminando por sendero rural al atardecer — beneficios de caminar diariamente'],
+  correr:          ['photo-1552674605-db6ffd4facb5', 'Persona corriendo en parque urbano — programa de entrenamiento para correr'],
+  fuerza_mayor:    ['photo-1534438327276-14e5300c3a48', 'Sala de gimnasio con mancuernas y racks — entrenamiento de fuerza para adultos mayores'],
+  fuerza:          ['photo-1581009146145-b5ef050c2e1e', 'Hombre levantando mancuernas en el gimnasio — entrenamiento de fuerza muscular'],
+  sedentarismo:    ['photo-1498049794561-7780e7231661', 'Auriculares y computador portátil sobre escritorio — riesgo del sedentarismo prolongado'],
+  fitt:            ['photo-1581009146145-b5ef050c2e1e', 'Persona en gimnasio con mancuernas — principio FITT para diseñar rutina de ejercicio'],
+  ejercicio_diab:  ['photo-1571019613454-1cb2f99b2d8b', 'Mujer realizando abdominales en el gimnasio — actividad física para control de diabetes'],
+  principiante:    ['photo-1571019614242-c5c5dee9f50b', 'Entrenador personal guiando a principiante — cómo empezar a hacer ejercicio'],
   // Salud mental
-  terapia:        ['photo-1573497019236-17f8177b81e8', 'Sesión de psicoterapia entre profesional y paciente'],
-  mindfulness:    ['photo-1506126613408-eca07ce68773', 'Persona meditando en posición de loto con paz interior'],
-  sueno:          ['photo-1541781774459-bb2af2f05b55', 'Dormitorio tranquilo con luz tenue — higiene del sueño'],
-  ansiedad:       ['photo-1541199249251-f713e6145474', 'Persona experimentando síntomas de ansiedad'],
-  burnout:        ['photo-1488190211105-8b0e65b80b4e', 'Persona agotada con signos de síndrome de burnout laboral'],
-  duelo:          ['photo-1493836512294-502baa1986e2', 'Persona en reflexión profunda tras una pérdida'],
-  respiracion:    ['photo-1506905925346-21bda4d32df4', 'Persona en montaña practicando respiración consciente'],
-  autoestima:     ['photo-1522075469751-3a6694fb2f61', 'Persona sonriendo con seguridad y autoestima positiva'],
-  salud_mental:   ['photo-1493836512294-502baa1986e2', 'Bienestar mental — persona en estado de calma'],
+  terapia:         ['photo-1573497019236-17f8177b81e8', 'Mujer sentada en consultorio con actitud abierta — sesión de terapia cognitivo-conductual'],
+  mindfulness:     ['photo-1506126613408-eca07ce68773', 'Mujer meditando en posición de loto al atardecer bajo palmeras — práctica de mindfulness'],
+  sueno:           ['photo-1531353826977-0941b4779a1c', 'Persona durmiendo profundamente cubierta con cobija — higiene del sueño y descanso'],
+  ansiedad:        ['photo-1493836512294-502baa1986e2', 'Hombre sentado en sofá con la mano en la frente — síntomas de ansiedad y estrés'],
+  burnout:         ['photo-1499750310107-5fef28a66643', 'Computador portátil y café sobre mesa de madera — síndrome de burnout laboral'],
+  duelo:           ['photo-1493836512294-502baa1986e2', 'Persona en postura de reflexión y tristeza — proceso de duelo tras una pérdida'],
+  respiracion:     ['photo-1490730141103-6cac27aaab94', 'Silueta de persona con brazos abiertos frente al mar al atardecer — respiración consciente'],
+  autoestima:      ['photo-1529156069898-49953e39b3ac', 'Grupo de amigos sonrientes junto al mar — autoestima y relaciones sociales positivas'],
+  salud_mental:    ['photo-1493836512294-502baa1986e2', 'Persona en reflexión profunda — bienestar y salud mental emocional'],
+  linea182:        ['photo-1544027993-37dbfe43562a', 'Dos manos alcanzándose — apoyo emocional y línea de crisis 182'],
   // Prevención / Emergencias
-  hipertension:   ['photo-1559757148-5c350d0d3c56', 'Médico midiendo presión arterial con tensiómetro'],
-  diabetes_prev:  ['photo-1579154204601-01588f351e67', 'Glucómetro y control de azúcar en sangre'],
-  vacunacion:     ['photo-1584516150909-c43483ee7932', 'Enfermera aplicando vacuna a paciente en centro de salud público'],
-  vacunacion_covid:['photo-1605289982774-9a6fef564df8', 'Frascos de vacunas del programa nacional de inmunización'],
-  examen_prev:    ['photo-1576091160550-2173dba999ef', 'Médico con estetoscopio en consulta de chequeo preventivo'],
-  tabaquismo:     ['photo-1559757175-0eb30cd8c063', 'Cigarro apagado — campaña de prevención del tabaquismo'],
-  cancer_piel:    ['photo-1594882645126-14ac19a234b5', 'Aplicación de protector solar en la piel'],
-  rcp:            ['photo-1559757175-5700dde675bc', 'Maniobra de reanimación cardiopulmonar básica — primeros auxilios'],
-  ecu911:         ['photo-1587745416684-47953f16f02f', 'Central de operaciones del sistema ECU 911'],
+  hipertension:    ['photo-1576091160399-112ba8d25d1d', 'Médico con estetoscopio en control médico — prevención y manejo de hipertensión arterial'],
+  diabetes_prev:   ['photo-1571019613454-1cb2f99b2d8b', 'Persona realizando ejercicio físico — prevención de diabetes tipo 2 con estilo de vida activo'],
+  vacunacion:      ['photo-1605289982774-9a6fef564df8', 'Frascos de vacunas del esquema nacional de inmunización — programa PAI Ecuador'],
+  vacunacion_covid:['photo-1605289982774-9a6fef564df8', 'Frascos de vacunas del programa nacional de inmunización para adultos en Ecuador'],
+  examen_prev:     ['photo-1576091160550-2173dba999ef', 'Manos en computador con estetoscopio — consulta de exámenes preventivos de salud'],
+  tabaquismo:      ['photo-1493836512294-502baa1986e2', 'Persona bajo estrés — consecuencias del tabaquismo en la salud mental y física'],
+  cancer_piel:     ['photo-1576091160550-2173dba999ef', 'Profesional de salud con computador — consulta preventiva para detección de cáncer de piel'],
+  rcp:             ['photo-1576091160399-112ba8d25d1d', 'Profesional de salud listo para asistir — RCP básica y primeros auxilios cardiorrespiratorios'],
+  ecu911:          ['photo-1586773860418-d37222d8fce3', 'Edificio de servicio de salud pública — sistema de emergencias ECU 911'],
 }
 
 function img(key) {
@@ -149,8 +150,8 @@ function getImgArticulo(titulo = '', modulo = '') {
     return img('respiracion')
   if (t.includes('autoestima'))
     return img('autoestima')
-  if (t.includes('línea 182') || t.includes('linea 182') || t.includes('crisis'))
-    return img('salud_mental')
+  if (t.includes('línea 182') || t.includes('linea 182') || t.includes('crisis emocional') || t.includes('línea de atenci'))
+    return img('linea182')
   if (t.includes('trastorno'))
     return img('salud_mental')
 
@@ -192,7 +193,7 @@ function getImgNoticia(titulo = '') {
   if (t.includes('sueño') || t.includes('dormir') || t.includes('luz azul'))
     return { url: `${BASE}photo-1541781774459-bb2af2f05b55${W}`, alt: 'Persona durmiendo en habitación oscura y tranquila' }
   if (t.includes('sedentarismo') || t.includes('muévete') || t.includes('movete') || t.includes('actividad física'))
-    return { url: `${BASE}photo-1476480862126-209bfaa8edc8${W}`, alt: 'Personas realizando actividad física al aire libre' }
+    return { url: `${BASE}photo-1571019614242-c5c5dee9f50b${W}`, alt: 'Personas realizando actividad física al aire libre' }
   if (t.includes('mindfulness') || t.includes('meditaci') || t.includes('mental'))
     return { url: `${BASE}photo-1506126613408-eca07ce68773${W}`, alt: 'Persona meditando con calma' }
   if (t.includes('oms') || t.includes('ops') || t.includes('global') || t.includes('plan'))
@@ -228,13 +229,13 @@ function getThumbRecurso(titulo = '', tipo = '') {
   if (t.includes('alimentaci') || t.includes('saludable') || t.includes('ops'))
     return { url: `${BASE}photo-1490645935967-10de6ba17061?w=400&auto=format&fit=crop`, alt: 'Guía de alimentación saludable de la OPS/OMS' }
   if (t.includes('correr') || t.includes('couch') || t.includes('semanas'))
-    return { url: `${BASE}photo-1571008887538-b36bb32f4571?w=400&auto=format&fit=crop`, alt: 'Persona corriendo en programa de entrenamiento progresivo' }
+    return { url: `${BASE}photo-1552674605-db6ffd4facb5?w=400&auto=format&fit=crop`, alt: 'Persona corriendo en programa de entrenamiento progresivo' }
   if (t.includes('rutina') || t.includes('sin equipo') || t.includes('20 minut'))
     return { url: `${BASE}photo-1534438327276-14e5300c3a48?w=400&auto=format&fit=crop`, alt: 'Rutina de ejercicio en casa sin equipamiento' }
   if (t.includes('primeros auxilios psicol'))
     return { url: `${BASE}photo-1573497019236-17f8177b81e8?w=400&auto=format&fit=crop`, alt: 'Primeros auxilios psicológicos — apoyo emocional' }
   if (t.includes('fumar') || t.includes('tabaco'))
-    return { url: `${BASE}photo-1559757175-5700dde675bc?w=400&auto=format&fit=crop`, alt: 'Guía para dejar de fumar — OPS' }
+    return { url: `${BASE}photo-1493836512294-502baa1986e2?w=400&auto=format&fit=crop`, alt: 'Guía para dejar de fumar — consecuencias del tabaquismo' }
   if (t.includes('cáncer') || t.includes('cancer'))
     return { url: `${BASE}photo-1576091160550-2173dba999ef?w=400&auto=format&fit=crop`, alt: 'Prevención del cáncer — diagnóstico y mitos' }
   if (t.includes('recetario') || t.includes('receta'))
@@ -242,9 +243,9 @@ function getThumbRecurso(titulo = '', tipo = '') {
   if (t.includes('señales') || t.includes('alerta') || t.includes('salud mental'))
     return { url: `${BASE}photo-1493836512294-502baa1986e2?w=400&auto=format&fit=crop`, alt: 'Señales de alerta en salud mental' }
   if (t.includes('etiqueta') || t.includes('nutricional') && t.includes('leer'))
-    return { url: `${BASE}photo-1558618666-fcd25c85cd64?w=400&auto=format&fit=crop`, alt: 'Cómo leer etiquetas nutricionales de los alimentos' }
+    return { url: `${BASE}photo-1490645935967-10de6ba17061?w=400&auto=format&fit=crop`, alt: 'Cómo leer etiquetas nutricionales de los alimentos' }
   if (t.includes('cardiovascul') || t.includes('cardíac') || t.includes('riesgo cardio'))
-    return { url: `${BASE}photo-1559757148-5c350d0d3c56?w=400&auto=format&fit=crop`, alt: 'Factores de riesgo cardiovascular — evaluación médica' }
+    return { url: `${BASE}photo-1576091160550-2173dba999ef?w=400&auto=format&fit=crop`, alt: 'Factores de riesgo cardiovascular — evaluación médica' }
   if (t.includes('frecuencia cardíaca') || t.includes('frecuencia cardiaca'))
     return { url: `${BASE}photo-1517836357463-d25dfeac3438?w=400&auto=format&fit=crop`, alt: 'Tabla de frecuencia cardíaca para el ejercicio' }
   if (t.includes('líneas') || t.includes('lineas') || t.includes('crisis') || t.includes('apoyo'))
@@ -254,7 +255,7 @@ function getThumbRecurso(titulo = '', tipo = '') {
   if (t.includes('directriz') || t.includes('oms') || t.includes('actividad física'))
     return { url: `${BASE}photo-1571019614242-c5c5dee9f50b?w=400&auto=format&fit=crop`, alt: 'Directrices OMS de actividad física 2024' }
   if (t.includes('meditaci') || t.includes('guiada') || t.includes('15 minut'))
-    return { url: `${BASE}photo-1506905925346-21bda4d32df4?w=400&auto=format&fit=crop`, alt: 'Meditación guiada para reducir la ansiedad' }
+    return { url: `${BASE}photo-1506126613408-eca07ce68773?w=400&auto=format&fit=crop`, alt: 'Meditación guiada para reducir la ansiedad' }
   // tipo fallback
   if (tipo === 'video') return { url: `${BASE}photo-1485846234645-a62644f84728?w=400&auto=format&fit=crop`, alt: 'Video educativo sobre salud' }
   if (tipo === 'podcast') return { url: `${BASE}photo-1478737270239-2f02b77fc618?w=400&auto=format&fit=crop`, alt: 'Podcast de salud y bienestar' }
@@ -263,11 +264,32 @@ function getThumbRecurso(titulo = '', tipo = '') {
   return { url: `${BASE}photo-1576091160550-2173dba999ef?w=400&auto=format&fit=crop`, alt: 'Recurso de salud pública' }
 }
 
-// IDs de Unsplash que muestran contenido incorrecto — se reemplazan siempre
+// IDs de Unsplash confirmados visualmente como incorrectos — se reemplazan siempre
 const BAD_PHOTO_IDS = [
-  'photo-1476480862126-209bfaa8edc8',  // pescador con salmón (caminar)
-  'photo-1497032628192-86f99bcd76bc',  // pescador con salmón (sedentarismo antiguo)
-  'photo-1517836357463-d25dfeac3438',  // pescador con salmón (FITT antiguo)
+  // Salmon fisherman (varios artículos)
+  'photo-1476480862126-209bfaa8edc8',
+  'photo-1497032628192-86f99bcd76bc',
+  'photo-1574781330855-d0db8cc6a79c',
+  // Imágenes completamente fuera de tema verificadas
+  'photo-1571997478779-2adcbbe9ab2f',  // pizza (hidratación)
+  'photo-1499028344343-cd173ffc68a9',  // hamburguesa (fibra)
+  'photo-1574144611937-0df059b5ef3e',  // gatito bostezando (tabaquismo)
+  'photo-1507003211169-0a1dd7228f2d',  // retrato hombre sonriente (terapia)
+  'photo-1584308666744-24d5c474f2ae',  // blíster de pastillas (vacunación)
+  'photo-1508214751196-bcfd4ca60f91',  // mujer feliz (duelo)
+  'photo-1558618666-fcd25c85cd64',     // herramienta industrial (respiración)
+  'photo-1579684385127-1ef15d508118',  // quirófano cenital (ejercicio diabetes)
+  'photo-1600880292203-757bb62b4baf',  // gente de negocios chocando manos (cáncer piel)
+  'photo-1558961363-fa8fdf82db35',     // galletas con chispas de chocolate (azúcar)
+  'photo-1541781774459-bb2af2f05b55',  // gato durmiendo (higiene sueño)
+  'photo-1506905925346-21bda4d32df4',  // montañas al atardecer (mindfulness/ansiedad)
+  'photo-1559757175-0eb30cd8c063',     // modelo anatómico cerebro (RCP)
+  'photo-1559757148-5c350d0d3c56',     // modelo anatómico cerebro (hipertensión/diabetes)
+  'photo-1587745416684-47953f16f02f',  // ambulancia americana AMR (ECU 911)
+  'photo-1571731956672-f2b94d7dd0cb',  // mujer joven en máquina cable (adultos mayores)
+  'photo-1571008887538-b36bb32f4571',  // persona corriendo (artículo caminar)
+  'photo-1584516150909-c43483ee7932',  // médico con paciente en cama (vacunación infantil)
+  'photo-1559757175-5700dde675bc',     // cerebro + neurona (RCP en versión anterior)
 ]
 function esFotoMala(url = '') {
   return BAD_PHOTO_IDS.some((id) => url.includes(id))
