@@ -1,5 +1,5 @@
 import {
-  collection, query, where, orderBy, getDocs,
+  collection, query, where, getDocs,
   updateDoc, deleteDoc, doc, serverTimestamp,
 } from 'firebase/firestore'
 import { db } from '@config/firebase'
@@ -201,11 +201,17 @@ export async function ejecutarCleanup(onProgress) {
   // ── 1. ARTÍCULOS: deduplicar + agregar imágenes ──────────────────────────
   log('→ Cargando artículos...')
   const artSnap = await getDocs(
-    query(collection(db, 'articulos'), where('publicado', '==', true), orderBy('creadoEn', 'asc'))
+    query(collection(db, 'articulos'), where('publicado', '==', true))
   )
+  // Ordenar en memoria por creadoEn para conservar siempre el primer documento
+  const artDocs = artSnap.docs.slice().sort((a, b) => {
+    const ta = a.data().creadoEn?.seconds ?? 0
+    const tb = b.data().creadoEn?.seconds ?? 0
+    return ta - tb
+  })
 
   const seenSlugs = {}
-  for (const d of artSnap.docs) {
+  for (const d of artDocs) {
     const data = d.data()
     const slug = data.slug || ''
     const tieneImg = !!(data.imagenUrl || data.imagen?.url)
@@ -245,7 +251,7 @@ export async function ejecutarCleanup(onProgress) {
   // ── 2. NOTICIAS: agregar imagen + slug ───────────────────────────────────
   log('\n→ Cargando noticias...')
   const notSnap = await getDocs(
-    query(collection(db, 'noticias'), where('publicado', '==', true), orderBy('creadoEn', 'asc'))
+    query(collection(db, 'noticias'), where('publicado', '==', true))
   )
   for (const d of notSnap.docs) {
     const data = d.data()
