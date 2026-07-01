@@ -522,6 +522,35 @@
   .module-card:hover .module-card__arrow { transform: none; }
 }
 
+/* ── Botón de pausa del cubo (WCAG 2.2.2 + 2.3.3) ── */
+.cube-pause-btn {
+  position: absolute;
+  bottom: var(--space-3);
+  right: var(--space-3);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(144, 202, 249, 0.3);
+  color: var(--color-blue-300);
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--duration-base);
+  z-index: 2;
+}
+
+.cube-pause-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.cube-pause-btn:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 2px;
+}
+
 /* ══════════════════════════════════════════════
    Hero Cube — cubo 3D interactivo
 ══════════════════════════════════════════════ */

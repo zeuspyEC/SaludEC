@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import PageWrapper from '@components/layout/PageWrapper/PageWrapper'
 import NewsCard from '@components/common/NewsCard/NewsCard'
@@ -14,7 +14,7 @@ const CUBE_MODS = [
   { pos: 'left',  icon: '🚨', title: 'Emergencias',         sub: 'SAMU · ECU 911',      path: ROUTES.PREVENCION,      bg: 'rgba(220,38,38,0.10)',  glow: '#f87171' },
 ]
 
-function HeroCube({ noticias }) {
+function HeroCube({ noticias, paused }) {
   const sceneRef = useRef(null)
   const rafRef   = useRef(null)
   const drag     = useRef({
@@ -23,12 +23,15 @@ function HeroCube({ noticias }) {
     lastX: 0,  lastY: 0,
     rotX: -20, rotY: 0,
   })
+  const pausedRef = useRef(paused)
+  useEffect(() => { pausedRef.current = paused }, [paused])
+
   useEffect(() => {
     const d = drag.current
-    const SPEED = 360 / (20 * 60)   // una vuelta cada ~20 s a 60 fps
+    const SPEED = 360 / (20 * 60)
 
     const tick = () => {
-      if (!d.active) d.rotY += SPEED
+      if (!d.active && !pausedRef.current) d.rotY += SPEED
       if (sceneRef.current) {
         sceneRef.current.style.transform =
           `rotateX(${d.rotX}deg) rotateY(${d.rotY}deg)`
@@ -102,13 +105,11 @@ function HeroCube({ noticias }) {
     >
       <div className="hero-cube__scene" ref={sceneRef}>
         {faces.map((f) => (
-          /* div exterior: panel de vidrio visible por ambos lados */
           <div
             key={f.pos}
             className={`hero-cube__face hero-cube__face--${f.pos}`}
             style={{ '--face-bg': f.bg, '--face-glow': f.glow }}
           >
-            {/* Link interior: sólo visible desde el frente (backface-visibility:hidden en CSS) */}
             <Link to={f.path} tabIndex="-1" className="hero-cube__face-front">
               <span className="hero-cube__face-icon" aria-hidden="true">{f.icon}</span>
               <strong className="hero-cube__face-title">{f.title}</strong>
@@ -117,7 +118,7 @@ function HeroCube({ noticias }) {
           </div>
         ))}
       </div>
-      <p className="hero-cube__hint">Arrastra para rotar · clic en una cara para explorar</p>
+      <p className="hero-cube__hint" aria-hidden="true">Arrastra para rotar · clic en una cara para explorar</p>
     </div>
   )
 }
@@ -208,6 +209,10 @@ const FEATURES = [
 export default function Home() {
   const [noticias, setNoticias] = useState([])
   const [loadingNoticias, setLoadingNoticias] = useState(true)
+  const [cubePaused, setCubePaused] = useState(
+    () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  )
+  const toggleCube = useCallback(() => setCubePaused((p) => !p), [])
 
   useEffect(() => {
     getNoticias(null, 3)
@@ -251,11 +256,21 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="hero__visual animate-fade-in" aria-hidden="true">
-            <div className="hero__orb hero__orb--1" />
-            <div className="hero__orb hero__orb--2" />
-            <div className="hero__orb hero__orb--3" />
-            <HeroCube noticias={noticias} />
+          <div className="hero__visual animate-fade-in">
+            <div aria-hidden="true">
+              <div className="hero__orb hero__orb--1" />
+              <div className="hero__orb hero__orb--2" />
+              <div className="hero__orb hero__orb--3" />
+              <HeroCube noticias={noticias} paused={cubePaused} />
+            </div>
+            <button
+              className="cube-pause-btn"
+              onClick={toggleCube}
+              aria-pressed={cubePaused}
+              aria-label={cubePaused ? 'Reanudar rotación del cubo decorativo' : 'Pausar rotación del cubo decorativo'}
+            >
+              <span aria-hidden="true">{cubePaused ? '▶' : '⏸'}</span>
+            </button>
           </div>
         </div>
       </section>
