@@ -34,3 +34,11 @@ Thumbs.db
 .firebase/
 firebase-debug.log
 firestore-debug.log
+
+# LaTeX auxiliares (generados al compilar .tex)
+docs/*.aux
+docs/*.toc
+docs/*.out
+docs/*.lof
+docs/*.lot
+docs/*.log

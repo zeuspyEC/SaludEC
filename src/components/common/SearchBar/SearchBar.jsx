@@ -42,7 +42,7 @@ export default function SearchBar({ onSearch, placeholder = 'Buscar…', label =
           placeholder={placeholder}
           className="search-bar__input"
           aria-label={placeholder}
-          autoComplete="off"
+          autoComplete="on"
         />
 
         {value && (
