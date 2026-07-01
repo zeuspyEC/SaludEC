@@ -175,6 +175,10 @@
   font-weight: var(--font-semibold);
 }
 
+.imc-table__check {
+  font-weight: var(--font-bold);
+}
+
 /* ── Artículo detalle ── */
 .nutricion-article {
   padding-block: var(--space-8) var(--space-20);

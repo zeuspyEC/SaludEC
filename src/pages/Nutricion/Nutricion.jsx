@@ -180,7 +180,7 @@ export default function Nutricion() {
                 </thead>
                 <tbody>
                   <tr><td>Bajo peso</td><td>&lt; 18.5</td></tr>
-                  <tr className="imc-table__ok"><td>Peso normal</td><td>18.5 – 24.9</td></tr>
+                  <tr className="imc-table__ok"><td><span className="imc-table__check" aria-hidden="true">✓ </span>Peso normal</td><td>18.5 – 24.9</td></tr>
                   <tr><td>Sobrepeso</td><td>25.0 – 29.9</td></tr>
                   <tr><td>Obesidad grado I</td><td>30.0 – 34.9</td></tr>
                   <tr><td>Obesidad grado II</td><td>35.0 – 39.9</td></tr>
