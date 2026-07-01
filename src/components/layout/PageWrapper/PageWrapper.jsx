@@ -12,14 +12,22 @@ export default function PageWrapper({ children, title, description }) {
     const pageTitle = title ? `${title} | VitaPrevent` : 'VitaPrevent — Servicios públicos de salud'
     document.title = pageTitle
 
+    if (description) {
+      let meta = document.querySelector('meta[name="description"]')
+      if (!meta) {
+        meta = document.createElement('meta')
+        meta.name = 'description'
+        document.head.appendChild(meta)
+      }
+      meta.setAttribute('content', description)
+    }
+
     if (isFirstRender.current) {
-      // Carga inicial: NO mover foco — Tab debe ir SkipLink → Navbar → contenido
       isFirstRender.current = false
       return
     }
-    // Navegación SPA: mueve foco al main para que el lector anuncie el cambio de página
     mainRef.current?.focus()
-  }, [pathname, title])
+  }, [pathname, title, description])
 
   return (
     <main
@@ -29,9 +37,6 @@ export default function PageWrapper({ children, title, description }) {
       className="page-wrapper"
       aria-label={title || 'Contenido principal'}
     >
-      {description && (
-        <meta name="description" content={description} />
-      )}
       {children}
     </main>
   )

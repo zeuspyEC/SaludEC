@@ -1,10 +1,11 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useId } from 'react'
 import PropTypes from 'prop-types'
 import './SearchBar.css'
 
 export default function SearchBar({ onSearch, placeholder = 'Buscar…', label = 'Buscar contenido' }) {
   const [value, setValue] = useState('')
   const inputRef = useRef(null)
+  const inputId = useId()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -34,7 +35,7 @@ export default function SearchBar({ onSearch, placeholder = 'Buscar…', label =
         <input
           ref={inputRef}
           type="search"
-          id="search-input"
+          id={inputId}
           name="q"
           value={value}
           onChange={(e) => setValue(e.target.value)}
