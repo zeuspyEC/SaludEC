@@ -146,7 +146,7 @@ export default function AdminDashboard() {
           <button
             className={`dash__seed-btn dash__seed-btn--${cleanState}`}
             onClick={handleClean}
-            disabled={cleanState === 'running' || cleanState === 'done'}
+            disabled={cleanState === 'running'}
             aria-busy={cleanState === 'running'}
           >
             {cleanState === 'running' && <Spinner size="sm" label="" />}

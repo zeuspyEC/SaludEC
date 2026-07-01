@@ -24,93 +24,161 @@ function slugify(str) {
 const BASE = 'https://images.unsplash.com/'
 const W = '?w=700&auto=format&fit=crop'
 
+// IDs de Unsplash verificados manualmente para cada tema de salud
+const IMG = {
+  // Nutrición
+  mediterranea:   ['photo-1498837167922-ddd27525d352', 'Ensalada mediterránea con aceitunas y aceite de oliva'],
+  plato_saludable:['photo-1512621776951-a57141f2eefd', 'Plato saludable con vegetales coloridos y proteínas'],
+  antiinflamatorio:['photo-1490645935967-10de6ba17061', 'Alimentos antiinflamatorios: frutos rojos y verduras'],
+  azucar:         ['photo-1558961363-fa8fdf82db35', 'Cucharas con diferentes tipos de azúcar'],
+  fibra:          ['photo-1571748982800-fa51082c2224', 'Alimentos integrales ricos en fibra dietética'],
+  macronutrientes:['photo-1490818387583-1baba5e638af', 'Alimentos con macronutrientes: proteínas y carbohidratos'],
+  superalimentos: ['photo-1490818387583-1baba5e638af', 'Superalimentos: semillas, bayas y vegetales'],
+  embarazo:       ['photo-1555252333-9f8e92e65df9', 'Mujer embarazada con frutas y alimentación saludable'],
+  hidratacion:    ['photo-1548839140-29a749e1cf4d', 'Vaso de agua cristalina con fruta fresca'],
+  alimentacion:   ['photo-1512621776951-a57141f2eefd', 'Alimentación balanceada con vegetales y proteínas'],
+  // Atención primaria
+  consulta_msp:   ['photo-1576091160399-112ba8d25d1d', 'Médico atendiendo a paciente en centro de salud del MSP'],
+  hospital:       ['photo-1586773860418-d37222d8fce3', 'Pasillo de hospital público con equipamiento médico'],
+  iess:           ['photo-1519494026892-80bbd2d6fd0d', 'Edificio institucional de salud pública'],
+  // Ejercicio
+  hiit:           ['photo-1571019614242-c5c5dee9f50b', 'Persona realizando entrenamiento de alta intensidad HIIT'],
+  yoga:           ['photo-1544367567-0f2fcb009e0b', 'Persona practicando yoga en postura de equilibrio al atardecer'],
+  caminar:        ['photo-1571008887538-b36bb32f4571', 'Persona caminando con zapatillas deportivas al aire libre'],
+  correr:         ['photo-1552674605-db6ffd4facb5', 'Persona corriendo en parque urbano con buena postura'],
+  fuerza_mayor:   ['photo-1574680096145-d05b474e2155', 'Adulto mayor haciendo ejercicio de fuerza con pesas'],
+  fuerza:         ['photo-1581009146145-b5ef050c2e1e', 'Persona en gimnasio realizando press de banca'],
+  sedentarismo:   ['photo-1498049794561-7780e7231661', 'Persona sentada frente al computador en postura sedentaria'],
+  fitt:           ['photo-1517836357463-d25dfeac3438', 'Planificación de rutina de ejercicio con objetivos'],
+  ejercicio_diab: ['photo-1571019613454-1cb2f99b2d8b', 'Persona controlando glucosa antes de hacer ejercicio'],
+  principiante:   ['photo-1534438327276-14e5300c3a48', 'Persona ejercitándose en casa con ropa deportiva'],
+  // Salud mental
+  terapia:        ['photo-1573497019236-17f8177b81e8', 'Sesión de psicoterapia entre profesional y paciente'],
+  mindfulness:    ['photo-1506126613408-eca07ce68773', 'Persona meditando en posición de loto con paz interior'],
+  sueno:          ['photo-1541781774459-bb2af2f05b55', 'Dormitorio tranquilo con luz tenue — higiene del sueño'],
+  ansiedad:       ['photo-1541199249251-f713e6145474', 'Persona experimentando síntomas de ansiedad'],
+  burnout:        ['photo-1488190211105-8b0e65b80b4e', 'Persona agotada con signos de síndrome de burnout laboral'],
+  duelo:          ['photo-1493836512294-502baa1986e2', 'Persona en reflexión profunda tras una pérdida'],
+  respiracion:    ['photo-1506905925346-21bda4d32df4', 'Persona en montaña practicando respiración consciente'],
+  autoestima:     ['photo-1522075469751-3a6694fb2f61', 'Persona sonriendo con seguridad y autoestima positiva'],
+  salud_mental:   ['photo-1493836512294-502baa1986e2', 'Bienestar mental — persona en estado de calma'],
+  // Prevención / Emergencias
+  hipertension:   ['photo-1559757148-5c350d0d3c56', 'Médico midiendo presión arterial con tensiómetro'],
+  diabetes_prev:  ['photo-1579154204601-01588f351e67', 'Glucómetro y control de azúcar en sangre'],
+  vacunacion:     ['photo-1605289982774-9a6fef564df8', 'Profesional aplicando vacuna a paciente adulto'],
+  examen_prev:    ['photo-1576091160550-2173dba999ef', 'Médico con estetoscopio en consulta de chequeo preventivo'],
+  tabaquismo:     ['photo-1559757175-0eb30cd8c063', 'Cigarro apagado — campaña de prevención del tabaquismo'],
+  cancer_piel:    ['photo-1594882645126-14ac19a234b5', 'Aplicación de protector solar en la piel'],
+  rcp:            ['photo-1559757175-0eb30cd8c063', 'Maniobra de reanimación cardiopulmonar básica'],
+  ecu911:         ['photo-1587745416684-47953f16f02f', 'Central de operaciones del sistema ECU 911'],
+}
+
+function img(key) {
+  const [id, alt] = IMG[key]
+  return { url: `${BASE}${id}${W}`, alt }
+}
+
 function getImgArticulo(titulo = '', modulo = '') {
   const t = titulo.toLowerCase()
 
+  // ── Atención primaria / MSP / IESS ───────────────────────
+  if (t.includes('msp') || t.includes('ministerio') || t.includes('consulta') || t.includes('cita médica'))
+    return img('consulta_msp')
+  if (t.includes('iess') || t.includes('seguro social') || t.includes('afiliado'))
+    return img('iess')
+  if (t.includes('nivel') && (t.includes('atenci') || t.includes('salud')))
+    return img('hospital')
+
   // ── Nutrición / alimentación ──────────────────────────────
   if (t.includes('mediterr'))
-    return { url: `${BASE}photo-1498837167922-ddd27525d352${W}`, alt: 'Ensalada mediterránea con vegetales frescos, aceitunas y aceite de oliva' }
+    return img('mediterranea')
   if (t.includes('plato') && t.includes('harvard'))
-    return { url: `${BASE}photo-1512621776951-a57141f2eefd${W}`, alt: 'Plato saludable con vegetales coloridos, proteínas y granos' }
+    return img('plato_saludable')
   if (t.includes('antiinflam'))
-    return { url: `${BASE}photo-1490645935967-10de6ba17061${W}`, alt: 'Alimentos antiinflamatorios: frutos rojos, verduras y especias' }
+    return img('antiinflamatorio')
   if (t.includes('azúcar') || t.includes('azucar'))
-    return { url: `${BASE}photo-1558961363-fa8fdf82db35${W}`, alt: 'Diferentes tipos de azúcar y edulcorantes en recipientes' }
+    return img('azucar')
   if (t.includes('fibra') || t.includes('integral'))
-    return { url: `${BASE}photo-1499028344343-cd173ffc68a9${W}`, alt: 'Alimentos ricos en fibra: legumbres, cereales integrales y verduras' }
+    return img('fibra')
   if (t.includes('macronut') || t.includes('proteín') || t.includes('carboh'))
-    return { url: `${BASE}photo-1490818387583-1baba5e638af${W}`, alt: 'Alimentos ricos en macronutrientes: proteínas, carbohidratos y grasas' }
+    return img('macronutrientes')
   if (t.includes('superaliment'))
-    return { url: `${BASE}photo-1505576399279-565b52d4ac71${W}`, alt: 'Superalimentos: arándanos, quinua, aguacate y semillas' }
+    return img('superalimentos')
   if (t.includes('embarazo') || t.includes('gestaci'))
-    return { url: `${BASE}photo-1493894473891-10fc1e5dbd22${W}`, alt: 'Mujer embarazada sosteniendo frutas y verduras frescas' }
+    return img('embarazo')
   if (t.includes('hidrat') || t.includes('agua'))
-    return { url: `${BASE}photo-1548839140-29a749e1cf4d${W}`, alt: 'Vaso de agua cristalina con fruta fresca' }
-  if (t.includes('dieta') || t.includes('alimentaci') || t.includes('nutric'))
-    return { url: `${BASE}photo-1512621776951-a57141f2eefd${W}`, alt: 'Alimentación balanceada con vegetales y proteínas' }
+    return img('hidratacion')
 
   // ── Actividad física / ejercicio ──────────────────────────
   if (t.includes('hiit') || t.includes('intervalos de alta'))
-    return { url: `${BASE}photo-1571019614242-c5c5dee9f50b${W}`, alt: 'Persona realizando entrenamiento de alta intensidad HIIT' }
+    return img('hiit')
   if (t.includes('yoga'))
-    return { url: `${BASE}photo-1544367567-0f2fcb009e0b${W}`, alt: 'Persona practicando yoga en postura de equilibrio' }
+    return img('yoga')
   if (t.includes('caminar') || t.includes('pasos'))
-    return { url: `${BASE}photo-1476480862126-209bfaa8edc8${W}`, alt: 'Persona caminando al aire libre en un parque' }
+    return img('caminar')
   if (t.includes('correr') || t.includes('running') || t.includes('couch to 5'))
-    return { url: `${BASE}photo-1571008887538-b36bb32f4571${W}`, alt: 'Persona corriendo en parque con zapatillas deportivas' }
-  if (t.includes('fuerza') && (t.includes('adulto mayor') || t.includes('60') || t.includes('mayor')))
-    return { url: `${BASE}photo-1571731956672-f2b94d7dd0cb${W}`, alt: 'Adulto mayor realizando ejercicio de fuerza con pesas ligeras' }
-  if (t.includes('fuerza') || t.includes('entrenamiento') || t.includes('muscula'))
-    return { url: `${BASE}photo-1581009146145-b5ef050c2e1e${W}`, alt: 'Persona en gimnasio realizando entrenamiento de fuerza' }
+    return img('correr')
+  if (t.includes('fuerza') && (t.includes('adulto mayor') || t.includes('mayor') || t.includes('60')))
+    return img('fuerza_mayor')
+  if (t.includes('fuerza') || t.includes('pesas') || t.includes('muscula'))
+    return img('fuerza')
   if (t.includes('sedentarismo') || t.includes('silla') || t.includes('escritorio'))
-    return { url: `${BASE}photo-1497032628192-86f99bcd76bc${W}`, alt: 'Persona frente a computadora con postura sedentaria' }
-  if (t.includes('fitt'))
-    return { url: `${BASE}photo-1517836357463-d25dfeac3438${W}`, alt: 'Persona planificando rutina de ejercicio en cuaderno' }
+    return img('sedentarismo')
+  if (t.includes('fitt') || t.includes('frecuencia') || t.includes('intensidad') || t.includes('tipo de ejercicio'))
+    return img('fitt')
   if (t.includes('diabetes') && (t.includes('ejercicio') || t.includes('actividad')))
-    return { url: `${BASE}photo-1571019613454-1cb2f99b2d8b${W}`, alt: 'Persona con diabetes realizando actividad física moderada' }
-  if (t.includes('principiante') || t.includes('empezar') || t.includes('nunca'))
-    return { url: `${BASE}photo-1534438327276-14e5300c3a48${W}`, alt: 'Persona principiante realizando ejercicio en casa' }
+    return img('ejercicio_diab')
+  if (t.includes('principiante') || t.includes('empezar') || t.includes('nunca') || t.includes('sin equipo'))
+    return img('principiante')
 
   // ── Salud mental ──────────────────────────────────────────
-  if (t.includes('terapia') || t.includes('cognitivo-conduct') || t.includes('tcc'))
-    return { url: `${BASE}photo-1573497019236-17f8177b81e8${W}`, alt: 'Sesión de terapia psicológica entre profesional y paciente' }
+  if (t.includes('terapia') || t.includes('cognitivo') || t.includes('psicolog'))
+    return img('terapia')
   if (t.includes('mindfulness') || t.includes('meditaci'))
-    return { url: `${BASE}photo-1506126613408-eca07ce68773${W}`, alt: 'Persona meditando en posición de loto con calma' }
+    return img('mindfulness')
   if (t.includes('sueño') || t.includes('sueno') || t.includes('dormir') || t.includes('higiene del sue'))
-    return { url: `${BASE}photo-1541781774459-bb2af2f05b55${W}`, alt: 'Habitación con cama ordenada y ambiente calmado para dormir bien' }
-  if (t.includes('ansiedad') && (t.includes('pánico') || t.includes('distingu') || t.includes('estrés')))
-    return { url: `${BASE}photo-1541199249251-f713e6145474${W}`, alt: 'Persona en estado de angustia y ansiedad' }
+    return img('sueno')
+  if (t.includes('ansiedad') || t.includes('pánico') || t.includes('panico'))
+    return img('ansiedad')
   if (t.includes('burnout') || t.includes('agotamient') || t.includes('sindrome'))
-    return { url: `${BASE}photo-1488190211105-8b0e65b80b4e${W}`, alt: 'Persona agotada frente a una computadora con síntomas de burnout' }
+    return img('burnout')
   if (t.includes('duelo') || t.includes('pérdida') || t.includes('perdida'))
-    return { url: `${BASE}photo-1473073899705-e7b1055a7419${W}`, alt: 'Persona reflexionando en un momento de duelo y pérdida' }
+    return img('duelo')
   if (t.includes('respiraci'))
-    return { url: `${BASE}photo-1506905925346-21bda4d32df4${W}`, alt: 'Persona practicando técnicas de respiración profunda al aire libre' }
+    return img('respiracion')
   if (t.includes('autoestima'))
-    return { url: `${BASE}photo-1522075469751-3a6694fb2f61${W}`, alt: 'Persona sonriendo con confianza y autoestima positiva' }
+    return img('autoestima')
+  if (t.includes('línea 182') || t.includes('linea 182') || t.includes('crisis'))
+    return img('salud_mental')
+  if (t.includes('trastorno'))
+    return img('salud_mental')
 
   // ── Prevención ────────────────────────────────────────────
   if (t.includes('hipertens') || t.includes('presión arterial') || t.includes('presion arterial'))
-    return { url: `${BASE}photo-1559757148-5c350d0d3c56${W}`, alt: 'Médico midiendo presión arterial a un paciente' }
+    return img('hipertension')
   if (t.includes('diabetes') && (t.includes('prevenci') || t.includes('tipo 2')))
-    return { url: `${BASE}photo-1579154204601-01588f351e67${W}`, alt: 'Medición de glucosa en sangre para prevención de diabetes' }
-  if (t.includes('vacuna') || t.includes('inmuniz') || t.includes('calendario de vacu'))
-    return { url: `${BASE}photo-1605289982774-9a6fef564df8${W}`, alt: 'Profesional de salud aplicando vacuna a un paciente adulto' }
+    return img('diabetes_prev')
+  if (t.includes('vacuna') || t.includes('inmuniz') || t.includes('pai') || t.includes('calendario'))
+    return img('vacunacion')
   if (t.includes('examen') || t.includes('chequeo') || t.includes('preventivo'))
-    return { url: `${BASE}photo-1576091160550-2173dba999ef${W}`, alt: 'Médico realizando chequeo preventivo con estetoscopio' }
+    return img('examen_prev')
   if (t.includes('fumar') || t.includes('tabaqui') || t.includes('cigarr'))
-    return { url: `${BASE}photo-1559757175-5700dde675bc${W}`, alt: 'Señal de prohibido fumar — prevención del tabaquismo' }
-  if (t.includes('cáncer de piel') || t.includes('cancer de piel') || t.includes('sol ecuator'))
-    return { url: `${BASE}photo-1594882645126-14ac19a234b5${W}`, alt: 'Protección solar con bloqueador en la piel' }
+    return img('tabaquismo')
+  if (t.includes('cáncer') || t.includes('cancer') || t.includes('sol ecuator'))
+    return img('cancer_piel')
+  if (t.includes('rcp') || t.includes('paro cardior') || t.includes('reanimaci'))
+    return img('rcp')
+  if (t.includes('ecu 911') || t.includes('emergencia') || t.includes('samu'))
+    return img('ecu911')
 
   // ── Fallback por módulo ───────────────────────────────────
   const fallbacks = {
-    'nutricion':       { url: `${BASE}photo-1512621776951-a57141f2eefd${W}`, alt: 'Alimentación saludable con vegetales y frutas' },
-    'actividad-fisica':{ url: `${BASE}photo-1571019614242-c5c5dee9f50b${W}`, alt: 'Persona realizando actividad física' },
-    'salud-mental':    { url: `${BASE}photo-1506126613408-eca07ce68773${W}`, alt: 'Persona en calma — bienestar mental' },
-    'prevencion':      { url: `${BASE}photo-1576091160550-2173dba999ef${W}`, alt: 'Control médico preventivo' },
+    'nutricion':       img('alimentacion'),
+    'actividad-fisica':img('hiit'),
+    'salud-mental':    img('salud_mental'),
+    'prevencion':      img('examen_prev'),
   }
-  return fallbacks[modulo] || fallbacks['nutricion']
+  return fallbacks[modulo] || img('consulta_msp')
 }
 
 function getImgNoticia(titulo = '') {
@@ -214,7 +282,8 @@ export async function ejecutarCleanup(onProgress) {
   for (const d of artDocs) {
     const data = d.data()
     const slug = data.slug || ''
-    const tieneImg = !!(data.imagenUrl || data.imagen?.url)
+    // Solo se considera que ya tiene imagen si tiene imagen.url (lo que ArticleCard usa)
+    const tieneImagen = !!(data.imagen?.url)
 
     // Detectar duplicado por slug
     if (slug && seenSlugs[slug]) {
@@ -230,16 +299,18 @@ export async function ejecutarCleanup(onProgress) {
     }
     if (slug) seenSlugs[slug] = d.id
 
-    // Agregar imagen si falta
-    if (!tieneImg) {
-      const img = getImgArticulo(data.titulo, data.modulo)
+    // Agregar o corregir imagen (siempre escribir {imagen:{url,alt}} que es lo que ArticleCard lee)
+    if (!tieneImagen) {
+      // Si ya tiene imagenUrl plano, lo reutilizamos; si no, asignamos uno temático
+      const img = data.imagenUrl
+        ? { url: data.imagenUrl, alt: data.imagenAlt || data.titulo || '' }
+        : getImgArticulo(data.titulo, data.modulo)
       try {
         await updateDoc(doc(db, 'articulos', d.id), {
-          imagenUrl: img.url,
-          imagenAlt: img.alt,
+          imagen: { url: img.url, alt: img.alt },
           actualizadoEn: serverTimestamp(),
         })
-        log(`🖼 Imagen añadida: "${(data.titulo || '').slice(0, 50)}"`)
+        log(`🖼 Imagen corregida: "${(data.titulo || '').slice(0, 50)}"`)
         actualizados++
       } catch (e) {
         log(`⚠ Error actualizando ${d.id}: ${e.message}`)
