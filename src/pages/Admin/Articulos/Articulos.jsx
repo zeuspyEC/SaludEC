@@ -9,7 +9,7 @@ import { getArticulosByModulo, crearArticulo, actualizarArticulo, eliminarArticu
 import { MODULOS_LIST as MODULOS } from '@config/constants'
 import './Articulos.css'
 
-const FORM_INICIAL = { titulo: '', modulo: 'nutricion', categoria: '', resumen: '', contenido: '', slug: '' }
+const FORM_INICIAL = { titulo: '', modulo: 'nutricion', categoria: '', resumen: '', contenido: '', slug: '', imagenUrl: '', imagenAlt: '' }
 
 export default function AdminArticulos() {
   const toast = useToast()
@@ -38,7 +38,7 @@ export default function AdminArticulos() {
 
   const abrirEditar = (a) => {
     setEditando(a)
-    setForm({ titulo: a.titulo || '', modulo: a.modulo || moduloActivo, categoria: a.categoria || '', resumen: a.resumen || '', contenido: a.contenido || '', slug: a.slug || '' })
+    setForm({ titulo: a.titulo || '', modulo: a.modulo || moduloActivo, categoria: a.categoria || '', resumen: a.resumen || '', contenido: a.contenido || '', slug: a.slug || '', imagenUrl: a.imagenUrl || '', imagenAlt: a.imagenAlt || '' })
     setErrors({})
     setModal(true)
   }
@@ -187,6 +187,15 @@ export default function AdminArticulos() {
           />
           <FormField id="art-contenido" label="Contenido (HTML)" as="textarea" required rows={8} value={form.contenido} error={errors.contenido}
             onChange={(e) => setForm((p) => ({ ...p, contenido: e.target.value }))}
+          />
+          <FormField id="art-imagen-url" label="URL de imagen destacada" type="url"
+            hint="Enlace a la imagen de portada del artículo (https://…)."
+            value={form.imagenUrl}
+            onChange={(e) => setForm((p) => ({ ...p, imagenUrl: e.target.value }))}
+          />
+          <FormField id="art-imagen-alt" label="Texto alternativo de la imagen" value={form.imagenAlt}
+            hint="Descripción breve para lectores de pantalla — requerido si hay imagen. ATAG B.1.1 / WCAG 1.1.1"
+            onChange={(e) => setForm((p) => ({ ...p, imagenAlt: e.target.value }))}
           />
           <div className="articulo-form__actions">
             <Button variant="outline" onClick={() => setModal(false)}>Cancelar</Button>

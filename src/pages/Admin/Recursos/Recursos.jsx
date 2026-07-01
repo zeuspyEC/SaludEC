@@ -20,6 +20,7 @@ const FORM_INICIAL = {
   descripcion: '',
   url: '',
   duracion: '',
+  transcripcion: '',
 }
 
 const TIPO_LABEL = {
@@ -66,7 +67,7 @@ export default function AdminRecursos() {
 
   const abrirEditar = (r) => {
     setEditando(r)
-    setForm({ titulo: r.titulo || '', tipo: r.tipo || 'pdf', modulo: r.modulo || 'nutricion', descripcion: r.descripcion || '', url: r.url || '', duracion: r.duracion || '' })
+    setForm({ titulo: r.titulo || '', tipo: r.tipo || 'pdf', modulo: r.modulo || 'nutricion', descripcion: r.descripcion || '', url: r.url || '', duracion: r.duracion || '', transcripcion: r.transcripcion || '' })
     setErrors({})
     setModal(true)
   }
@@ -194,6 +195,14 @@ export default function AdminRecursos() {
           <FormField id="rec-descripcion" label="Descripción" as="textarea" rows={3} value={form.descripcion}
             onChange={(e) => setForm((p) => ({ ...p, descripcion: e.target.value }))}
           />
+
+          {(form.tipo === 'video' || form.tipo === 'podcast' || form.tipo === 'pdf') && (
+            <FormField id="rec-transcripcion" label="URL de transcripción o subtítulos" type="url"
+              hint="Enlace a la transcripción textual o archivo de subtítulos — WCAG 1.2.2 / 1.2.3. Recomendado para todos los medios multimedia."
+              value={form.transcripcion}
+              onChange={(e) => setForm((p) => ({ ...p, transcripcion: e.target.value }))}
+            />
+          )}
 
           <div className="articulo-form__actions">
             <Button variant="outline" onClick={() => setModal(false)}>Cancelar</Button>

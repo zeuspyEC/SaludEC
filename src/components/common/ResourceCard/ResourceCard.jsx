@@ -11,7 +11,7 @@ const TYPE_CONFIG = {
 }
 
 export default function ResourceCard({ recurso }) {
-  const { titulo, descripcion, tipo, url, thumbnail } = recurso
+  const { titulo, descripcion, tipo, url, thumbnail, transcripcion } = recurso
   const config = TYPE_CONFIG[tipo] ?? { label: tipo, icon: '📁', color: 'default' }
   const isExternal = url?.startsWith('http')
 
@@ -51,6 +51,18 @@ export default function ResourceCard({ recurso }) {
           {tipo === 'pdf' ? 'Descargar PDF' : tipo === 'video' ? 'Ver video' : 'Acceder'}
           {isExternal && <span className="sr-only"> (abre en nueva pestaña)</span>}
         </a>
+
+        {transcripcion && (
+          <a
+            href={transcripcion}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="resource-card__transcripcion"
+            aria-label={`Transcripción de: ${titulo} (abre en nueva pestaña)`}
+          >
+            <span aria-hidden="true">📝</span> Transcripción disponible
+          </a>
+        )}
       </div>
     </article>
   )

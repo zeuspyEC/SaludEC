@@ -97,3 +97,26 @@
   outline: var(--focus-outline);
   outline-offset: var(--focus-outline-offset);
 }
+
+.resource-card__transcripcion {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--color-blue-600);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  margin-top: var(--space-1);
+  align-self: flex-start;
+  transition: color var(--duration-fast);
+}
+
+.resource-card__transcripcion:hover {
+  color: var(--color-blue-800);
+}
+
+.resource-card__transcripcion:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-outline-offset);
+  border-radius: var(--radius-sm);
+}
