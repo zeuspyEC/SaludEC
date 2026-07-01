@@ -50,7 +50,7 @@
 }
 
 .navbar__brand-slogan {
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   color: var(--color-blue-300);
   letter-spacing: 0.03em;
   font-weight: var(--font-medium);

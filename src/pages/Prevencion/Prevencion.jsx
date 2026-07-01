@@ -96,7 +96,7 @@ export default function Prevencion() {
             <div className="cards-grid">{articulos.map((a) => <ArticleCard key={a.id} articulo={a} moduloBase="emergencias" />)}</div>
           ) : (
             <div className="empty-state">
-              <div className="empty-state__icon">🛡️</div>
+              <div className="empty-state__icon" aria-hidden="true">🛡️</div>
               <h3>Sin artículos en esta categoría</h3>
               <p>Prueba seleccionando «Todos» para ver todo el contenido disponible.</p>
             </div>

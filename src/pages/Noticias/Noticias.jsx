@@ -71,7 +71,7 @@ export default function Noticias() {
           <div className="noticias-loading"><Spinner size="lg" label="Cargando noticias…" /></div>
         ) : noticias.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-state__icon">📰</div>
+            <div className="empty-state__icon" aria-hidden="true">📰</div>
             <h2>No hay noticias publicadas</h2>
             <p>Estamos actualizando el contenido. Vuelve en breve.</p>
           </div>

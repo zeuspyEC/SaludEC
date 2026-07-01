@@ -3,14 +3,15 @@ import PropTypes from 'prop-types'
 import './Breadcrumb.css'
 
 const ROUTE_LABELS = {
-  'nutricion': 'Nutrición',
-  'actividad-fisica': 'Actividad Física',
+  'atencion-primaria': 'Atención Primaria',
+  'vacunacion': 'Vacunación',
   'salud-mental': 'Salud Mental',
-  'prevencion': 'Prevención',
+  'emergencias': 'Emergencias',
   'biblioteca': 'Biblioteca Digital',
   'noticias': 'Noticias',
   'contacto': 'Contacto',
   'nosotros': 'Nosotros',
+  'accesibilidad': 'Declaración de accesibilidad',
   'admin': 'Panel Admin',
   'articulos': 'Artículos',
   'recursos': 'Recursos',

@@ -125,7 +125,7 @@ export default function Biblioteca() {
             </>
           ) : (
             <div className="empty-state">
-              <div className="empty-state__icon">📚</div>
+              <div className="empty-state__icon" aria-hidden="true">📚</div>
               <h3>{busqueda ? 'Sin resultados' : 'Sin recursos en esta categoría'}</h3>
               <p>
                 {busqueda
