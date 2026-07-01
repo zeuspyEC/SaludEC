@@ -298,9 +298,11 @@ export async function ejecutarCleanup(onProgress) {
   for (const d of artDocs) {
     const data = d.data()
     const slug = data.slug || ''
+    // Siempre calcular la imagen correcta por título — garantiza idempotencia y evita IDs incorrectos
+    const imgCorrecta = getImgArticulo(data.titulo, data.modulo)
     const imgActual = data.imagen?.url || ''
-    // Necesita corrección si: no tiene imagen.url, O tiene una foto conocida como incorrecta
-    const necesitaImagen = !imgActual || esFotoMala(imgActual)
+    // Actualizar si: no tiene imagen, tiene foto mala conocida, O la URL difiere de la correcta
+    const necesitaActualizar = !imgActual || esFotoMala(imgActual) || imgActual !== imgCorrecta.url
 
     // Detectar duplicado por slug
     if (slug && seenSlugs[slug]) {
@@ -316,15 +318,13 @@ export async function ejecutarCleanup(onProgress) {
     }
     if (slug) seenSlugs[slug] = d.id
 
-    // Agregar o reemplazar imagen — siempre detectar por título para evitar fotos incorrectas
-    if (necesitaImagen) {
-      const img = getImgArticulo(data.titulo, data.modulo)
+    if (necesitaActualizar) {
       try {
         await updateDoc(doc(db, 'articulos', d.id), {
-          imagen: { url: img.url, alt: img.alt },
+          imagen: { url: imgCorrecta.url, alt: imgCorrecta.alt },
           actualizadoEn: serverTimestamp(),
         })
-        log(`🖼 Imagen ${esFotoMala(imgActual) ? 'reemplazada' : 'añadida'}: "${(data.titulo || '').slice(0, 50)}"`)
+        log(`🖼 Imagen sincronizada: "${(data.titulo || '').slice(0, 50)}"`)
         actualizados++
       } catch (e) {
         log(`⚠ Error actualizando ${d.id}: ${e.message}`)
