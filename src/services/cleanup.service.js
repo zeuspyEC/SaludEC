@@ -27,7 +27,7 @@ const W = '?w=700&auto=format&fit=crop'
 // IDs de Unsplash verificados visualmente — únicos por sección para evitar duplicados visuales
 const IMG = {
   // ── Nutrición (sección Atención Primaria) ─────────────────
-  mediterránea:       ['photo-1498837167922-ddd27525d352', 'Mesa con verduras y ensaladas variadas — patrón de dieta mediterránea'],
+  mediterranea:       ['photo-1498837167922-ddd27525d352', 'Mesa con verduras y ensaladas variadas — patrón de dieta mediterránea'],
   plato_saludable:    ['photo-1512621776951-a57141f2eefd', 'Plato con aguacate, tomates, garbanzos y vegetales coloridos — alimentación balanceada'],
   antiinflamatorio:   ['photo-1490645935967-10de6ba17061', 'Bowl con huevo, aguacate, tomates y brotes — dieta antiinflamatoria'],
   azucar:             ['photo-1490818387583-1baba5e638af', 'Fresas, moras, ruibarbo y naranja — azúcares naturales en frutas frescas'],
