@@ -193,7 +193,7 @@
 
 El presente documento describe la planificación, ejecución y gestión del proyecto VitaPrevent empleando la metodología \textbf{Extreme Programming (XP)}, seleccionada por su adaptabilidad a equipos pequeños, su énfasis en la calidad del código y su capacidad para incorporar cambios de requerimientos durante el desarrollo, algo especialmente relevante en un proyecto académico con restricciones de tiempo.
 
-VitaPrevent es una plataforma web accesible de servicios públicos de salud del Ecuador, construida con React 19 + Vite 6 + Firebase. El desarrollo real se ejecutó en \textbf{cuatro iteraciones} comprendidas entre el 28/06/2026 y el 29/06/2026. A partir de esa base funcional, se planifican \textbf{dos semanas adicionales} (Sprint 2: 30/06/2026 -- 13/07/2026) para completar los criterios WCAG pendientes, robustecer el panel administrativo y preparar las evidencias de evaluación final.
+VitaPrevent es una plataforma web accesible de servicios públicos de salud del Ecuador, construida con React 19 + Vite 6 + Firebase. El desarrollo real se ejecutó en \textbf{cuatro iteraciones} comprendidas entre el 28/06/2026 y el 29/06/2026. A partir de esa base funcional, el Sprint 2 (30/06/2026 -- 13/07/2026) se encuentra \textbf{en ejecución}. Al 02/07/2026 ya se han completado las historias HU-11, HU-14 y parte de HU-13, y se han resuelto cinco correcciones de calidad relacionadas con accesibilidad de imágenes y renderizado semántico de contenido.
 
 Este documento incluye:
 \begin{itemize}
@@ -396,6 +396,36 @@ Las historias de usuario fueron definidas al inicio del proyecto. Cada historia 
   \item Notificaciones Toast al crear/editar/eliminar.
 \end{itemize}
 \textbf{Puntos:} 8 \quad \textbf{Estado:} \cmark~Completado (Iteraciones 2 y 3)
+\end{storybox}
+
+\subsection{Historia completada en Iteración 1.4 --- complemento}
+
+\begin{storybox}{HU-03b \quad Imágenes únicas por sección (extensión WCAG 1.1.1)}{successgreen}
+\textbf{Como} usuario con discapacidad visual,
+\textbf{quiero} que cada artículo tenga una imagen visualmente distinta a los demás de la misma sección,
+\textbf{para} que el lector de pantalla no anuncie el mismo \texttt{alt} dos veces para artículos diferentes.\\[4pt]
+\textbf{Criterios de aceptación:}
+\begin{itemize}
+  \item Ningún artículo en la misma sección comparte ID de foto con otro artículo del mismo módulo.
+  \item El texto alternativo describe el tema específico del artículo, no un texto genérico.
+  \item El servicio \texttt{cleanup.service.js} asigna automáticamente imágenes diferenciadas al ejecutar limpieza.
+  \item Para artículos del mismo tema con títulos distintos (ej.~dos artículos sobre dieta mediterránea), se aplica sub-routing por palabras clave del título.
+\end{itemize}
+\textbf{Puntos:} 3 \quad \textbf{Estado:} \cmark~Completado (Sprint 2, 01/07/2026)
+\end{storybox}
+
+\begin{storybox}{HU-11b \quad Renderizado semántico del contenido WYSIWYG (WCAG 1.3.1)}{successgreen}
+\textbf{Como} usuario de lector de pantalla,
+\textbf{quiero} que el cuerpo de los artículos y noticias se renderice como HTML semántico,
+\textbf{para} que el lector de pantalla interprete correctamente encabezados, párrafos y énfasis del contenido.\\[4pt]
+\textbf{Criterios de aceptación:}
+\begin{itemize}
+  \item Artículos con contenido HTML del editor WYSIWYG se renderizan con \texttt{dangerouslySetInnerHTML} (no como texto plano con etiquetas visibles).
+  \item Artículos con contenido Markdown se renderizan con \texttt{ReactMarkdown}.
+  \item La detección es automática: si el contenido empieza con \texttt{<}, se usa HTML; si no, Markdown.
+  \item Aplicado en \texttt{ArticleDetail.jsx} y \texttt{NoticiasDetalle.jsx}.
+\end{itemize}
+\textbf{Puntos:} 2 \quad \textbf{Estado:} \cmark~Completado (Sprint 2, 30/06/2026)
 \end{storybox}
 
 \subsection{Historias pendientes (Sprint 2)}
@@ -665,10 +695,10 @@ El Sprint 2 tiene como objetivo:
 \midrule
 HU-09 & Alternativa explícita al cubo (WCAG 2.5.7) & 1 & Erick Costa & 1 \\
 HU-10 & Ayuda contextual en módulos (WCAG 3.2.6) & 2 & Jonathan Tipán & 1 \\
-HU-11 & Alt/title en miniaturas de listados & 2 & Javier Quilumba & 1 \\
+HU-11 & Alt/title en miniaturas de listados & 2 & Javier Quilumba & \textcolor{successgreen}{\cmark~Completado} \\
 HU-12 & Prueba formal VoiceOver y documento de evidencias & 3 & Erick Costa & 1 \\
 HU-13 & Admin: CRUD de FAQs y configuración del sitio & 5 & Jonathan Tipán & 1--2 \\
-HU-14 & Contenido Firestore: 3+ artículos por módulo & 5 & Javier Quilumba & 1--2 \\
+HU-14 & Contenido Firestore: 3+ artículos por módulo & 5 & Javier Quilumba & \textcolor{successgreen}{\cmark~Completado} \\
 HU-15 & Presentación PPT/Beamer para evaluación final & 5 & Todos & 2 \\
 HU-16 & Matriz WCAG final con evidencias fotográficas & 3 & Javier Quilumba & 2 \\
 HU-17 & Corrección de issues post-evaluación docente & 5 & Todos & 2 \\
@@ -739,6 +769,24 @@ HU-17 & Corrección de issues post-evaluación docente & 5 & Todos & 2 \\
 \caption{Calendario del Sprint 2 --- VitaPrevent}
 \end{figure}
 
+\subsection{Avance real del Sprint 2 (al 02/07/2026)}
+
+\begin{iterbox}{Sprint 2 --- Avance al 02/07/2026 (6 commits)}{tealxp}
+\textbf{Historias completadas:} HU-11 (imágenes únicas), HU-11b (HTML semántico), HU-14 (contenido por módulo)
+
+\textbf{Commits realizados:}
+\begin{itemize}
+  \item \texttt{2a52e01} --- fix(vacunacion): diferenciar imagen PAI infantil; índice compuesto recursos (Erick)
+  \item \texttt{5891b17} --- fix(cleanup): corregir tabla de imágenes con IDs verificados visualmente (Jonathan)
+  \item \texttt{8fb86e7} --- fix(cleanup): corregir key mediterránea con acento que causaba crash (Javier)
+  \item \texttt{c68bcd0} --- fix(imágenes): unicidad de fotos por sección + renderizado HTML en noticias (Erick)
+  \item \texttt{1449a39} --- fix(cleanup): imágenes únicas --- 5 pares de artículos duplicados resueltos (Jonathan)
+  \item \texttt{d073a10} --- docs: actualizar informe, análisis WCAG y guía de demo (Javier)
+\end{itemize}
+
+\textbf{Entregable:} Imágenes únicas por sección verificadas visualmente; renderizado HTML semántico en artículos y noticias; documentación LaTeX y PDFs actualizados.
+\end{iterbox}
+
 \subsection{Criterios de aceptación del Sprint 2}
 
 Para declarar el Sprint 2 completado, se deben cumplir todos los siguientes criterios:
@@ -802,6 +850,7 @@ En este contexto académico, el ``cliente'' es la asignatura y su rúbrica. Los 
 \textbf{Métrica} & \textbf{Valor} \\
 \midrule
 Total de commits (Sprint 1)             & 34 \\
+Total de commits (Sprint 2, al 02/07)  & 6 (acumulado: 40) \\
 Líneas de código aproximadas (src/)     & $\sim$5.200 \\
 Páginas implementadas                   & 11 \\
 Componentes reutilizables               & 13 \\
@@ -855,7 +904,7 @@ Regresión de accesibilidad al añadir contenido &
 
   \item \textbf{La integración continua fue determinante:} El pipeline GitHub Actions + \texttt{eslint-plugin-jsx-a11y} garantizó que ninguna regresión de accesibilidad llegara a producción. Los 34 commits del Sprint 1 resultaron en 0 violaciones axe en el sitio desplegado.
 
-  \item \textbf{Las iteraciones cortas aceleraron la retroalimentación:} Cuatro sub-iteraciones de pocas horas cada una permitieron detectar y corregir tres problemas de accesibilidad (orden de foco WCAG 2.4.3, alt vacíos WCAG 1.1.1, contraste en tablas WCAG 1.4.3) antes de que se acumularan.
+  \item \textbf{Las iteraciones cortas aceleraron la retroalimentación:} Cuatro sub-iteraciones en Sprint 1 y seis commits en los primeros días del Sprint 2 permitieron detectar y corregir cinco problemas de accesibilidad (orden de foco WCAG 2.4.3, imágenes duplicadas WCAG 1.1.1, renderizado HTML WCAG 1.3.1, caracteres acentuados en routing, diferenciación PAI/adultos) antes de que se acumularan.
 
   \item \textbf{La propiedad colectiva del código funcionó:} Los 34 commits distribuidos entre tres integrantes muestran contribución real y alternada. Ningún módulo pertenece a una sola persona; todos pueden modificar cualquier parte del proyecto.
 

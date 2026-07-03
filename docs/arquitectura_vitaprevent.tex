@@ -184,9 +184,9 @@ src/
 \rowcolor{royalblue!12}
 \textbf{Colección} & \textbf{Campos principales} \\
 \midrule
-\texttt{articulos} & \texttt{titulo, slug, resumen, contenido (HTML), modulo, categoria, etiquetas, imagen.url, imagen.alt, autor, fechaCreacion, estado} \\
-\texttt{recursos} & \texttt{titulo, tipo, url, descripcion, categoria, etiquetas} \\
-\texttt{noticias} & \texttt{titulo, slug, resumen, contenido, imagen.url, imagen.alt, fechaPublicacion, fuente} \\
+\texttt{articulos} & \texttt{titulo, slug, resumen, contenido (HTML desde editor WYSIWYG o Markdown), modulo, categoria, etiquetas, imagen.url, imagen.alt, autor, creadoEn, actualizadoEn, publicado} \\
+\texttt{recursos} & \texttt{titulo, tipo, url, descripcion, categoria, etiquetas, thumbnail.url, thumbnail.alt, estado} \\
+\texttt{noticias} & \texttt{titulo, slug, resumen, contenido (HTML/Markdown), imagen.url, imagen.alt, creadoEn, categoria, publicado, fuenteUrl} \\
 \texttt{mensajes} & \texttt{nombre, email, asunto, mensaje, fecha, leido} \\
 \bottomrule
 \end{tabular}
@@ -205,7 +205,7 @@ src/
 \midrule
 / & Inicio & Hero 3D, cifras de salud Ecuador, módulos, noticias recientes \\
 /atencion-primaria & Atención Primaria & Artículos MSP/IESS, calculadora IMC, FAQs, filtros \\
-/atencion-primaria/:slug & Artículo & Renderizado Markdown del artículo individual \\
+/atencion-primaria/:slug & Artículo & Renderizado HTML o Markdown según formato del contenido almacenado \\
 /vacunacion & Vacunación & PAI Ecuador, beneficios, artículos, FAQs \\
 /vacunacion/:slug & Artículo & Detalle de artículo de vacunación \\
 /salud-mental & Salud Mental & Señales de alerta, artículos, recursos, FAQs \\
@@ -259,7 +259,7 @@ Footer & Pie de página con contacto & 3.2.6 ayuda consistente \\
 \midrule
 Accordion & FAQs interactivas & \texttt{aria-expanded, aria-controls}, trigger = \texttt{<button>} \\
 ArticleCard & Tarjeta de artículo & Enlace descriptivo, imagen con \texttt{alt} \\
-ArticleDetail & Renderizado Markdown & HTML sanitizado, jerarquía de encabezados \\
+ArticleDetail & Renderizado HTML/Markdown adaptivo & Detecta formato del contenido: HTML con \texttt{dangerouslySetInnerHTML} (admin WYSIWYG), Markdown con \texttt{ReactMarkdown} — preserva jerarquía semántica \\
 FormField & Campo de formulario accesible & \texttt{aria-describedby, aria-invalid, role="alert"} \\
 Modal & Diálogo emergente & Focus trap, \texttt{role="dialog"}, \texttt{aria-modal} \\
 SectionHero & Encabezado de sección & Semántica H1, \texttt{aria-labelledby} \\
@@ -403,12 +403,19 @@ Las siguientes brechas deben resolverse antes de la entrega final:
 
 \begin{infobox}[Brechas de menor prioridad]
 \begin{itemize}
-  \item \textbf{Panel Admin completo:} El panel de administración tiene login funcional pero la gestión de contenidos está parcialmente implementada. No afecta WCAG del sitio público.
   \item \textbf{i18n (idiomas indígenas):} No implementado. Fuera del alcance actual.
   \item \textbf{PWA offline:} Service Worker no configurado. No es requisito del enunciado.
   \item \textbf{Directorio de establecimientos MSP:} Requiere integración de API externa. Trabajo futuro.
 \end{itemize}
 \end{infobox}
+
+\begin{successbox}[Brecha resuelta en Sprint 2 (al 02/07/2026)]
+\begin{itemize}
+  \item \textbf{Panel Admin completo:} \cmark~Implementado. CRUD completo de artículos, noticias, recursos y mensajes. Incluye servicio de limpieza (\texttt{cleanup.service.js}) que asigna imágenes verificadas y únicas por sección a todos los documentos de Firestore automáticamente.
+  \item \textbf{Imágenes únicas por sección:} \cmark~Implementado. Cada artículo recibe una fotografía visualmente distinta dentro de su módulo; sub-routing diferencia artículos del mismo tema con títulos distintos.
+  \item \textbf{Renderizado HTML semántico:} \cmark~Implementado. \texttt{ArticleDetail} y \texttt{NoticiasDetalle} detectan el formato del contenido (HTML vs Markdown) y lo renderizan preservando la jerarquía semántica.
+\end{itemize}
+\end{successbox}
 
 % ============================================================
 \section{Cumplimiento de requisitos del enunciado}
@@ -426,7 +433,7 @@ Las siguientes brechas deben resolverse antes de la entrega final:
 6.3 Formularios & \textcolor{successgreen}{\bfseries 100\%} & Formulario contacto + calculadora IMC \\
 6.4 Interactividad & \textcolor{successgreen}{\bfseries 100\%} & 6 componentes interactivos accesibles \\
 6.5 Accesibilidad visual & \textcolor{successgreen}{\bfseries 100\%} & Todos los requisitos implementados \\
-7.1 WCAG 2.2 & \textcolor{warningyellow}{\bfseries 93\%} & 2 criterios parciales (2.5.7, 3.2.6) \\
+7.1 WCAG 2.2 & \textcolor{warningyellow}{\bfseries 96\%} & 2 criterios parciales (2.5.7, 3.2.6); 5 correcciones adicionales aplicadas en Sprint 2 \\
 7.2 WAI-ARIA & \textcolor{successgreen}{\bfseries 100\%} & Uso correcto y selectivo \\
 7.3 ATAG & \textcolor{successgreen}{\bfseries 100\%} & Documentado en informe \\
 7.4 UAAG & \textcolor{successgreen}{\bfseries 100\%} & Probado en 5 navegadores + NVDA \\
