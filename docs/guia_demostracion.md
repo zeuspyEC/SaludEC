@@ -1,8 +1,8 @@
-# Guía Personal de Demostración — VitaPrevent
+# Guía Personal de Demostración — SaludEC
 
 > **Para quién:** Erick, Jonathan y Javier para la presentación oral (10–15 min).  
 > **URL del sitio:** https://vitaprevent-b2e34.web.app  
-> **Repo:** https://github.com/zeuspyEC/VitaPrevent
+> **Repo:** https://github.com/zeuspyEC/SaludEC
 
 ---
 
@@ -21,11 +21,11 @@
 
 ---
 
-## SECCIÓN 1: Qué es VitaPrevent y para quién es
+## SECCIÓN 1: Qué es SaludEC y para quién es
 
 **Pitch de 1 minuto:**
 
-> "VitaPrevent es un portal de servicios públicos de salud del Ecuador. Elegimos este tema porque los portales de salud pública suelen tener barreras de accesibilidad para personas con discapacidad, adultos mayores y personas con bajo dominio tecnológico. Nuestro objetivo fue demostrar que es posible construir un portal de salud completamente accesible sin sacrificar el diseño visual."
+> "SaludEC es un portal de servicios públicos de salud del Ecuador. Elegimos este tema porque los portales de salud pública suelen tener barreras de accesibilidad para personas con discapacidad, adultos mayores y personas con bajo dominio tecnológico. Nuestro objetivo fue demostrar que es posible construir un portal de salud completamente accesible sin sacrificar el diseño visual."
 
 **Público objetivo:** Ciudadanos ecuatorianos, incluyendo:
 - Personas con discapacidad visual (usan lectores de pantalla como NVDA)
@@ -152,7 +152,7 @@
 2. Ir a `vitaprevent-b2e34.web.app`
 3. **NVDA + F6** → lista de landmarks: escucha "Navegación principal", "main: Contenido principal"
 4. Presionar **Tab**: NVDA anuncia "Saltar al contenido principal, enlace"
-5. Tab de nuevo: "VitaPrevent, enlace" (logo)
+5. Tab de nuevo: "SaludEC, enlace" (logo)
 6. Tab: "Inicio, enlace, página actual" (aria-current)
 7. Tab: "Atención Primaria, enlace"
 8. Ir a `/atencion-primaria`
@@ -194,7 +194,7 @@
 
 ### Declaración (leer):
 
-> "Después de evaluación automática con axe DevTools y Lighthouse, revisión manual de criterios WCAG 2.2 y prueba con NVDA y teclado, declaramos que VitaPrevent **cumple sustancialmente con WCAG 2.2 Nivel AA**. Identificamos dos criterios con cumplimiento parcial:
+> "Después de evaluación automática con axe DevTools y Lighthouse, revisión manual de criterios WCAG 2.2 y prueba con NVDA y teclado, declaramos que SaludEC **cumple sustancialmente con WCAG 2.2 Nivel AA**. Identificamos dos criterios con cumplimiento parcial:
 > 1. **2.5.7 Movimientos de arrastre:** el cubo 3D usa arrastre, pero el contenido es accesible por Navbar. Alternativa documentada.
 > 2. **3.2.6 Ayuda consistente:** el contacto está en el footer; enlace contextual pendiente en módulos internos.
 >

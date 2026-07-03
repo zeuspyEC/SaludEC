@@ -1,5 +1,5 @@
 % ============================================================
-%  DOCUMENTO DE ARQUITECTURA --- VitaPrevent
+%  DOCUMENTO DE ARQUITECTURA --- SaludEC
 %  Qué tiene el sitio, qué falta, análisis de brechas WCAG
 %  Compilar con: pdflatex arquitectura_vitaprevent.tex (2 veces)
 % ============================================================
@@ -63,7 +63,7 @@
   fonttitle=\bfseries\small, title={#1}, arc=4pt, boxrule=0.8pt,
   left=8pt, right=8pt, top=6pt, bottom=6pt}
 \usepackage[colorlinks=true, linkcolor=royalblue, urlcolor=royalblue, unicode=true,
-  pdftitle={VitaPrevent - Arquitectura y Analisis de Brechas},
+  pdftitle={SaludEC - Arquitectura y Analisis de Brechas},
   pdfauthor={Erick Costa, Jonathan Tipan, Javier Quilumba},
   pdflang={es-EC}]{hyperref}
 \usepackage{amssymb}
@@ -73,7 +73,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\color{graymid}\textit{VitaPrevent --- Arquitectura y Análisis de Brechas}}
+\fancyhead[L]{\small\color{graymid}\textit{SaludEC --- Arquitectura y Análisis de Brechas}}
 \fancyhead[R]{\small\color{graymid}\thepage}
 \fancyfoot[C]{\small\color{graymid}\textit{Escuela Politécnica Nacional --- 2026}}
 \renewcommand{\headrulewidth}{0.4pt}
@@ -95,13 +95,13 @@
 {\normalsize Facultad de Ingeniería en Sistemas --- Ingeniería de Software}\\[4pt]
 {\normalsize Asignatura: Usabilidad y Accesibilidad}\\[2cm]
 {\color{royalblue}\rule{0.8\linewidth}{1.5pt}}\\[1cm]
-{\Huge\bfseries\color{navydeep} VitaPrevent}\\[0.4cm]
+{\Huge\bfseries\color{navydeep} SaludEC}\\[0.4cm]
 {\Large\color{royalblue} Arquitectura Técnica y Análisis de Brechas}\\[0.3cm]
 {\large\itshape Portal de Servicios Públicos de Salud del Ecuador}\\[1cm]
 {\color{royalblue}\rule{0.8\linewidth}{0.8pt}}\\[1.5cm]
 \begin{tabular}{ll}
   \textbf{Autores:} & Erick Costa, Jonathan Tipán, Javier Quilumba \\
-  \textbf{Repositorio:} & \texttt{github.com/zeuspyEC/VitaPrevent} \\
+  \textbf{Repositorio:} & \texttt{github.com/zeuspyEC/SaludEC} \\
   \textbf{Despliegue:} & \texttt{vitaprevent-b2e34.web.app} \\
   \textbf{Fecha:} & Junio 2026 \\
 \end{tabular}
@@ -113,7 +113,7 @@
 % ============================================================
 \section{Resumen del documento}
 
-Este documento describe la arquitectura técnica completa de VitaPrevent y realiza un análisis exhaustivo de las brechas entre el estado actual del sistema y los requisitos del proyecto académico (Asignatura Usabilidad y Accesibilidad, EPN). Para cada brecha identificada se indica el estado, la prioridad de resolución y la acción correctiva.
+Este documento describe la arquitectura técnica completa de SaludEC y realiza un análisis exhaustivo de las brechas entre el estado actual del sistema y los requisitos del proyecto académico (Asignatura Usabilidad y Accesibilidad, EPN). Para cada brecha identificada se indica el estado, la prioridad de resolución y la acción correctiva.
 
 % ============================================================
 \section{Arquitectura general del sistema}
@@ -122,7 +122,7 @@ Este documento describe la arquitectura técnica completa de VitaPrevent y reali
 
 \begin{table}[H]
 \centering
-\caption{Stack tecnológico de VitaPrevent}
+\caption{Stack tecnológico de SaludEC}
 \begin{tabular}{@{}>{\bfseries}p{3.5cm} p{4.5cm} p{5.5cm}@{}}
 \toprule
 \rowcolor{royalblue!12}
@@ -142,7 +142,7 @@ Linting & ESLint + \texttt{jsx-a11y} & Plugin de accesibilidad en build \\
 
 \subsection{Patrón de arquitectura}
 
-VitaPrevent sigue un patrón \textbf{SPA (Single Page Application)} con las siguientes capas:
+SaludEC sigue un patrón \textbf{SPA (Single Page Application)} con las siguientes capas:
 
 \begin{enumerate}
   \item \textbf{Enrutamiento:} React Router v6 con \texttt{createBrowserRouter} y lazy loading por módulo.
@@ -197,7 +197,7 @@ src/
 
 \begin{table}[H]
 \centering
-\caption{Mapa completo de rutas --- VitaPrevent}
+\caption{Mapa completo de rutas --- SaludEC}
 \begin{tabular}{@{}>{\ttfamily\small}p{4.5cm} >{\bfseries}p{3cm} p{5.5cm}@{}}
 \toprule
 \rowcolor{royalblue!12}

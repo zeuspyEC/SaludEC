@@ -1,5 +1,5 @@
 % ============================================================
-%  PRINCIPIOS WCAG 2.2 Y EVIDENCIAS --- VitaPrevent
+%  PRINCIPIOS WCAG 2.2 Y EVIDENCIAS --- SaludEC
 %  Análisis POUR con evidencias de código y pruebas
 %  Compilar con: pdflatex principios_wcag_evidencias.tex (2 veces)
 % ============================================================
@@ -72,7 +72,7 @@
   arc=4pt, boxrule=0.8pt,
   left=8pt, right=8pt, top=6pt, bottom=6pt}
 \usepackage[colorlinks=true, linkcolor=royalblue, urlcolor=royalblue, unicode=true,
-  pdftitle={VitaPrevent - Principios WCAG y Evidencias POUR},
+  pdftitle={SaludEC - Principios WCAG y Evidencias POUR},
   pdfauthor={Erick Costa, Jonathan Tipan, Javier Quilumba},
   pdflang={es-EC}]{hyperref}
 \usepackage{amssymb}
@@ -81,7 +81,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\color{graymid}\textit{VitaPrevent --- Principios WCAG 2.2 y Evidencias POUR}}
+\fancyhead[L]{\small\color{graymid}\textit{SaludEC --- Principios WCAG 2.2 y Evidencias POUR}}
 \fancyhead[R]{\small\color{graymid}\thepage}
 \fancyfoot[C]{\small\color{graymid}\textit{Escuela Politécnica Nacional --- 2026}}
 \renewcommand{\headrulewidth}{0.4pt}
@@ -105,13 +105,13 @@
 {\normalsize Facultad de Ingeniería en Sistemas --- Ingeniería de Software}\\[4pt]
 {\normalsize Asignatura: Usabilidad y Accesibilidad}\\[2cm]
 {\color{royalblue}\rule{0.8\linewidth}{1.5pt}}\\[1cm]
-{\Huge\bfseries\color{navydeep} VitaPrevent}\\[0.5cm]
+{\Huge\bfseries\color{navydeep} SaludEC}\\[0.5cm]
 {\Large\color{royalblue} Principios WCAG 2.2 y Evidencias de Cumplimiento}\\[0.3cm]
 {\large\itshape Análisis POUR con fragmentos de código y resultados de prueba}\\[1cm]
 {\color{royalblue}\rule{0.8\linewidth}{0.8pt}}\\[1.5cm]
 \begin{tabular}{ll}
   \textbf{Autores:} & Erick Costa, Jonathan Tipán, Javier Quilumba \\
-  \textbf{Repositorio:} & \texttt{github.com/zeuspyEC/VitaPrevent} \\
+  \textbf{Repositorio:} & \texttt{github.com/zeuspyEC/SaludEC} \\
   \textbf{Sitio web:} & \texttt{vitaprevent-b2e34.web.app} \\
   \textbf{Estándar evaluado:} & WCAG 2.2 Nivel AA (W3C, octubre 2023) \\
   \textbf{Fecha:} & Junio 2026 \\
@@ -135,7 +135,7 @@ WCAG 2.2 organiza todos sus criterios de éxito bajo cuatro principios fundament
 \end{tabular}
 \end{center}
 
-VitaPrevent adopta el enfoque \textit{accessibility-first}: cada componente se diseña desde el principio para cumplir POUR, sin añadir accesibilidad como capa posterior.
+SaludEC adopta el enfoque \textit{accessibility-first}: cada componente se diseña desde el principio para cumplir POUR, sin añadir accesibilidad como capa posterior.
 
 % ============================================================
 \section{P --- Perceptible}
@@ -149,7 +149,7 @@ El contenido no puede depender de un único sentido (visión, audición) para se
 
 \textbf{Criterio:} Todo contenido no textual que se presenta al usuario tiene una alternativa textual que sirve el mismo propósito.
 
-\textbf{Cómo se cumple en VitaPrevent:}
+\textbf{Cómo se cumple en SaludEC:}
 
 \begin{itemize}
   \item \textbf{Emojis decorativos:} Todos los emojis usados como íconos visuales tienen \texttt{aria-hidden="true"} para que los lectores de pantalla los ignoren.
@@ -262,12 +262,12 @@ Ninguna funcionalidad debe requerir exclusivamente el uso del ratón o gestos co
 
 \textbf{Criterio:} Toda la funcionalidad del contenido es operable mediante una interfaz de teclado, sin requerir tiempos específicos para cada pulsación.
 
-\textbf{Verificación de ruta Tab en VitaPrevent:}
+\textbf{Verificación de ruta Tab en SaludEC:}
 
 \begin{center}
 \begin{tabular}{>{\bfseries\small}r l}
 1 & SkipLink (``Saltar al contenido principal'') \\
-2 & Logo VitaPrevent (enlace a Inicio) \\
+2 & Logo SaludEC (enlace a Inicio) \\
 3--9 & Ítems de Navbar (Inicio, Atención Primaria, Vacunación, \ldots) \\
 10 & Primer enlace/botón interactivo en el contenido principal \\
 $\vdots$ & \ldots (continúa en orden lógico visual) \\
@@ -400,7 +400,7 @@ Los usuarios deben poder entender tanto el contenido como el funcionamiento de l
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <title>VitaPrevent</title>
+    <title>SaludEC</title>
   </head>
   ...
 </html>
@@ -551,7 +551,7 @@ El contenido debe poder ser interpretado de manera fiable por una amplia varieda
 
 \begin{table}[H]
 \centering
-\caption{Cumplimiento POUR global de VitaPrevent}
+\caption{Cumplimiento POUR global de SaludEC}
 \begin{tabular}{@{}>{\bfseries\color{navydeep}}p{3cm} >{\centering\arraybackslash}p{2.5cm} p{8cm}@{}}
 \toprule
 \rowcolor{royalblue!12}
@@ -568,7 +568,7 @@ Robusto & \textcolor{successgreen}{\bfseries 100\%} & 4.1.1 HTML válido, 4.1.2 
 \end{table}
 
 \begin{okbox}[Declaración resumida de conformidad]
-VitaPrevent cumple sustancialmente con los cuatro principios POUR de WCAG 2.2 Nivel AA. Los dos criterios con cumplimiento parcial (2.5.7 y 3.2.6) tienen alternativas funcionales documentadas y están en proceso de resolución completa. El sitio \textbf{no presenta barreras de acceso} para usuarios con discapacidades visuales, motrices, auditivas o cognitivas que utilizan lectores de pantalla, teclado o magnificadores.
+SaludEC cumple sustancialmente con los cuatro principios POUR de WCAG 2.2 Nivel AA. Los dos criterios con cumplimiento parcial (2.5.7 y 3.2.6) tienen alternativas funcionales documentadas y están en proceso de resolución completa. El sitio \textbf{no presenta barreras de acceso} para usuarios con discapacidades visuales, motrices, auditivas o cognitivas que utilizan lectores de pantalla, teclado o magnificadores.
 \end{okbox}
 
 \end{document}

@@ -1,5 +1,5 @@
 % ============================================================
-%  DOCUMENTO DE PLANIFICACIÓN XP --- VitaPrevent
+%  DOCUMENTO DE PLANIFICACIÓN XP --- SaludEC
 %  Metodología Extreme Programming: Iteraciones reales + plan
 %  Asignatura: Usabilidad y Accesibilidad (ISWD732) – GR3SW
 %  EPN – Facultad de Ingeniería de Sistemas – Ingeniería de Software
@@ -56,7 +56,7 @@
 \usepackage[
   colorlinks=true, linkcolor=royalblue, urlcolor=royalblue, citecolor=royalblue,
   unicode=true, pdfencoding=auto,
-  pdftitle={VitaPrevent - Metodología XP - Planificación de Iteraciones},
+  pdftitle={SaludEC - Metodología XP - Planificación de Iteraciones},
   pdfauthor={Erick Costa, Jonathan Tipán, Javier Quilumba},
   pdflang={es-EC}
 ]{hyperref}
@@ -69,7 +69,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\color{graymid}\textit{VitaPrevent --- Metodología XP --- ISWD732 GR3SW}}
+\fancyhead[L]{\small\color{graymid}\textit{SaludEC --- Metodología XP --- ISWD732 GR3SW}}
 \fancyhead[R]{\small\color{graymid}\thepage}
 \fancyfoot[C]{\small\color{graymid}\textit{Escuela Politécnica Nacional --- 2026}}
 \renewcommand{\headrulewidth}{0.4pt}
@@ -191,9 +191,9 @@
 % ============================================================
 \section{Introducción}
 
-El presente documento describe la planificación, ejecución y gestión del proyecto VitaPrevent empleando la metodología \textbf{Extreme Programming (XP)}, seleccionada por su adaptabilidad a equipos pequeños, su énfasis en la calidad del código y su capacidad para incorporar cambios de requerimientos durante el desarrollo, algo especialmente relevante en un proyecto académico con restricciones de tiempo.
+El presente documento describe la planificación, ejecución y gestión del proyecto SaludEC empleando la metodología \textbf{Extreme Programming (XP)}, seleccionada por su adaptabilidad a equipos pequeños, su énfasis en la calidad del código y su capacidad para incorporar cambios de requerimientos durante el desarrollo, algo especialmente relevante en un proyecto académico con restricciones de tiempo.
 
-VitaPrevent es una plataforma web accesible de servicios públicos de salud del Ecuador, construida con React 19 + Vite 6 + Firebase. El desarrollo real se ejecutó en \textbf{cuatro iteraciones} comprendidas entre el 28/06/2026 y el 29/06/2026. A partir de esa base funcional, el Sprint 2 (30/06/2026 -- 13/07/2026) se encuentra \textbf{en ejecución}. Al 02/07/2026 ya se han completado las historias HU-11, HU-14 y parte de HU-13, y se han resuelto cinco correcciones de calidad relacionadas con accesibilidad de imágenes y renderizado semántico de contenido.
+SaludEC es una plataforma web accesible de servicios públicos de salud del Ecuador, construida con React 19 + Vite 6 + Firebase. El desarrollo real se ejecutó en \textbf{cuatro iteraciones} comprendidas entre el 28/06/2026 y el 29/06/2026. A partir de esa base funcional, el Sprint 2 (30/06/2026 -- 13/07/2026) se encuentra \textbf{en ejecución}. Al 02/07/2026 ya se han completado las historias HU-11, HU-14 y parte de HU-13, y se han resuelto cinco correcciones de calidad relacionadas con accesibilidad de imágenes y renderizado semántico de contenido.
 
 Este documento incluye:
 \begin{itemize}
@@ -221,12 +221,12 @@ Extreme Programming fue elegida sobre metodologías más pesadas (RUP, cascada) 
 
 \begin{table}[H]
 \centering
-\caption{Valores XP y su aplicación en VitaPrevent}
+\caption{Valores XP y su aplicación en SaludEC}
 \small
 \begin{tabular}{@{}>{\bfseries\color{violetxp}}p{3cm} p{11.5cm}@{}}
 \toprule
 \rowcolor{violetxp!10}
-\textbf{Valor XP} & \textbf{Aplicación concreta en VitaPrevent} \\
+\textbf{Valor XP} & \textbf{Aplicación concreta en SaludEC} \\
 \midrule
 Comunicación &
   Repositorio GitHub compartido con commits descriptivos. Todos los integrantes conocen el estado completo del proyecto. Pull del código antes de cada sesión. \\
@@ -260,7 +260,7 @@ Respeto &
 
 \begin{table}[H]
 \centering
-\caption{Equipo XP de VitaPrevent}
+\caption{Equipo XP de SaludEC}
 \begin{tabular}{@{}>{\bfseries}p{3.5cm} p{4.5cm} p{6cm}@{}}
 \toprule
 \rowcolor{violetxp!10}
@@ -306,8 +306,8 @@ Las historias de usuario fueron definidas al inicio del proyecto. Cada historia 
 \textbf{para} saber en qué sección me encuentro al navegar.\\[4pt]
 \textbf{Criterios de aceptación:}
 \begin{itemize}
-  \item \texttt{document.title} se actualiza en cada cambio de ruta con formato ``Sección | VitaPrevent''.
-  \item La página de inicio usa ``VitaPrevent --- Servicios públicos de salud''.
+  \item \texttt{document.title} se actualiza en cada cambio de ruta con formato ``Sección | SaludEC''.
+  \item La página de inicio usa ``SaludEC --- Servicios públicos de salud''.
 \end{itemize}
 \textbf{Puntos:} 2 \quad \textbf{Estado:} \cmark~Completado (Iteración 1)
 \end{storybox}
@@ -467,11 +467,11 @@ Las historias de usuario fueron definidas al inicio del proyecto. Cada historia 
 \textbf{Historias:}      & HU-01 a HU-08 (8 historias completadas) \\
 \textbf{Puntos:}         & 39 puntos de historia completados \\
 \textbf{Despliegue:}     & \url{https://vitaprevent-b2e34.web.app} \\
-\textbf{Repositorio:}    & \url{https://github.com/zeuspyEC/VitaPrevent} \\
+\textbf{Repositorio:}    & \url{https://github.com/zeuspyEC/SaludEC} \\
 \end{tabular}
 \end{metabox}
 
-El Sprint 1 comprende el desarrollo completo de la plataforma VitaPrevent, desde la inicialización del proyecto hasta la versión con accesibilidad completa (WCAG 2.2 AA, salvo 2 criterios parciales). Se ejecutó en cuatro sub-iteraciones de trabajo intensivo.
+El Sprint 1 comprende el desarrollo completo de la plataforma SaludEC, desde la inicialización del proyecto hasta la versión con accesibilidad completa (WCAG 2.2 AA, salvo 2 criterios parciales). Se ejecutó en cuatro sub-iteraciones de trabajo intensivo.
 
 \subsection{Iteración 1.1 --- Fundamentos y Arquitectura (28/06/2026)}
 
@@ -617,7 +617,7 @@ Javier Quilumba & 10 & HU-03, HU-05 (parcial), HU-08 (parcial) & 12 \\
 \addlegendentry{Avance real}
 \end{axis}
 \end{tikzpicture}
-\caption{Burndown del Sprint 1 --- VitaPrevent (39 puntos, 4 iteraciones)}
+\caption{Burndown del Sprint 1 --- SaludEC (39 puntos, 4 iteraciones)}
 \end{figure}
 
 \subsubsection{Estado de criterios WCAG 2.2 al finalizar Sprint 1}
@@ -766,7 +766,7 @@ HU-17 & Corrección de issues post-evaluación docente & 5 & Todos & 2 \\
 % Borde
 \draw[royalblue!30, thick] (0,0) rectangle (14, 6);
 \end{tikzpicture}
-\caption{Calendario del Sprint 2 --- VitaPrevent}
+\caption{Calendario del Sprint 2 --- SaludEC}
 \end{figure}
 
 \subsection{Avance real del Sprint 2 (al 02/07/2026)}
@@ -926,7 +926,7 @@ Regresión de accesibilidad al añadir contenido &
 
   \item GitHub, Inc. (2024). \textit{GitHub Actions Documentation}. \url{https://docs.github.com/actions}
 
-  \item Repositorio del proyecto: \url{https://github.com/zeuspyEC/VitaPrevent}
+  \item Repositorio del proyecto: \url{https://github.com/zeuspyEC/SaludEC}
 
   \item Sitio en producción: \url{https://vitaprevent-b2e34.web.app}
 \end{enumerate}

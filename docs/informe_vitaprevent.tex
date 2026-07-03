@@ -1,5 +1,5 @@
 % ============================================================
-%  INFORME TÉCNICO --- VitaPrevent
+%  INFORME TÉCNICO --- SaludEC
 %  Tarea 06 – Primer Avance Técnico-Arquitectónico
 %  Asignatura: Usabilidad y Accesibilidad (ISWD732) – GR3SW
 %  EPN – Facultad de Ingeniería de Sistemas – Ingeniería de Software
@@ -77,7 +77,7 @@
   citecolor=royalblue,
   unicode=true,
   pdfencoding=auto,
-  pdftitle={VitaPrevent - Primer Avance Tecnico-Arquitectonico},
+  pdftitle={SaludEC - Primer Avance Tecnico-Arquitectonico},
   pdfauthor={Erick Costa, Jonathan Tipan, Javier Quilumba},
   pdfsubject={Tarea 06 - Usabilidad y Accesibilidad ISWD732 GR3SW},
   pdflang={es-EC}
@@ -92,7 +92,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\color{graymid}\textit{VitaPrevent --- Usabilidad y Accesibilidad ISWD732}}
+\fancyhead[L]{\small\color{graymid}\textit{SaludEC --- Usabilidad y Accesibilidad ISWD732}}
 \fancyhead[R]{\small\color{graymid}\thepage}
 \fancyfoot[C]{\small\color{graymid}\textit{Escuela Politécnica Nacional --- 2026}}
 \renewcommand{\headrulewidth}{0.4pt}
@@ -216,11 +216,11 @@
 % ============================================================
 \section{Introducción}
 
-El presente informe corresponde al avance técnico-arquitectónico del proyecto \textbf{VitaPrevent}, una plataforma web de servicios públicos de salud del Ecuador, desarrollada para la asignatura de Usabilidad y Accesibilidad (ISWD732).
+El presente informe corresponde al avance técnico-arquitectónico del proyecto \textbf{SaludEC}, una plataforma web de servicios públicos de salud del Ecuador, desarrollada para la asignatura de Usabilidad y Accesibilidad (ISWD732).
 
 En esta etapa se documenta el estado actual del proyecto: su estructura, módulos implementados, tecnologías seleccionadas, decisiones de accesibilidad adoptadas y los criterios WCAG 2.2 aplicados hasta la fecha. El sitio se encuentra funcional y desplegado en producción en \href{https://vitaprevent-b2e34.web.app}{\texttt{vitaprevent-b2e34.web.app}}, con todas sus páginas principales operativas.
 
-Como grupo, buscamos que VitaPrevent no sea solamente una página informativa, sino una plataforma web funcional, organizada y accesible, orientada a ciudadanos ecuatorianos que deseen conocer y acceder a los servicios públicos de salud sin barreras de ningún tipo. Por esta razón, el proyecto fue planificado e implementado desde el inicio considerando navegación clara, formularios accesibles, contenido comprensible, componentes interactivos y compatibilidad con distintos usuarios y dispositivos.
+Como grupo, buscamos que SaludEC no sea solamente una página informativa, sino una plataforma web funcional, organizada y accesible, orientada a ciudadanos ecuatorianos que deseen conocer y acceder a los servicios públicos de salud sin barreras de ningún tipo. Por esta razón, el proyecto fue planificado e implementado desde el inicio considerando navegación clara, formularios accesibles, contenido comprensible, componentes interactivos y compatibilidad con distintos usuarios y dispositivos.
 
 % ============================================================
 \section{Descripción General del Sitio}
@@ -231,15 +231,15 @@ El tema seleccionado es el desarrollo de una plataforma web accesible de \textbf
 
 \begin{infobox}[Ficha del sitio]
 \begin{tabular}{@{}ll@{}}
-\textbf{Nombre:}       & VitaPrevent \\
+\textbf{Nombre:}       & SaludEC \\
 \textbf{Eslogan:}      & ``Tu salud, un derecho garantizado'' \\
 \textbf{Enfoque:}      & Servicios públicos de salud del Ecuador \\
 \textbf{URL:}          & \url{https://vitaprevent-b2e34.web.app} \\
-\textbf{Repositorio:}  & \url{https://github.com/zeuspyEC/VitaPrevent} \\
+\textbf{Repositorio:}  & \url{https://github.com/zeuspyEC/SaludEC} \\
 \end{tabular}
 \end{infobox}
 
-VitaPrevent es un portal digital orientado a promover el conocimiento y acceso a los servicios públicos de salud del Ecuador, con contenido sobre Atención Primaria (centros del MSP e IESS), Vacunación (Programa Ampliado de Inmunizaciones), Salud Mental (servicios y líneas de crisis del MSP) y Emergencias (ECU 911 y SAMU). El sitio está diseñado para facilitar el acceso a información clara sobre cómo usar el sistema de salud pública, con cifras oficiales de fuentes como el MSP, IESS, ECU 911 y OPS Ecuador.
+SaludEC es un portal digital orientado a promover el conocimiento y acceso a los servicios públicos de salud del Ecuador, con contenido sobre Atención Primaria (centros del MSP e IESS), Vacunación (Programa Ampliado de Inmunizaciones), Salud Mental (servicios y líneas de crisis del MSP) y Emergencias (ECU 911 y SAMU). El sitio está diseñado para facilitar el acceso a información clara sobre cómo usar el sistema de salud pública, con cifras oficiales de fuentes como el MSP, IESS, ECU 911 y OPS Ecuador.
 
 \subsection{Público objetivo}
 
@@ -258,7 +258,7 @@ Este público justifica la necesidad de que el sitio sea claro, accesible, fáci
 
 \subsection{Objetivo comunicacional y funcional}
 
-El \textbf{objetivo comunicacional} de VitaPrevent es informar y orientar a los ciudadanos ecuatorianos sobre los servicios públicos de salud disponibles, usando un lenguaje sencillo, directo y comprensible, con datos de fuentes oficiales (MSP, IESS, ECU 911, OPS).
+El \textbf{objetivo comunicacional} de SaludEC es informar y orientar a los ciudadanos ecuatorianos sobre los servicios públicos de salud disponibles, usando un lenguaje sencillo, directo y comprensible, con datos de fuentes oficiales (MSP, IESS, ECU 911, OPS).
 
 El \textbf{objetivo funcional} es permitir que el usuario pueda navegar por las cuatro secciones de servicios de salud, consultar artículos y guías, revisar recursos educativos, acceder a noticias de salud pública y enviar mensajes mediante un formulario de contacto accesible.
 
@@ -267,7 +267,7 @@ El \textbf{objetivo funcional} es permitir que el usuario pueda navegar por las 
 
 Los portales institucionales de salud en Ecuador frecuentemente presentan barreras de accesibilidad que dificultan su uso por parte de personas con discapacidades, adultos mayores o personas con bajo dominio tecnológico. Formularios sin etiquetas, imágenes sin texto alternativo, navegación imposible por teclado y contraste insuficiente son problemas comunes que violan los derechos de acceso a la información.
 
-VitaPrevent responde a esta problemática construyendo desde el inicio una plataforma que cumpla los estándares internacionales WCAG 2.2 Nivel AA. No se trata únicamente de diseñar una página visualmente agradable, sino de construir una plataforma que pueda utilizarse con teclado, lector de pantalla, dispositivos móviles y distintos navegadores, garantizando que ningún ciudadano quede excluido por razones tecnológicas.
+SaludEC responde a esta problemática construyendo desde el inicio una plataforma que cumpla los estándares internacionales WCAG 2.2 Nivel AA. No se trata únicamente de diseñar una página visualmente agradable, sino de construir una plataforma que pueda utilizarse con teclado, lector de pantalla, dispositivos móviles y distintos navegadores, garantizando que ningún ciudadano quede excluido por razones tecnológicas.
 
 Desde la asignatura, el proyecto permite aplicar de manera práctica los principios de usabilidad y accesibilidad web, validados mediante herramientas automáticas (axe DevTools, Lighthouse), revisión manual y pruebas con tecnología asistiva (NVDA).
 
@@ -294,7 +294,7 @@ Desarrollar una plataforma web funcional, usable y accesible de servicios públi
 
 \begin{table}[H]
 \centering
-\caption{Distribución de roles del equipo VitaPrevent}
+\caption{Distribución de roles del equipo SaludEC}
 \begin{tabular}{@{}>{\bfseries}p{3.5cm} p{4cm} p{6.5cm}@{}}
 \toprule
 \rowcolor{royalblue!12}
@@ -318,7 +318,7 @@ Aunque cada integrante tiene un rol principal, las actividades se trabajan de fo
 % ============================================================
 \section{Visión Técnica General del Proyecto}
 
-VitaPrevent ha sido desarrollado como una \textbf{SPA (Single Page Application)} con React 19 y Vite 6. Para la navegación interna se usa React Router v6 con \texttt{createBrowserRouter} y code splitting por ruta (lazy loading), lo que permite cargar únicamente el código necesario para cada página y optimizar el tiempo de carga inicial.
+SaludEC ha sido desarrollado como una \textbf{SPA (Single Page Application)} con React 19 y Vite 6. Para la navegación interna se usa React Router v6 con \texttt{createBrowserRouter} y code splitting por ruta (lazy loading), lo que permite cargar únicamente el código necesario para cada página y optimizar el tiempo de carga inicial.
 
 El proyecto utiliza \textbf{Firebase} como backend:
 \begin{itemize}
@@ -327,7 +327,7 @@ El proyecto utiliza \textbf{Firebase} como backend:
   \item \textbf{Hosting:} Publica el sitio con CDN global y HTTPS automático.
 \end{itemize}
 
-El código fuente se gestiona en \href{https://github.com/zeuspyEC/VitaPrevent}{\texttt{github.com/zeuspyEC/VitaPrevent}}, con despliegue automático a Firebase Hosting mediante GitHub Actions en cada push a la rama principal.
+El código fuente se gestiona en \href{https://github.com/zeuspyEC/SaludEC}{\texttt{github.com/zeuspyEC/SaludEC}}, con despliegue automático a Firebase Hosting mediante GitHub Actions en cada push a la rama principal.
 
 La accesibilidad es un eje transversal del desarrollo: se usa \texttt{eslint-plugin-jsx-a11y} que detecta violaciones WCAG en tiempo de compilación, evitando que errores de accesibilidad lleguen al código desplegado.
 
@@ -336,7 +336,7 @@ La accesibilidad es un eje transversal del desarrollo: se usa \texttt{eslint-plu
 
 \begin{table}[H]
 \centering
-\caption{Mapa de páginas del sitio VitaPrevent}
+\caption{Mapa de páginas del sitio SaludEC}
 \begin{tabular}{@{}>{\bfseries}p{3.5cm} p{10cm}@{}}
 \toprule
 \rowcolor{royalblue!12}
@@ -373,7 +373,7 @@ Página 404 &
 
 \begin{table}[H]
 \centering
-\caption{Rutas implementadas en VitaPrevent}
+\caption{Rutas implementadas en SaludEC}
 \small
 \begin{tabular}{@{}>{\ttfamily\small}p{5.5cm} p{8cm}@{}}
 \toprule
@@ -408,7 +408,7 @@ Para el desarrollo del proyecto se utilizaron las siguientes tecnologías:
 
 \begin{table}[H]
 \centering
-\caption{Stack tecnológico de VitaPrevent}
+\caption{Stack tecnológico de SaludEC}
 \small
 \begin{tabular}{@{}>{\bfseries}p{4cm} p{4cm} p{5.5cm}@{}}
 \toprule
@@ -540,7 +540,7 @@ El sistema de design tokens CSS centraliza: contraste mínimo 7.2:1 en texto pri
 % ============================================================
 \section{Estrategia de Accesibilidad}
 
-La estrategia de accesibilidad de VitaPrevent se basa en el principio \textit{accessibility-first}: cada componente se diseña para cumplir POUR desde su creación, sin añadir accesibilidad al final.
+La estrategia de accesibilidad de SaludEC se basa en el principio \textit{accessibility-first}: cada componente se diseña para cumplir POUR desde su creación, sin añadir accesibilidad al final.
 
 Decisiones clave adoptadas:
 \begin{enumerate}
@@ -610,7 +610,7 @@ El sitio fue probado en los siguientes entornos:
 % ============================================================
 \section{Metodología de Evaluación Prevista}
 
-La evaluación de accesibilidad de VitaPrevent se organiza en tres niveles complementarios:
+La evaluación de accesibilidad de SaludEC se organiza en tres niveles complementarios:
 
 \textbf{Evaluación automática:}
 Se utilizan herramientas como axe DevTools (extensión de Chrome), Lighthouse (integrado en Chrome DevTools) y WAVE. Estas herramientas detectan aproximadamente el 30--40\% de los problemas de accesibilidad, principalmente violaciones de contraste, alt faltante y estructura ARIA incorrecta.
@@ -625,7 +625,7 @@ Se prueba con \textbf{NVDA 2024.1 + Chrome 126} la lectura de landmarks, encabez
 \section{Matriz Inicial de Criterios WCAG 2.2 AA}
 
 \begin{longtable}{@{}>{\ttfamily\small}p{1.2cm} p{3.2cm} >{\centering\arraybackslash}p{0.9cm} >{\centering\arraybackslash\small}p{2.5cm} p{5.5cm}@{}}
-\caption{Matriz de conformidad WCAG 2.2 AA --- VitaPrevent} \\
+\caption{Matriz de conformidad WCAG 2.2 AA --- SaludEC} \\
 \toprule
 \rowcolor{royalblue!12}
 \textbf{Criterio} & \textbf{Nombre} & \textbf{Niv.} & \textbf{Estado} & \textbf{Aplicación / Evidencia} \\
@@ -665,7 +665,7 @@ Se prueba con \textbf{NVDA 2024.1 + Chrome 126} la lectura de landmarks, encabez
 
 2.4.1 & Evitar bloques & A & \textcolor{successgreen}{\cmark~Implementado} & SkipLink \texttt{\#main-content} como primer elemento del DOM en todas las páginas. \\
 
-2.4.2 & Página con título & A & \textcolor{successgreen}{\cmark~Implementado} & \texttt{document.title} actualizado en cada ruta por \texttt{PageWrapper} (ej: ``Vacunación | VitaPrevent''). \\
+2.4.2 & Página con título & A & \textcolor{successgreen}{\cmark~Implementado} & \texttt{document.title} actualizado en cada ruta por \texttt{PageWrapper} (ej: ``Vacunación | SaludEC''). \\
 
 2.4.3 & Orden de foco & A & \textcolor{successgreen}{\cmark~Implementado} & Corregido: \texttt{isFirstRender} en \texttt{PageWrapper} evita robar foco en carga inicial. Tab va: SkipLink $\to$ Navbar $\to$ contenido. \\
 
@@ -728,7 +728,7 @@ Se prueba con \textbf{NVDA 2024.1 + Chrome 126} la lectura de landmarks, encabez
 \section{Declaración de Conformidad del Avance}
 
 \begin{wcagbox}[Declaración de conformidad WCAG 2.2 Nivel AA]
-Luego de la evaluación realizada mediante herramientas automáticas (axe DevTools, Lighthouse, WAVE), revisión manual de criterios WCAG 2.2 y pruebas con tecnología asistiva (NVDA 2024.1 + Chrome 126, navegación por teclado), el equipo VitaPrevent declara que el sitio web \textbf{cumple sustancialmente con WCAG 2.2 Nivel AA}.
+Luego de la evaluación realizada mediante herramientas automáticas (axe DevTools, Lighthouse, WAVE), revisión manual de criterios WCAG 2.2 y pruebas con tecnología asistiva (NVDA 2024.1 + Chrome 126, navegación por teclado), el equipo SaludEC declara que el sitio web \textbf{cumple sustancialmente con WCAG 2.2 Nivel AA}.
 
 Se identifican dos criterios con cumplimiento parcial, documentados en la matriz de la Sección 18:
 \begin{itemize}
@@ -756,7 +756,7 @@ En este avance se ha completado lo siguiente:
   \item Despliegue funcional en \href{https://vitaprevent-b2e34.web.app}{\texttt{vitaprevent-b2e34.web.app}}.
   \item Evaluación de accesibilidad con axe DevTools (0 violaciones), Lighthouse (97/100) y NVDA.
   \item Corrección de 5 problemas de accesibilidad detectados durante el desarrollo.
-  \item Repositorio actualizado en \href{https://github.com/zeuspyEC/VitaPrevent}{\texttt{github.com/zeuspyEC/VitaPrevent}}.
+  \item Repositorio actualizado en \href{https://github.com/zeuspyEC/SaludEC}{\texttt{github.com/zeuspyEC/SaludEC}}.
 \end{itemize}
 
 % ============================================================

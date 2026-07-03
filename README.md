@@ -1,6 +1,6 @@
-# VitaPrevent
+# SaludEC
 
-Plataforma web de salud preventiva desarrollada con React 19 + Firebase. Proporciona información confiable y accesible sobre nutrición, actividad física, salud mental y prevención de enfermedades, orientada a la población ecuatoriana.
+Portal de servicios públicos de salud del Ecuador desarrollado con React 19 + Firebase. Proporciona información oficial accesible sobre atención primaria, vacunación, salud mental y emergencias (MSP, IESS, ECU 911), orientada a la ciudadanía ecuatoriana.
 
 **Sitio en producción:** https://vitaprevent-b2e34.web.app
 
