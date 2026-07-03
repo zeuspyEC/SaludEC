@@ -39,7 +39,7 @@ const VALORES = [
 
 export default function Nosotros() {
   return (
-    <PageWrapper title="Nosotros" description="Equipo VitaPrevent — portal de servicios públicos de salud del Ecuador desarrollado en la EPN. Misión, roles y valores del proyecto.">
+    <PageWrapper title="Nosotros" description="Equipo SaludEC — portal de servicios públicos de salud del Ecuador desarrollado en la EPN. Misión, roles y valores del proyecto.">
       <SectionHero
         tag="El equipo"
         title="Quiénes somos"
@@ -68,7 +68,7 @@ export default function Nosotros() {
         {/* Equipo */}
         <section aria-labelledby="equipo-title" className="equipo-section">
           <h2 id="equipo-title" className="nosotros-section-title">El equipo de desarrollo</h2>
-          <p className="equipo-intro">VitaPrevent es un proyecto académico desarrollado en la <strong>Escuela Politécnica Nacional (EPN)</strong> de Quito, Ecuador, para la asignatura <em>Usabilidad y Accesibilidad</em>. Cada integrante desempeña roles definidos según la metodología del proyecto.</p>
+          <p className="equipo-intro">SaludEC es un proyecto académico desarrollado en la <strong>Escuela Politécnica Nacional (EPN)</strong> de Quito, Ecuador, para la asignatura <em>Usabilidad y Accesibilidad</em>. Cada integrante desempeña roles definidos según la metodología del proyecto.</p>
 
           <ul className="equipo-grid" role="list">
             {EQUIPO.map((m) => (

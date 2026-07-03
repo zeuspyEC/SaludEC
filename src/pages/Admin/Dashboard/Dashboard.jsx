@@ -96,7 +96,7 @@ export default function AdminDashboard() {
       <header className="dash__header">
         <div>
           <h1 className="dash__title">Dashboard</h1>
-          <p className="dash__subtitle">Panel de administración de VitaPrevent</p>
+          <p className="dash__subtitle">Panel de administración de SaludEC</p>
         </div>
       </header>
 

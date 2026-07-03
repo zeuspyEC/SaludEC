@@ -1,5 +1,5 @@
-export const SITE_NAME = 'VitaPrevent'
-export const SITE_SLOGAN = 'Tu bienestar comienza con la prevención'
+export const SITE_NAME = 'SaludEC'
+export const SITE_SLOGAN = 'Servicios públicos de salud · Ecuador'
 export const SITE_URL = 'https://vitaprevent-b2e34.web.app'
 
 export const MODULOS = {

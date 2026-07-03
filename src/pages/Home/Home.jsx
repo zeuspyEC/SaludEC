@@ -355,12 +355,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Por qué VitaPrevent ── */}
+      {/* ── Por qué SaludEC ── */}
       <section className="section section--alt" aria-labelledby="features-title">
         <div className="container">
           <header className="section__header">
             <span className="section__tag">Nuestra propuesta</span>
-            <h2 id="features-title" className="section__title">¿Por qué VitaPrevent?</h2>
+            <h2 id="features-title" className="section__title">¿Por qué SaludEC?</h2>
             <p className="section__subtitle">
               Un portal diseñado para que cualquier ciudadano ecuatoriano pueda conocer
               y acceder a los servicios públicos de salud sin barreras.

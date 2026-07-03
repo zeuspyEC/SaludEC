@@ -36,7 +36,7 @@ const CRITERIOS = [
   { id: '2.4.1', nombre: 'Evitar bloques', nivel: 'A', estado: 'ok',
     desc: 'SkipLink "Saltar al contenido principal" visible al recibir foco. Biblioteca añade segundo skip link en página hacia #biblioteca-toolbar para saltar directamente a los filtros.' },
   { id: '2.4.2', nombre: 'Página con título', nivel: 'A', estado: 'ok',
-    desc: 'document.title actualizado en cada ruta con formato "Sección | VitaPrevent". Título del index.html actualizado a "VitaPrevent — Servicios de salud pública del Ecuador".' },
+    desc: 'document.title actualizado en cada ruta con formato "Sección | SaludEC". Título del index.html actualizado a "SaludEC — Servicios públicos de salud del Ecuador".' },
   { id: '2.4.3', nombre: 'Orden del foco', nivel: 'A', estado: 'ok',
     desc: 'Menú móvil: foco se mueve automáticamente al primer ítem al abrir. Modal: foco va al dialog al abrir y regresa al disparador al cerrar. Contacto: foco a resumen de errores o a mensaje de éxito.' },
   { id: '2.4.4', nombre: 'Propósito del enlace', nivel: 'A', estado: 'ok',
@@ -91,7 +91,7 @@ export default function Accesibilidad() {
   return (
     <PageWrapper
       title="Declaración de accesibilidad"
-      description="Estado de conformidad WCAG 2.2 Nivel AA del sitio VitaPrevent."
+      description="Estado de conformidad WCAG 2.2 Nivel AA del sitio SaludEC."
     >
       <div className="accesibilidad container">
         <Breadcrumb customItems={BREADCRUMB} />
@@ -111,7 +111,7 @@ export default function Accesibilidad() {
           <div>
             <h1 className="accesibilidad__titulo">Declaración de accesibilidad</h1>
             <p className="accesibilidad__subtitulo">
-              VitaPrevent está comprometido con la accesibilidad digital. Esta declaración describe
+              SaludEC está comprometido con la accesibilidad digital. Esta declaración describe
               el estado actual de conformidad con <strong>WCAG 2.2 Nivel AA</strong> y los
               criterios adicionales de WAI-ARIA APG, ATAG y UAAG evaluados durante la auditoría.
             </p>
@@ -146,7 +146,7 @@ export default function Accesibilidad() {
           <h2 id="declaracion-titulo" className="accesibilidad__section-title">Declaración formal</h2>
           <div className="accesibilidad__declaracion-card">
             <p>
-              El equipo de <strong>VitaPrevent</strong> declara que el sitio web disponible en{' '}
+              El equipo de <strong>SaludEC</strong> declara que el sitio web disponible en{' '}
               <a href="https://vitaprevent-b2e34.web.app" target="_blank" rel="noopener noreferrer">
                 vitaprevent-b2e34.web.app
               </a>{' '}
@@ -199,7 +199,7 @@ export default function Accesibilidad() {
           </h2>
           <div className="accesibilidad__tabla-wrap">
             <table className="accesibilidad__tabla">
-              <caption className="sr-only">Matriz de conformidad WCAG 2.2 Nivel AA del sitio VitaPrevent</caption>
+              <caption className="sr-only">Matriz de conformidad WCAG 2.2 Nivel AA del sitio SaludEC</caption>
               <thead>
                 <tr>
                   <th scope="col">Criterio</th>

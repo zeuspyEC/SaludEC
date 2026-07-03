@@ -9,7 +9,7 @@ export default function PageWrapper({ children, title, description }) {
   const isFirstRender = useRef(true)
 
   useEffect(() => {
-    const pageTitle = title ? `${title} | VitaPrevent` : 'VitaPrevent — Servicios públicos de salud'
+    const pageTitle = title ? `${title} | SaludEC` : 'SaludEC — Servicios públicos de salud'
     document.title = pageTitle
 
     if (description) {

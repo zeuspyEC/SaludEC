@@ -26,7 +26,7 @@ export default function AdminShell() {
       </div>
 
       <aside className="admin-sidebar" aria-label="Panel de administración">
-        <Link to="/admin" className="admin-sidebar__brand" aria-label="VitaPrevent Admin — ir al dashboard">
+        <Link to="/admin" className="admin-sidebar__brand" aria-label="SaludEC Admin — ir al dashboard">
           <span className="admin-sidebar__logo-mark" aria-hidden="true">VP</span>
           <span className="admin-sidebar__brand-name">Admin</span>
         </Link>

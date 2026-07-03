@@ -62,7 +62,7 @@ export default function Biblioteca() {
       <SectionHero
         tag="Recursos educativos"
         title="Biblioteca de salud"
-        description="Accede a videos, podcasts, guías descargables e infografías elaboradas por profesionales de la salud sobre todos los temas que cubre VitaPrevent."
+        description="Accede a videos, podcasts, guías descargables e infografías elaboradas por profesionales de la salud sobre todos los temas que cubre SaludEC."
         icon="📚"
         gradient="blue"
       />

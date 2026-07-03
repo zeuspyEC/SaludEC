@@ -59,15 +59,15 @@ export default function Navbar() {
     <header className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`} role="banner">
       <div className="navbar__inner container">
         {/* Logo */}
-        <Link to={ROUTES.HOME} className="navbar__logo" aria-label="VitaPrevent — Ir al inicio">
+        <Link to={ROUTES.HOME} className="navbar__logo" aria-label="SaludEC — Ir al inicio">
           <svg aria-hidden="true" focusable="false" width="36" height="36" viewBox="0 0 64 64" fill="none">
             <rect width="64" height="64" rx="12" fill="#0d1b2a"/>
             <path d="M32 12 L32 52 M12 32 L52 32" stroke="#90caf9" strokeWidth="8" strokeLinecap="round"/>
             <circle cx="32" cy="32" r="8" fill="#1565c0"/>
           </svg>
           <span className="navbar__brand">
-            <span className="navbar__brand-name">VitaPrevent</span>
-            <span className="navbar__brand-slogan">Tu salud, un derecho garantizado</span>
+            <span className="navbar__brand-name">SaludEC</span>
+            <span className="navbar__brand-slogan">Servicios públicos de salud · Ecuador</span>
           </span>
         </Link>
 

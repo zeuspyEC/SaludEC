@@ -28,13 +28,13 @@ export default function Footer() {
     <footer className="footer" role="contentinfo">
       <div className="footer__main container">
         <div className="footer__brand">
-          <Link to={ROUTES.HOME} className="footer__logo" aria-label="VitaPrevent — Volver al inicio">
+          <Link to={ROUTES.HOME} className="footer__logo" aria-label="SaludEC — Volver al inicio">
             <svg aria-hidden="true" focusable="false" width="40" height="40" viewBox="0 0 64 64" fill="none">
               <rect width="64" height="64" rx="12" fill="rgba(144,202,249,0.1)"/>
               <path d="M32 12 L32 52 M12 32 L52 32" stroke="#90caf9" strokeWidth="8" strokeLinecap="round"/>
               <circle cx="32" cy="32" r="8" fill="#1565c0"/>
             </svg>
-            <span className="footer__logo-name">VitaPrevent</span>
+            <span className="footer__logo-name">SaludEC</span>
           </Link>
           <p className="footer__description">
             Portal de servicios públicos de salud del Ecuador. Información oficial del MSP,
@@ -84,7 +84,7 @@ export default function Footer() {
       <div className="footer__bottom">
         <div className="footer__bottom-inner container">
           <p className="footer__copy">
-            &copy; {currentYear} VitaPrevent. Contenido con fines educativos.
+            &copy; {currentYear} SaludEC. Contenido con fines educativos.
           </p>
           <p className="footer__a11y">
             <span aria-hidden="true">♿</span>{' '}

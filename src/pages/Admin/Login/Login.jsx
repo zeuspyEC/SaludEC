@@ -59,7 +59,7 @@ export default function AdminLogin() {
         <div className="admin-login__header">
           <div className="admin-login__logo" aria-hidden="true">VP</div>
           <h1 className="admin-login__title">Panel de administración</h1>
-          <p className="admin-login__subtitle">Acceso exclusivo para el equipo de VitaPrevent</p>
+          <p className="admin-login__subtitle">Acceso exclusivo para el equipo de SaludEC</p>
         </div>
 
         {authError && (
