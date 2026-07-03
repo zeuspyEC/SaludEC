@@ -324,7 +324,7 @@
 /* ── Stats desc ── */
 .home-stats__desc {
   font-size: var(--text-xs);
-  color: var(--color-blue-400);
+  color: var(--color-gray-700);
   max-width: none;
 }
 
@@ -431,6 +431,14 @@
   .feature-card--violet .feature-card__icon-wrap { background: rgba(139,92,246,0.15); }
   .feature-card--green  .feature-card__icon-wrap { background: rgba(34,197,94,0.12); }
   .feature-card--teal   .feature-card__icon-wrap { background: rgba(20,184,166,0.12); }
+
+  .home-stats {
+    background: var(--color-navy-800);
+    border-bottom-color: var(--color-navy-600);
+  }
+  .home-stats__value { color: var(--color-blue-300); }
+  .home-stats__label { color: var(--color-gray-200); }
+  .home-stats__desc  { color: var(--color-gray-400); }
 }
 
 /* ── Sección header con row ── */
