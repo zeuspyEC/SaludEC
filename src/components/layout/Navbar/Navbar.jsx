@@ -56,7 +56,7 @@ export default function Navbar() {
   const closeMenu = () => setMenuOpen(false)
 
   return (
-    <header className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`} role="banner">
+    <header id="main-nav" tabIndex={-1} className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`} role="banner">
       <div className="navbar__inner container">
         {/* Logo */}
         <Link to={ROUTES.HOME} className="navbar__logo" aria-label="SaludEC — Ir al inicio">

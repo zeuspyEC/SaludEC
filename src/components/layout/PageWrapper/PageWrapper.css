@@ -3,3 +3,35 @@
   outline: none; /* El foco es funcional, no visual, en este elemento */
   min-height: calc(100vh - var(--navbar-height));
 }
+
+/* Link de retorno al nav — oculto salvo al recibir foco (como SkipLink) */
+.page-wrapper__back-to-nav {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.page-wrapper__back-to-nav:focus-visible {
+  position: fixed;
+  bottom: var(--space-4);
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  height: auto;
+  overflow: visible;
+  padding: var(--space-3) var(--space-6);
+  background-color: var(--color-navy-900);
+  color: var(--color-white);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-blue-300);
+  outline: var(--focus-outline);
+  outline-offset: var(--focus-outline-offset);
+  z-index: var(--z-toast);
+  white-space: nowrap;
+}
