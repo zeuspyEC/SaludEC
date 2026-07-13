@@ -1,3 +1,4 @@
+import { useRef, useEffect } from 'react'
 import PageWrapper from '@components/layout/PageWrapper/PageWrapper'
 import Breadcrumb from '@components/layout/Breadcrumb/Breadcrumb'
 import SectionHero from '@components/common/SectionHero/SectionHero'
@@ -38,6 +39,49 @@ const VALORES = [
 ]
 
 export default function Nosotros() {
+  const videoRef    = useRef(null)
+  const subtitleRef = useRef(null)
+
+  // Inyecta cues VTT activos en región aria-live para Narrador de Windows (WCAG 1.2.2)
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+    let cleanup
+
+    const attachTrack = () => {
+      const track = Array.from(video.textTracks).find(
+        t => t.kind === 'captions' || t.kind === 'subtitles'
+      )
+      if (!track) return
+      track.mode = 'showing'
+
+      const onCueChange = () => {
+        if (!subtitleRef.current) return
+        const cues = track.activeCues
+        subtitleRef.current.textContent =
+          cues && cues.length > 0
+            ? Array.from(cues)
+                .map(c => c.text.replace(/<[^>]+>/g, ''))
+                .join(' ')
+            : ''
+      }
+
+      track.addEventListener('cuechange', onCueChange)
+      cleanup = () => track.removeEventListener('cuechange', onCueChange)
+    }
+
+    if (video.readyState >= 1) {
+      attachTrack()
+    } else {
+      video.addEventListener('loadedmetadata', attachTrack, { once: true })
+    }
+
+    return () => {
+      cleanup?.()
+      video?.removeEventListener('loadedmetadata', attachTrack)
+    }
+  }, [])
+
   return (
     <PageWrapper title="Nosotros" description="Equipo SaludEC — portal de servicios públicos de salud del Ecuador desarrollado en la EPN. Misión, roles y valores del proyecto.">
       <SectionHero
@@ -114,6 +158,7 @@ export default function Nosotros() {
           </p>
           <div className="video-wrapper">
             <video
+              ref={videoRef}
               controls
               preload="metadata"
               className="video-player"
@@ -132,6 +177,16 @@ export default function Nosotros() {
                 <a href="/media/Video-SaludEC.mp4" className="video-fallback__link">Descargar el video</a>.
               </p>
             </video>
+
+            {/* Región aria-live: inyecta subtítulos activos para Narrador de Windows.
+                Los cues VTT no se anuncian automáticamente por AT; este div los expone. */}
+            <div
+              ref={subtitleRef}
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+              className="sr-only"
+            />
           </div>
           <p className="video-section__caption">
             Fuente: MSP Ecuador y OPS — Día Mundial de la Salud 2025. Subtítulos en español disponibles.
