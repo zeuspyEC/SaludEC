@@ -557,18 +557,18 @@ El contenido debe poder ser interpretado de manera fiable por una amplia varieda
 \rowcolor{royalblue!12}
 \textbf{Principio} & \textbf{Cumplimiento} & \textbf{Criterios destacados} \\
 \midrule
-Perceptible & \textcolor{warningyellow}{\bfseries 91\%} & 1.1.1 alt text único, 1.3.1 semántica HTML, 1.4.10 responsive 320px. \textbf{Issue activo:} 1.4.3 contraste insuficiente en 2 elementos (WAVE + Lighthouse) \\
+Perceptible & \textcolor{successgreen}{\bfseries 96\%} & 1.1.1 alt text único, 1.2.2 vídeo con subtítulos VTT, 1.3.1 semántica HTML, 1.4.3 contraste corregido (Sprint 2), 1.4.10 responsive 320px. Parcial: 1.2.3 audiodescripción \\
 Operable & \textcolor{successgreen}{\bfseries 93\%} & 2.1.1 teclado, 2.4.1 SkipLink, 2.4.3 Tab fix, 2.4.7 focus visible. Parcial: 2.5.7 drag \\
 Comprensible & \textcolor{successgreen}{\bfseries 95\%} & 3.1.1 lang, 3.2.3 Navbar coherente, 3.3.1--2 errores descriptivos. Parcial: 3.2.6 ayuda \\
-Robusto & \textcolor{warningyellow}{\bfseries 95\%} & 4.1.1 HTML válido, 4.1.3 aria-live. \textbf{Issue activo:} 4.1.2 atributos ARIA prohibidos en 2 elementos (Lighthouse) \\
+Robusto & \textcolor{warningyellow}{\bfseries 95\%} & 4.1.1 HTML válido, 4.1.3 aria-live. Parcial: 4.1.2 atributos ARIA prohibidos en 2 elementos (Lighthouse, deuda técnica) \\
 \midrule
-\textbf{Global WCAG 2.2 AA} & \textcolor{warningyellow}{\bfseries 92\%} & Lighthouse Accessibility 92/100 (03/07/2026); 4 criterios con cumplimiento parcial o issue activo \\
+\textbf{Global WCAG 2.2 AA} & \textcolor{warningyellow}{\bfseries 92\%} & Lighthouse Accessibility 92/100 (13/07/2026); 4 criterios con cumplimiento parcial; contraste 1.4.3 corregido en Sprint 2 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{okbox}[Declaración resumida de conformidad]
-SaludEC cumple sustancialmente con los cuatro principios POUR de WCAG 2.2 Nivel AA. Lighthouse PageSpeed Insights (03/07/2026) otorga una puntuación de \textbf{92/100} en Accessibility, con dos issues activos en corrección: (1) atributos ARIA prohibidos en 2 elementos (principio Robusto, 4.1.2) y (2) contraste insuficiente en 2 elementos (principio Perceptible, 1.4.3). Dos criterios adicionales tienen cumplimiento parcial documentado con alternativas funcionales (2.5.7 y 3.2.6). El sitio \textbf{no presenta barreras que impidan} el acceso a la información de servicios públicos de salud para usuarios con discapacidades visuales, motrices, auditivas o cognitivas. Las correcciones restantes están planificadas para la semana del 07/07/2026 (Sprint 2).
+SaludEC cumple sustancialmente con los cuatro principios POUR de WCAG 2.2 Nivel AA. Lighthouse PageSpeed Insights (13/07/2026) mantiene una puntuación de \textbf{92/100} en Accessibility. En Sprint 2 (cierre 13/07/2026) se corrigió el contraste 1.4.3 en tres secciones (footer, estadísticas Home, declaración de accesibilidad) y se añadió vídeo accesible con subtítulos VTT (1.2.2). Permanecen cuatro criterios con cumplimiento parcial documentado: 2.5.7 (cubo sin \texttt{aria-label} explícito), 3.2.6 (ayuda no contextual por módulo), 4.1.2 (ARIA prohibido en 2 elementos --- Lighthouse, deuda técnica), y 1.2.3 (sin audiodescripción del vídeo). El sitio \textbf{no presenta barreras que impidan} el acceso a la información de servicios públicos de salud para usuarios con discapacidades visuales, motrices, auditivas o cognitivas.
 \end{okbox}
 
 \end{document}

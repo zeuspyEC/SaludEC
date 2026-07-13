@@ -12,6 +12,7 @@ const FOOTER_LINKS = {
   ],
   recursos: [
     { label: 'Noticias', path: ROUTES.NOTICIAS },
+    { label: 'Videos de salud', path: '/nosotros#video-title' },
   ],
   institucional: [
     { label: 'Nosotros', path: ROUTES.NOSOTROS },

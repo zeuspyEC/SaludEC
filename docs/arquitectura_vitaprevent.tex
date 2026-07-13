@@ -164,8 +164,8 @@ src/
   contexts/         # AuthContext, ToastContext
   hooks/            # useFocusTrap, useAnnouncer
   pages/            # Home, Nutricion, ActividadFisica, SaludMental,
-                    # Prevencion, Biblioteca, Noticias, Contacto, Nosotros,
-                    # Admin
+                    # Prevencion, Noticias, Contacto, Nosotros,
+                    # Accesibilidad, Admin
   services/         # articulos.service.js, recursos.service.js, noticias.service.js
   styles/           # tokens.css, reset.css, global.css, animations.css
   utils/            # validators.js, formatters.js
@@ -212,7 +212,7 @@ src/
 /salud-mental/:slug & Artículo & Detalle de artículo de salud mental \\
 /emergencias & Emergencias & ECU 911, SAMU, hospitales, primeros auxilios, FAQs \\
 /emergencias/:slug & Artículo & Detalle de artículo de emergencias \\
-/biblioteca & Biblioteca & Recursos digitales (PDF, video, enlace) filtrados \\
+/biblioteca & Redirect & Redirige a Inicio (sección eliminada en Sprint 2) \\
 /noticias & Noticias & Feed paginado de noticias de salud \\
 /noticias/:slug & Noticia & Artículo de noticia completo \\
 /contacto & Contacto & Formulario accesible con validación \\
@@ -318,7 +318,7 @@ Diseño responsive & \cmark & Breakpoints 320px / 768px / 1024px \\
 Textos claros y organizados & \cmark & Contenido real MSP, IESS, ECU 911 con fuentes oficiales \\
 Imágenes informativas con alt & \cmark & Campo \texttt{imagen.alt} obligatorio en Firestore \\
 Imágenes decorativas ignoradas & \cmark & Emojis con \texttt{aria-hidden="true"} \\
-Multimedia con transcripción/alt & \wmark & Biblioteca contiene PDFs con título descriptivo. Video: no implementado aún \\
+Multimedia con transcripción/alt & \cmark & Vídeo oficial MSP/OPS en Nosotros con \texttt{<track kind="captions">} VTT español (WCAG 1.2.2). Audiodescripción: parcial (1.2.3). \\
 Tablas accesibles & \cmark & Tabla IMC con \texttt{<caption>}, \texttt{scope="col"} \\
 Lenguaje comprensible & \cmark & Español claro, términos médicos explicados \\
 \bottomrule
@@ -392,12 +392,14 @@ Reducción de movimiento & \cmark & \texttt{@media (prefers-reduced-motion)} imp
 % ============================================================
 \section{Brechas pendientes y plan de acción}
 
-\begin{warnbox}[Brechas identificadas --- Prioridad alta]
-Las siguientes brechas deben resolverse antes de la entrega final:
+\begin{warnbox}[Deudas técnicas documentadas --- Sprint 2 cerrado (13/07/2026)]
+Las siguientes brechas permanecen como deuda técnica tras el cierre del Sprint 2:
 \begin{enumerate}
-  \item \textbf{WCAG 2.5.7 (AA) --- Movimientos de arrastre:} El cubo 3D usa arrastre. La alternativa (rotación automática + acceso por Navbar) existe pero no está explícitamente documentada en el código con \texttt{aria-label} que lo indique. \textit{Acción:} Añadir \texttt{aria-label="Cubo decorativo. Usa el menú de navegación para acceder a los módulos"} al contenedor del cubo.
-  \item \textbf{WCAG 3.2.6 (A, WCAG 2.2) --- Ayuda consistente:} Falta enlace de ayuda contextual en cada módulo. \textit{Acción:} Añadir sección de contacto/ayuda visible en cada página de módulo, o enlace permanente al formulario de contacto en el contenido principal.
-  \item \textbf{Multimedia con transcripción:} El sitio no tiene videos. La Biblioteca tiene PDFs enlazados con títulos descriptivos, pero no transcripciones de audio. \textit{Acción:} Para la entrega final, documentar explícitamente que los recursos PDF incluyen texto alternativo en su título y descripción.
+  \item \textbf{WCAG 2.5.7 (AA) --- Movimientos de arrastre:} El cubo 3D usa arrastre. Alternativa funcional: rotación automática + Navbar. Pendiente: \texttt{aria-label} explícito en el contenedor del cubo.
+  \item \textbf{WCAG 3.2.6 (A, WCAG 2.2) --- Ayuda consistente:} Formulario de contacto en footer (enlace consistente). Falta ayuda contextual visible dentro de cada módulo.
+  \item \textbf{WCAG 4.1.2 --- ARIA prohibido:} Lighthouse detecta 2 elementos con atributos ARIA prohibidos para su rol. Funcionalidad no afectada; corrección pendiente.
+  \item \textbf{WCAG 1.2.3 --- Audiodescripción:} El vídeo de Nosotros tiene subtítulos VTT (1.2.2 cumplido) pero no audiodescripción completa para usuarios ciegos.
+  \item \textbf{CLS 0.326 en escritorio:} Layout shift por carga tardía de fuentes y animación shimmer no compuesta. No corregido en este sprint.
 \end{enumerate}
 \end{warnbox}
 
@@ -409,21 +411,23 @@ Las siguientes brechas deben resolverse antes de la entrega final:
 \end{itemize}
 \end{infobox}
 
-\begin{successbox}[Brechas resueltas en Sprint 2 (al 03/07/2026)]
+\begin{successbox}[Brechas resueltas en Sprint 2 (cierre 13/07/2026)]
 \begin{itemize}
-  \item \textbf{Panel Admin completo:} \cmark~CRUD completo de artículos, noticias, recursos y mensajes. Incluye servicio de limpieza (\texttt{cleanup.service.js}) que asigna imágenes verificadas y únicas por sección.
-  \item \textbf{Imágenes únicas por sección:} \cmark~Sub-routing diferencia artículos del mismo tema con títulos distintos.
-  \item \textbf{Renderizado HTML semántico:} \cmark~\texttt{ArticleDetail} y \texttt{NoticiasDetalle} detectan HTML vs Markdown y renderizan preservando jerarquía semántica.
-  \item \textbf{Renombrado a SaludEC:} \cmark~Marca actualizada en toda la interfaz, documentos y repositorio (github.com/zeuspyEC/SaludEC).
+  \item \textbf{Contraste WCAG 1.4.3:} \cmark~Corregido en footer (7.4:1), estadísticas Home (10:1) y declaración de accesibilidad (5.36:1).
+  \item \textbf{Vídeo accesible:} \cmark~Vídeo MSP/OPS en Nosotros con subtítulos VTT español (\texttt{<track kind="captions" default>}, WCAG 1.2.2).
+  \item \textbf{Biblioteca eliminada:} \cmark~Sección eliminada; \texttt{/biblioteca} redirige a Inicio; referencias limpias en Navbar, Footer, Breadcrumb, Home y Admin.
+  \item \textbf{Navegación:} \cmark~Scroll al inicio en PUSH/REPLACE (no en POP); logo/eslogan clickables; foco movido al \texttt{<main>} en cada navegación (\texttt{PageWrapper} con \texttt{appHasHydrated} módulo-nivel).
+  \item \textbf{Formulario de contacto:} \cmark~Validación blur por campo sin disrumpir flujo de foco (ref \texttt{focusSummaryAfterSubmit}).
+  \item \textbf{Declaración de accesibilidad:} \cmark~Honesta: Lighthouse 92/100 real, 4 criterios parciales documentados, 5 correcciones pendientes listadas.
+  \item \textbf{Link directo a videos:} \cmark~Footer ``Recursos'' incluye ``Videos de salud'' → \texttt{/nosotros\#video-title}.
 \end{itemize}
 \end{successbox}
 
-\begin{warnbox}[Issues activos detectados por PageSpeed Insights (03/07/2026)]
+\begin{warnbox}[Issues activos (PageSpeed Insights 13/07/2026)]
 \begin{enumerate}
-  \item \textbf{ARIA prohibido (4.1.2):} Lighthouse detecta 2 elementos con atributos \texttt{aria-*} no permitidos para su rol. \textit{Acción:} Identificar mediante \texttt{axe DevTools} y eliminar o reemplazar los atributos incorrectos.
-  \item \textbf{Contraste insuficiente (1.4.3):} WAVE detecta 2 errores de contraste. \textit{Acción:} Ajustar color de texto o fondo hasta ratio $\geq$ 4.5:1 con Chrome DevTools \textit{Color Picker}.
-  \item \textbf{CLS 0.326 en escritorio:} Footer y Navbar sufren layout shift por carga tardía de Google Fonts. Skeleton shimmer usa \texttt{background-position-x} (propiedad no compuesta). \textit{Acción:} \texttt{font-display: optional}; \texttt{transform: translateX} en shimmer.
-  \item \textbf{Rendimiento móvil 66/100:} LCP 5,6 s. Causas: render-blocking de CSS + Google Fonts (640 ms); imágenes Unsplash \texttt{w=800} sobredimensionadas (83 KiB ahorro); JS no utilizado ($\sim$92 KiB). \textit{Acción:} Reducir a \texttt{w=400}; diferir fuentes.
+  \item \textbf{ARIA prohibido (4.1.2):} Lighthouse detecta 2 elementos con atributos ARIA prohibidos. Deuda técnica documentada en declaración de accesibilidad.
+  \item \textbf{CLS 0.326 en escritorio:} Layout shift por carga tardía de fuentes y animación shimmer. Deuda técnica.
+  \item \textbf{Rendimiento móvil 66/100:} LCP 5,6 s. Causas: render-blocking CSS, imágenes \texttt{w=800}, JS no utilizado ($\sim$92 KiB).
 \end{enumerate}
 \end{warnbox}
 
@@ -439,12 +443,12 @@ Las siguientes brechas deben resolverse antes de la entrega final:
 \textbf{Área} & \textbf{Cumplimiento} & \textbf{Observación} \\
 \midrule
 6.1 Estructura & \textcolor{successgreen}{\bfseries 100\%} & Todos los requisitos implementados \\
-6.2 Contenido & \textcolor{warningyellow}{\bfseries 85\%} & Pendiente: multimedia con transcripción \\
+6.2 Contenido & \textcolor{successgreen}{\bfseries 95\%} & Vídeo MSP/OPS con subtítulos VTT (WCAG 1.2.2). Parcial: audiodescripción (1.2.3) \\
 6.3 Formularios & \textcolor{successgreen}{\bfseries 100\%} & Formulario contacto + calculadora IMC \\
 6.4 Interactividad & \textcolor{successgreen}{\bfseries 100\%} & 6 componentes interactivos accesibles \\
 6.5 Accesibilidad visual & \textcolor{successgreen}{\bfseries 100\%} & Todos los requisitos implementados \\
-7.1 WCAG 2.2 & \textcolor{warningyellow}{\bfseries 92\%} & Lighthouse 92/100 (03/07/2026); 4 issues: 2.5.7, 3.2.6 parciales; 1.4.3 contraste, 4.1.2 ARIA en corrección \\
-7.2 WAI-ARIA & \textcolor{warningyellow}{\bfseries 95\%} & 2 elementos con atributos ARIA prohibidos detectados por Lighthouse (en corrección) \\
+7.1 WCAG 2.2 & \textcolor{warningyellow}{\bfseries 92\%} & Lighthouse 92/100 (13/07/2026); 4 criterios parciales: 1.2.3, 2.5.7, 3.2.6, 4.1.2; contraste 1.4.3 corregido \\
+7.2 WAI-ARIA & \textcolor{warningyellow}{\bfseries 95\%} & 2 elementos con atributos ARIA prohibidos (Lighthouse, deuda técnica documentada) \\
 7.3 ATAG & \textcolor{successgreen}{\bfseries 100\%} & Documentado en informe \\
 7.4 UAAG & \textcolor{successgreen}{\bfseries 100\%} & Probado en 5 navegadores + NVDA \\
 \bottomrule

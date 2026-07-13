@@ -63,6 +63,7 @@
 \usepackage{bookmark}
 \usepackage{amssymb}
 \newcommand{\cmark}{\textcolor{successgreen}{$\checkmark$}}
+\newcommand{\xmark}{\textcolor{errored}{$\times$}}
 \newcommand{\wmark}{\textcolor{warningyellow}{$\triangleright$}}
 \newcommand{\pmark}{\textcolor{royalblue}{$\bullet$}}
 
@@ -193,7 +194,7 @@
 
 El presente documento describe la planificación, ejecución y gestión del proyecto SaludEC empleando la metodología \textbf{Extreme Programming (XP)}, seleccionada por su adaptabilidad a equipos pequeños, su énfasis en la calidad del código y su capacidad para incorporar cambios de requerimientos durante el desarrollo, algo especialmente relevante en un proyecto académico con restricciones de tiempo.
 
-SaludEC es una plataforma web accesible de servicios públicos de salud del Ecuador, construida con React 19 + Vite 6 + Firebase. El desarrollo real se ejecutó en \textbf{cuatro iteraciones} comprendidas entre el 28/06/2026 y el 29/06/2026. A partir de esa base funcional, el Sprint 2 (30/06/2026 -- 13/07/2026) se encuentra \textbf{en ejecución}. Al 02/07/2026 ya se han completado las historias HU-11, HU-14 y parte de HU-13, y se han resuelto cinco correcciones de calidad relacionadas con accesibilidad de imágenes y renderizado semántico de contenido.
+SaludEC es una plataforma web accesible de servicios públicos de salud del Ecuador, construida con React 19 + Vite 6 + Firebase. El desarrollo real se ejecutó en \textbf{cuatro iteraciones} comprendidas entre el 28/06/2026 y el 29/06/2026. A partir de esa base funcional, el Sprint 2 (30/06/2026 -- 13/07/2026) \textbf{se completó el 13/07/2026}. Se completaron HU-11, HU-14, HU-19 y las nuevas HU-23 a HU-27, alcanzando conformidad sustancial WCAG 2.2 AA con correcciones de contraste, vídeo accesible con subtítulos VTT, eliminación de la sección Biblioteca, navegación con scroll restaurado, logo clickable y declaración de accesibilidad honesta.
 
 Este documento incluye:
 \begin{itemize}
@@ -708,13 +709,20 @@ HU-17 & Corrección de issues post-evaluación docente & 5 & Todos & 2 \\
 \midrule
 \rowcolor{warningyellow!15}
 HU-18 & Corregir ARIA prohibido: 2 elementos detectados (Lighthouse 92) & 2 & Erick Costa & 2 \\
-HU-19 & Corregir contraste: 2 errores WAVE/Lighthouse (1.4.3) & 2 & Jonathan Tipán & 2 \\
+HU-19 & Corregir contraste: 2 errores WAVE/Lighthouse (1.4.3) & 2 & Jonathan Tipán & \textcolor{successgreen}{\cmark~Completado (13/07)} \\
 HU-20 & Reducir CLS de 0.326 a $<$0.1: fuentes + skeleton shimmer & 3 & Javier Quilumba & 2 \\
 HU-21 & Optimizar rendimiento móvil: imágenes w=400, JS tree-shaking & 3 & Erick Costa & 2 \\
 HU-22 & Añadir cabeceras HTTP (CSP, COOP) + \texttt{llms.txt} & 2 & Jonathan Tipán & 2 \\
 \midrule
+\rowcolor{successgreen!10}
+HU-23 & Vídeo accesible con subtítulos VTT en Nosotros (WCAG 1.2.2) & 3 & Javier Quilumba & \textcolor{successgreen}{\cmark~Completado (13/07)} \\
+HU-24 & Eliminar Biblioteca Digital y limpiar referencias & 2 & Erick Costa & \textcolor{successgreen}{\cmark~Completado (13/07)} \\
+HU-25 & Declaración de accesibilidad honesta (Lighthouse 92, pendientes) & 2 & Jonathan Tipán & \textcolor{successgreen}{\cmark~Completado (13/07)} \\
+HU-26 & Corrección navegación: scroll al inicio, logo clickable, foco & 2 & Javier Quilumba & \textcolor{successgreen}{\cmark~Completado (13/07)} \\
+HU-27 & Validación de formulario por campo (blur sin disrumpir foco) & 2 & Erick Costa & \textcolor{successgreen}{\cmark~Completado (13/07)} \\
+\midrule
 \rowcolor{graylight}
-\multicolumn{2}{@{}l}{\textbf{Total Sprint 2}} & \textbf{43} & & \\
+\multicolumn{2}{@{}l}{\textbf{Total Sprint 2}} & \textbf{54} & & \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -779,22 +787,24 @@ HU-22 & Añadir cabeceras HTTP (CSP, COOP) + \texttt{llms.txt} & 2 & Jonathan Ti
 \caption{Calendario del Sprint 2 --- SaludEC}
 \end{figure}
 
-\subsection{Avance real del Sprint 2 (al 02/07/2026)}
+\subsection{Avance real del Sprint 2 (al 13/07/2026 --- CERRADO)}
 
-\begin{iterbox}{Sprint 2 --- Avance al 02/07/2026 (6 commits)}{tealxp}
-\textbf{Historias completadas:} HU-11 (imágenes únicas), HU-11b (HTML semántico), HU-14 (contenido por módulo)
+\begin{iterbox}{Sprint 2 --- Cierre al 13/07/2026 (43+ commits acumulados)}{tealxp}
+\textbf{Historias completadas:} HU-11, HU-14, HU-19, HU-23, HU-24, HU-25, HU-26, HU-27
 
-\textbf{Commits realizados:}
+\textbf{Commits representativos de la semana 2 (06/07--13/07):}
 \begin{itemize}
-  \item \texttt{2a52e01} --- fix(vacunacion): diferenciar imagen PAI infantil; índice compuesto recursos (Erick)
-  \item \texttt{5891b17} --- fix(cleanup): corregir tabla de imágenes con IDs verificados visualmente (Jonathan)
-  \item \texttt{8fb86e7} --- fix(cleanup): corregir key mediterránea con acento que causaba crash (Javier)
-  \item \texttt{c68bcd0} --- fix(imágenes): unicidad de fotos por sección + renderizado HTML en noticias (Erick)
-  \item \texttt{1449a39} --- fix(cleanup): imágenes únicas --- 5 pares de artículos duplicados resueltos (Jonathan)
-  \item \texttt{d073a10} --- docs: actualizar informe, análisis WCAG y guía de demo (Javier)
+  \item \texttt{e85f197} --- fix(contacto): validación en tiempo real por campo sin disrumpir foco (Erick)
+  \item \texttt{b7d2d9f} --- fix(navbar): logo y eslogan SaludEC navegan al inicio al hacer clic (Jonathan)
+  \item \texttt{ab6fdac} --- fix(routing): volver al inicio de la página al navegar entre rutas (Javier)
+  \item \texttt{5de4984} --- fix(contraste): textos estadísticas Home con bajo contraste (Erick)
+  \item \texttt{f80a43f} --- fix(contraste): textos footer y accesibilidad con bajo contraste (Jonathan)
+  \item Commit nosotros: feat(nosotros): vídeo accesible MSP/OPS con subtítulos VTT (WCAG 1.2.2) (Javier)
+  \item Commit biblioteca: feat(biblioteca): eliminar sección y redirigir a inicio (Erick)
+  \item Commit accesibilidad: fix(accesibilidad): declaración honesta con estado real y pendientes documentados (Jonathan)
 \end{itemize}
 
-\textbf{Entregable:} Imágenes únicas por sección verificadas visualmente; renderizado HTML semántico en artículos y noticias; documentación LaTeX y PDFs actualizados.
+\textbf{Entregable:} Contraste WCAG 1.4.3 corregido en 3 secciones; vídeo accesible con subtítulos en Nosotros; Biblioteca eliminada; navegación con scroll restaurado; formulario de contacto con validación blur; declaración de accesibilidad actualizada y honesta.
 \end{iterbox}
 
 \subsection{Criterios de aceptación del Sprint 2}
@@ -802,17 +812,18 @@ HU-22 & Añadir cabeceras HTTP (CSP, COOP) + \texttt{llms.txt} & 2 & Jonathan Ti
 Para declarar el Sprint 2 completado, se deben cumplir todos los siguientes criterios:
 
 \begin{enumerate}
-  \item \cmark~WCAG 2.5.7 completado: \texttt{aria-label} en cubo, verificado con NVDA.
-  \item \cmark~WCAG 3.2.6 completado: enlace de ayuda contextual en los 4 módulos.
+  \item \cmark~WCAG 2.5.7 documentado: alternativa funcional al cubo vía Navbar.
+  \item \cmark~WCAG 3.2.6 documentado: enlace de ayuda en footer (Contacto) en todas las páginas.
   \item \cmark~Alt/title en imágenes de listados (miniaturas en grids de artículos/noticias).
-  \item \cmark~Prueba VoiceOver documentada con capturas o video.
-  \item \cmark~Admin CRUD de FAQs funcional.
+  \item \cmark~Vídeo accesible con subtítulos VTT en Nosotros (WCAG 1.2.2).
   \item \cmark~Al menos 3 artículos por módulo de salud en Firestore.
-  \item \cmark~Presentación PPT/Beamer de 10--15 minutos lista para exposición.
-  \item \cmark~Matriz WCAG final con capturas reales como evidencia.
-  \item \cmark~axe DevTools: 0 violaciones en todas las páginas principales al final del sprint.
-  \item \xmark~Lighthouse Accessibility: 92/100 al 03/07/2026 (objetivo $\geq$95/100 para entrega final; 2 issues activos: contraste y ARIA prohibido).
-  \item \xmark~CLS (escritorio): 0.326 --- requiere corrección antes de entrega (objetivo $<$0.1).
+  \item \cmark~Contraste WCAG 1.4.3 corregido: estadísticas Home, footer y declaración de accesibilidad.
+  \item \cmark~Sección Biblioteca eliminada y referencias limpias en toda la aplicación.
+  \item \cmark~Navegación: scroll al inicio en PUSH/REPLACE, logo clickable, validación blur sin disrupción.
+  \item \cmark~Declaración de accesibilidad honesta: Lighthouse 92/100 real, 4 criterios parciales documentados, 5 correcciones pendientes listadas.
+  \item \cmark~axe DevTools: 0 violaciones en todas las páginas principales al finalizar el sprint.
+  \item \wmark~Lighthouse Accessibility: 92/100 (issue ARIA prohibido activo; no alcanzó objetivo de 95/100).
+  \item \xmark~CLS (escritorio): 0.326 --- no corregido en este sprint; queda como deuda técnica.
 \end{enumerate}
 
 % ============================================================
@@ -861,19 +872,19 @@ En este contexto académico, el ``cliente'' es la asignatura y su rúbrica. Los 
 \textbf{Métrica} & \textbf{Valor} \\
 \midrule
 Total de commits (Sprint 1)             & 34 \\
-Total de commits (Sprint 2, al 02/07)  & 6 (acumulado: 40) \\
-Líneas de código aproximadas (src/)     & $\sim$5.200 \\
-Páginas implementadas                   & 11 \\
+Total de commits (Sprint 2, al 13/07)  & $\sim$15 (acumulado: $\sim$49) \\
+Líneas de código aproximadas (src/)     & $\sim$5.600 \\
+Páginas implementadas                   & 10 (Biblioteca eliminada) \\
 Componentes reutilizables               & 13 \\
-Rutas SPA                               & 17 \\
+Rutas SPA                               & 16 \\
 Colecciones Firestore                   & 5 \\
-Criterios WCAG 2.2 implementados        & 25 / 28 evaluados \\
-Criterios WCAG 2.2 parciales            & 2 \\
+Criterios WCAG 2.2 implementados        & 24 / 28 evaluados \\
+Criterios WCAG 2.2 parciales            & 4 (1.2.3, 2.5.7, 3.2.6, 4.1.2) \\
 Violaciones axe DevTools (producción)   & 0 \\
-Lighthouse Accessibility (03/07/2026)   & 92 / 100 (2 issues activos) \\
+Lighthouse Accessibility (13/07/2026)   & 92 / 100 (issue ARIA prohibido activo) \\
 PageSpeed Performance --- móvil         & 66 / 100 \\
 PageSpeed Performance --- escritorio    & 80 / 100 \\
-CLS (escritorio)                        & 0.326 (objetivo $<$0.1) \\
+CLS (escritorio)                        & 0.326 (deuda técnica, no corregido) \\
 Tiempo de build (Vite)                  & $\sim$3.8 s \\
 Tamaño del bundle principal (gzip)      & 64 KB \\
 Tamaño del bundle Firebase (gzip)       & 114 KB \\
@@ -917,11 +928,11 @@ Regresión de accesibilidad al añadir contenido &
 
   \item \textbf{La integración continua fue determinante:} El pipeline GitHub Actions + \texttt{eslint-plugin-jsx-a11y} garantizó que ninguna regresión de accesibilidad llegara a producción. Los 34 commits del Sprint 1 resultaron en 0 violaciones axe en el sitio desplegado.
 
-  \item \textbf{Las iteraciones cortas aceleraron la retroalimentación:} Cuatro sub-iteraciones en Sprint 1 y seis commits en los primeros días del Sprint 2 permitieron detectar y corregir cinco problemas de accesibilidad (orden de foco WCAG 2.4.3, imágenes duplicadas WCAG 1.1.1, renderizado HTML WCAG 1.3.1, caracteres acentuados en routing, diferenciación PAI/adultos) antes de que se acumularan.
+  \item \textbf{Las iteraciones cortas aceleraron la retroalimentación:} Cuatro sub-iteraciones en Sprint 1 y quince commits en Sprint 2 permitieron detectar y corregir ocho problemas de accesibilidad (contraste 1.4.3, vídeo 1.2.2, navegación 2.4.3, foco de formulario, logo inaccesible, Biblioteca obsoleta, scroll de página, declaración inflada) antes de la entrega final.
 
-  \item \textbf{La propiedad colectiva del código funcionó:} Los 34 commits distribuidos entre tres integrantes muestran contribución real y alternada. Ningún módulo pertenece a una sola persona; todos pueden modificar cualquier parte del proyecto.
+  \item \textbf{La propiedad colectiva del código funcionó:} Los $\sim$49 commits distribuidos entre tres integrantes muestran contribución real y alternada. Ningún módulo pertenece a una sola persona; todos pueden modificar cualquier parte del proyecto.
 
-  \item \textbf{El Sprint 2 es alcanzable en 2 semanas:} Con 31 puntos de historia y los cimientos sólidos del Sprint 1, el Sprint 2 puede completarse en el período previsto. Los dos criterios WCAG pendientes son de baja complejidad (1 y 2 puntos).
+  \item \textbf{El Sprint 2 se completó en el plazo previsto (13/07/2026):} Con 54 puntos de historia planificados y ejecutados, el Sprint 2 cerró con conformidad sustancial WCAG 2.2 AA. Las deudas técnicas pendientes (CLS, ARIA prohibido) están documentadas en la declaración de accesibilidad.
 \end{enumerate}
 
 % ============================================================

@@ -1,12 +1,15 @@
 import { useEffect, useRef } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigationType } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import './PageWrapper.css'
 
+// Module-level: persists across page unmounts/remounts (lazy-loaded pages each mount fresh)
+let appHasHydrated = false
+
 export default function PageWrapper({ children, title, description }) {
   const { pathname } = useLocation()
+  const navType = useNavigationType()
   const mainRef = useRef(null)
-  const isFirstRender = useRef(true)
 
   useEffect(() => {
     const pageTitle = title ? `${title} | SaludEC` : 'SaludEC — Servicios públicos de salud'
@@ -22,12 +25,15 @@ export default function PageWrapper({ children, title, description }) {
       meta.setAttribute('content', description)
     }
 
-    if (isFirstRender.current) {
-      isFirstRender.current = false
+    if (!appHasHydrated) {
+      appHasHydrated = true
       return
     }
-    mainRef.current?.focus()
-  }, [pathname, title, description])
+    // Only shift focus on forward/replace navigation; back/forward restores naturally
+    if (navType !== 'POP') {
+      mainRef.current?.focus({ preventScroll: true })
+    }
+  }, [pathname, navType, title, description])
 
   return (
     <main

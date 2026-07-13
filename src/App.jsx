@@ -31,11 +31,20 @@ const NoticiasDetalle   = lazy(() => import('@pages/NoticiasDetalle/NoticiasDeta
 const Accesibilidad     = lazy(() => import('@pages/Accesibilidad/Accesibilidad'))
 
 function ScrollToTop() {
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
   const navType = useNavigationType()
   useEffect(() => {
-    if (navType !== 'POP') window.scrollTo(0, 0)
-  }, [pathname, navType])
+    if (navType === 'POP') return
+    if (hash) {
+      setTimeout(() => {
+        const el = document.querySelector(hash)
+        if (el) el.scrollIntoView({ behavior: 'smooth' })
+        else window.scrollTo(0, 0)
+      }, 80)
+    } else {
+      window.scrollTo(0, 0)
+    }
+  }, [pathname, hash, navType])
   return null
 }
 
