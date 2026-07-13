@@ -2,81 +2,118 @@ import PageWrapper from '@components/layout/PageWrapper/PageWrapper'
 import Breadcrumb from '@components/layout/Breadcrumb/Breadcrumb'
 import './Accesibilidad.css'
 
+// Estado real al 13/07/2026
 const CRITERIOS = [
   { id: '1.1.1', nombre: 'Contenido no textual', nivel: 'A', estado: 'ok',
-    desc: 'Imágenes informativas con alt descriptivo. Imágenes decorativas con aria-hidden="true". Emojis decorativos de estado vacío y secciones envueltos con aria-hidden. Texto alternativo requerido en panel admin (ATAG B.1.1).' },
+    desc: 'Imágenes informativas con alt descriptivo. Decorativas con aria-hidden="true". Emojis de estado envueltos en span aria-hidden. Alt requerido en panel admin (ATAG B.1.1).' },
+  { id: '1.2.1', nombre: 'Solo audio y solo vídeo (grabado)', nivel: 'A', estado: 'ok',
+    desc: 'No hay contenido solo-audio o solo-vídeo sin alternativa textual. El video de la página Nosotros incluye subtítulos completos en VTT.' },
   { id: '1.2.2', nombre: 'Subtítulos (grabados)', nivel: 'A', estado: 'ok',
-    desc: 'Panel admin de recursos incluye campo de URL de transcripción/subtítulos para videos, podcasts y PDFs. ResourceCard muestra enlace "Transcripción disponible" cuando el recurso lo tiene.' },
-  { id: '1.2.3', nombre: 'Descripción de audio (grabada)', nivel: 'A', estado: 'ok',
-    desc: 'Campo de transcripción disponible en el panel admin para todos los tipos de recursos multimedia. Publicado con ResourceCard en la Biblioteca.' },
+    desc: 'Video MSP/OPS en /nosotros incluye pista <track kind="captions" srclang="es" default> con archivo VTT sincronizado. Subtítulos activados por defecto.' },
+  { id: '1.2.3', nombre: 'Audiodescripción o alternativa (grabada)', nivel: 'A', estado: 'parcial',
+    desc: 'El video cuenta con subtítulos, pero no incluye una pista de audiodescripción separada para personas con discapacidad visual. Pendiente: añadir <track kind="descriptions"> o proporcionar transcripción equivalente completa.' },
   { id: '1.3.1', nombre: 'Información y relaciones', nivel: 'A', estado: 'ok',
-    desc: 'HTML semántico en todas las páginas: header, nav, main, section aria-labelledby, footer. Tablas con caption y scope. Formularios con label y fieldset. Flechas tipográficas decorativas → envueltas en span aria-hidden.' },
+    desc: 'HTML semántico: header, nav, main, section aria-labelledby, footer. Tablas con caption y scope. Formularios con label. Flechas tipográficas → en span aria-hidden.' },
   { id: '1.3.5', nombre: 'Propósito del campo de entrada', nivel: 'AA', estado: 'ok',
-    desc: 'Campos del formulario de contacto con autocomplete="name", "email", "tel". ID único en SearchBar generado con useId(). Meta description actualizada dinámicamente en el head vía useEffect.' },
+    desc: 'Campos de contacto con autocomplete="name" y "email". ID único en SearchBar con useId(). Meta description actualizada dinámicamente.' },
   { id: '1.4.1', nombre: 'Uso del color', nivel: 'A', estado: 'ok',
-    desc: 'Errores de formulario: ícono + texto + color. Fila "Peso normal" en tabla IMC con símbolo ✓ adicional al color verde — ninguna información depende exclusivamente del color.' },
+    desc: 'Errores de formulario: ícono + texto + color. Tabla IMC: símbolo ✓ adicional al color. Ninguna información depende exclusivamente del color.' },
   { id: '1.4.3', nombre: 'Contraste mínimo', nivel: 'AA', estado: 'ok',
-    desc: 'Texto principal: 17.9:1 (blanco sobre navy-900). Botón primario: 7.1:1. Texto secundario: 4.7:1. Slogan Navbar aumentado a 0.75rem para mejorar legibilidad. Todos superan el mínimo de 4.5:1.' },
+    desc: 'Corregidos tres fallos detectados en auditoría 03/07/2026: texto .home-stats__desc (#42a5f5 sobre #f0f8ff, ratio 2.35:1→10:1), footer col-title (3.9:1→7.4:1), footer copy/a11y (3.3:1→6.2:1). Todos superan 4.5:1.' },
   { id: '1.4.4', nombre: 'Cambio de tamaño del texto', nivel: 'AA', estado: 'ok',
-    desc: 'Sin pérdida de funcionalidad al escalar al 200% en Chrome y Firefox. Preload de hoja de fuentes Google para reducir FOUT en conexiones lentas.' },
+    desc: 'Sin pérdida de funcionalidad al escalar al 200% en Chrome y Firefox.' },
   { id: '1.4.10', nombre: 'Reajuste (reflujo)', nivel: 'AA', estado: 'ok',
     desc: 'Diseño responsive desde 320px sin scroll horizontal. Compatible con zoom del navegador.' },
   { id: '1.4.11', nombre: 'Contraste de componentes', nivel: 'AA', estado: 'ok',
-    desc: 'Bordes de campos de formulario e íconos de estado con ratio ≥ 3:1 sobre el fondo.' },
+    desc: 'Bordes de campos e íconos de estado con ratio ≥ 3:1 sobre el fondo.' },
   { id: '1.4.12', nombre: 'Espaciado de texto', nivel: 'AA', estado: 'ok',
-    desc: 'El contenido permanece visible y funcional al ampliar interlineado, espacio entre letras y párrafos desde hojas de estilo del usuario.' },
+    desc: 'Contenido visible y funcional al ampliar interlineado y espaciado desde hojas del usuario.' },
   { id: '2.1.1', nombre: 'Teclado', nivel: 'A', estado: 'ok',
-    desc: 'Toda la interfaz es operable con teclado. Tablist de Biblioteca con navegación ArrowLeft/ArrowRight/Home/End (patrón ARIA Tabs). Focus trap en menú móvil y modal. Filtros aria-pressed navegables por Tab.' },
+    desc: 'Toda la interfaz operable con teclado. Focus trap en menú móvil. Filtros aria-pressed navegables por Tab.' },
   { id: '2.1.2', nombre: 'Sin trampa para el foco del teclado', nivel: 'A', estado: 'ok',
-    desc: 'Modal: focus trap completo con Tab/Shift+Tab. Menú móvil: focus trap activo mientras menuOpen. Escape cierra ambos y devuelve foco al elemento origen.' },
+    desc: 'Menú móvil: focus trap con Tab/Shift+Tab. Escape cierra y devuelve foco al elemento origen.' },
   { id: '2.2.2', nombre: 'Pausar, detener, ocultar', nivel: 'AA', estado: 'ok',
-    desc: 'Cubo 3D: botón de pausa/play con aria-pressed. Respeta prefers-reduced-motion para estado inicial. Orbs decorativos con animation: none bajo prefers-reduced-motion.' },
+    desc: 'Cubo 3D: botón de pausa/play con aria-pressed. Respeta prefers-reduced-motion.' },
   { id: '2.3.3', nombre: 'Animación de interacciones (WCAG 2.2)', nivel: 'AA', estado: 'ok',
-    desc: 'Cubo 3D detiene rotación automática si prefers-reduced-motion está activo. Orbs .hero__orb reciben animation: none bajo la media query. Clases .animate-fade-in, .animate-scale-in ya cubiertas en animations.css.' },
+    desc: 'Cubo detiene rotación si prefers-reduced-motion activo. Orbs con animation: none bajo la media query.' },
   { id: '2.4.1', nombre: 'Evitar bloques', nivel: 'A', estado: 'ok',
-    desc: 'SkipLink "Saltar al contenido principal" visible al recibir foco. Biblioteca añade segundo skip link en página hacia #biblioteca-toolbar para saltar directamente a los filtros.' },
+    desc: 'SkipLink "Saltar al contenido principal" visible al recibir foco.' },
   { id: '2.4.2', nombre: 'Página con título', nivel: 'A', estado: 'ok',
-    desc: 'document.title actualizado en cada ruta con formato "Sección | SaludEC". Título del index.html actualizado a "SaludEC — Servicios públicos de salud del Ecuador".' },
+    desc: 'document.title actualizado en cada ruta con formato "Sección | SaludEC".' },
   { id: '2.4.3', nombre: 'Orden del foco', nivel: 'A', estado: 'ok',
-    desc: 'Menú móvil: foco se mueve automáticamente al primer ítem al abrir. Modal: foco va al dialog al abrir y regresa al disparador al cerrar. Contacto: foco a resumen de errores o a mensaje de éxito.' },
+    desc: 'Menú móvil: foco al primer ítem al abrir. Contacto: foco a resumen de errores o mensaje de éxito. PageWrapper enfoca <main> en cada navegación nueva.' },
   { id: '2.4.4', nombre: 'Propósito del enlace', nivel: 'A', estado: 'ok',
-    desc: 'Todos los enlaces tienen texto descriptivo. Flechas tipográficas → envueltas en span aria-hidden para evitar anuncio "flecha derecha". Atributo title redundante eliminado de article cards.' },
+    desc: 'Todos los enlaces con texto descriptivo. Flechas tipográficas → en span aria-hidden.' },
   { id: '2.4.7', nombre: 'Foco visible', nivel: 'AA', estado: 'ok',
-    desc: 'Indicador de foco visible en todos los interactivos: outline 3px azul con offset 3px. Module cards: :focus-visible con box-shadow y translateY idénticos al :hover.' },
+    desc: 'Indicador de foco 3px azul en todos los interactivos. Module cards con :focus-visible y box-shadow.' },
   { id: '2.4.8', nombre: 'Ubicación (WCAG 2.2)', nivel: 'AA', estado: 'ok',
-    desc: 'Breadcrumb con etiquetas legibles actualizadas a rutas reales (Atención Primaria, Vacunación, Emergencias). NavLink de React Router aplica aria-current="page" automáticamente — prop manual eliminado.' },
+    desc: 'Breadcrumb con etiquetas legibles. NavLink aplica aria-current="page" automáticamente.' },
   { id: '2.4.11', nombre: 'Apariencia del foco (WCAG 2.2)', nivel: 'AA', estado: 'ok',
-    desc: 'Área de foco ≥ perímetro del componente. Contraste del indicador ≥ 3:1. Criterio nuevo de WCAG 2.2.' },
+    desc: 'Área de foco ≥ perímetro del componente. Contraste del indicador ≥ 3:1.' },
   { id: '2.5.3', nombre: 'Etiqueta en el nombre', nivel: 'A', estado: 'ok',
-    desc: 'El texto visible de cada botón está incluido en su nombre accesible (aria-label).' },
-  { id: '2.5.7', nombre: 'Movimientos de arrastre (WCAG 2.2)', nivel: 'AA', estado: 'ok',
-    desc: 'El cubo 3D es decorativo: contenedor con aria-hidden="true" y role="presentation". Ningún elemento hijo es focusable. Los módulos de salud son accesibles desde la navegación sin requerir arrastre.' },
+    desc: 'El texto visible de cada botón está incluido en su nombre accesible.' },
+  { id: '2.5.7', nombre: 'Movimientos de arrastre (WCAG 2.2)', nivel: 'AA', estado: 'parcial',
+    desc: 'El cubo 3D es decorativo (aria-hidden, role="presentation") — no se puede acceder a sus caras por teclado ni lector de pantalla. Los módulos son accesibles desde la Navbar. Pendiente: añadir alternativa de puntero simple o arreglar accesibilidad del cubo.' },
   { id: '3.1.1', nombre: 'Idioma de la página', nivel: 'A', estado: 'ok',
     desc: '<html lang="es"> en todas las páginas. Open Graph con og:locale="es_EC".' },
   { id: '3.2.3', nombre: 'Navegación coherente', nivel: 'AA', estado: 'ok',
-    desc: 'Navbar con el mismo orden, posición y etiquetas en todas las páginas del sitio.' },
+    desc: 'Navbar con el mismo orden y etiquetas en todas las páginas.' },
   { id: '3.2.4', nombre: 'Identificación coherente', nivel: 'AA', estado: 'ok',
-    desc: 'Breadcrumb con etiquetas coherentes en todas las páginas. Meta description y Open Graph actualizados a descripción vigente del sitio (servicios MSP/IESS/ECU 911).' },
-  { id: '3.2.6', nombre: 'Ayuda consistente (WCAG 2.2)', nivel: 'A', estado: 'ok',
-    desc: 'Componente ContextualHelp en Atención Primaria, Vacunación, Salud Mental y Emergencias. Líneas 171 MSP, 182 Salud Mental y ECU 911 con enlaces tel: directos y enlace a /contacto.' },
+    desc: 'Breadcrumb con etiquetas coherentes en todas las páginas.' },
+  { id: '3.2.6', nombre: 'Ayuda consistente (WCAG 2.2)', nivel: 'A', estado: 'parcial',
+    desc: 'Enlace a /contacto disponible en footer y en algunos módulos de contenido. Pendiente: añadir enlace de contacto contextual en todos los módulos de forma coherente (no solo en el footer).' },
   { id: '3.3.1', nombre: 'Identificación de errores', nivel: 'A', estado: 'ok',
-    desc: 'Formulario de contacto: resumen único de errores con role="alert" al inicio, con enlaces a cada campo erróneo. Foco se mueve al resumen al fallar validación.' },
+    desc: 'Formulario de contacto: resumen de errores con role="alert". Validación en tiempo real al salir de cada campo (onBlur). Foco al resumen al fallar envío.' },
   { id: '3.3.2', nombre: 'Etiquetas o instrucciones', nivel: 'A', estado: 'ok',
-    desc: 'label htmlFor visible en todos los campos. Hint descriptivo cuando el formato es específico. Campos requeridos marcados.' },
+    desc: 'label htmlFor visible en todos los campos. Hint descriptivo con formato esperado. Campos requeridos marcados con * y aria-required.' },
   { id: '4.1.1', nombre: 'Procesamiento', nivel: 'A', estado: 'ok',
-    desc: 'SearchBar usa useId() de React 18 para ID único por instancia — evita duplicación en SPA. Sin atributos aria conflictivos.' },
-  { id: '4.1.2', nombre: 'Nombre, función, valor', nivel: 'A', estado: 'ok',
-    desc: 'aria-expanded + aria-controls en Accordion y menú hamburger. aria-current="page" en NavLink (automático de React Router). aria-pressed en filtros y botón pausa/play del cubo. role="dialog" + aria-modal en Modal. Modal backdrop sin aria-hidden incorrecto.' },
+    desc: 'SearchBar usa useId() para ID único por instancia. Sin atributos aria conflictivos detectados.' },
+  { id: '4.1.2', nombre: 'Nombre, función, valor', nivel: 'A', estado: 'parcial',
+    desc: 'aria-expanded + aria-controls en Accordion y menú hamburger. aria-current en NavLink. Pendiente: Lighthouse detecta 2 elementos con atributos ARIA prohibidos — en corrección.' },
   { id: '4.1.3', nombre: 'Mensajes de estado', nivel: 'AA', estado: 'ok',
-    desc: 'aria-live="polite" con aria-atomic="true" en región de resultados de Biblioteca. role="status" en Spinner. Toast de confirmación con aria-live="assertive". Campos IMC con type="text" inputMode="decimal" para AT correcto.' },
+    desc: 'role="status" en Spinner. Toast con aria-live="assertive". Mensajes de éxito/error con rol semántico correcto.' },
+]
+
+const PENDIENTES = [
+  {
+    id: '4.1.2',
+    titulo: 'Atributos ARIA prohibidos (2 elementos)',
+    desc: 'Lighthouse detecta 2 elementos con aria-* que están explícitamente prohibidos según la especificación. Se corregirán en el próximo Sprint.',
+    eta: 'Sprint 2 — julio 2026',
+  },
+  {
+    id: '1.2.3',
+    titulo: 'Audiodescripción del video',
+    desc: 'El video en la página Nosotros tiene subtítulos pero carece de pista de audiodescripción (<track kind="descriptions">) para usuarios con discapacidad visual.',
+    eta: 'Sprint 2 — julio 2026',
+  },
+  {
+    id: '2.5.7',
+    titulo: 'Alternativa al arrastre del cubo 3D',
+    desc: 'El cubo decorativo actualmente está completamente oculto a tecnologías de asistencia. Sus módulos de salud son accesibles por Navbar, pero el criterio exige una alternativa de puntero simple explícita.',
+    eta: 'Sprint 2 — julio 2026',
+  },
+  {
+    id: '3.2.6',
+    titulo: 'Ayuda contextual coherente en todos los módulos',
+    desc: 'El enlace de contacto existe en el footer pero no en todos los módulos de contenido de forma sistemática. WCAG 2.2 requiere que la ayuda esté en la misma posición relativa en todas las páginas.',
+    eta: 'Sprint 2 — julio 2026',
+  },
+  {
+    id: 'CLS',
+    titulo: 'Cumulative Layout Shift 0.326 (objetivo < 0.1)',
+    desc: 'CLS elevado causado por carga de Google Fonts y animaciones Skeleton no compositadas. No es un criterio WCAG pero afecta la experiencia. Corrección: font-display: swap y transform en lugar de height en skeletons.',
+    eta: 'Sprint 2 — julio 2026',
+  },
 ]
 
 const HERRAMIENTAS = [
-  { nombre: 'axe DevTools', resultado: '0 violaciones', url: 'https://www.deque.com/axe/' },
-  { nombre: 'Lighthouse', resultado: 'Accessibility 100/100', url: 'https://developer.chrome.com/docs/lighthouse/' },
-  { nombre: 'WAVE', resultado: '0 errores', url: 'https://wave.webaim.org/' },
-  { nombre: 'NVDA 2024.1 + Chrome', resultado: 'Navegación completa', url: 'https://www.nvaccess.org/' },
+  { nombre: 'axe DevTools', resultado: '0 violaciones críticas', url: 'https://www.deque.com/axe/' },
+  { nombre: 'Lighthouse (Accessibilty)', resultado: '92/100 (03/07/2026)', url: 'https://developer.chrome.com/docs/lighthouse/' },
+  { nombre: 'WAVE', resultado: '0 errores · 2 alertas SPA (falsos positivos)', url: 'https://wave.webaim.org/' },
+  { nombre: 'NVDA 2024.1 + Chrome', resultado: 'Navegación completa por landmarks y encabezados', url: 'https://www.nvaccess.org/' },
   { nombre: 'Teclado (sin mouse)', resultado: 'Todas las funciones accesibles', url: null },
+  { nombre: 'PageSpeed Insights', resultado: 'Performance 66/100 móvil · 80/100 escritorio', url: null },
 ]
 
 const BREADCRUMB = [
@@ -87,11 +124,14 @@ const BREADCRUMB = [
 const ESTADO_LABEL = { ok: 'Implementado', parcial: 'Parcial', pendiente: 'Pendiente' }
 const ESTADO_CLASS = { ok: 'accesibilidad__estado--ok', parcial: 'accesibilidad__estado--parcial', pendiente: 'accesibilidad__estado--pendiente' }
 
+const criteriosOk = CRITERIOS.filter(c => c.estado === 'ok').length
+const criteriosParcial = CRITERIOS.filter(c => c.estado === 'parcial').length
+
 export default function Accesibilidad() {
   return (
     <PageWrapper
       title="Declaración de accesibilidad"
-      description="Estado de conformidad WCAG 2.2 Nivel AA del sitio SaludEC."
+      description="Estado real de conformidad WCAG 2.2 Nivel AA del sitio SaludEC — qué cumple, qué está parcial y qué sigue pendiente."
     >
       <div className="accesibilidad container">
         <Breadcrumb customItems={BREADCRUMB} />
@@ -100,7 +140,6 @@ export default function Accesibilidad() {
           <div className="accesibilidad__badge" aria-hidden="true">
             <svg width="48" height="48" viewBox="0 0 64 64" fill="none" aria-hidden="true">
               <circle cx="32" cy="32" r="30" fill="#1565C0" opacity="0.12"/>
-              <path d="M32 10a6 6 0 1 1 0 12 6 6 0 0 1 0-12zm-2 16h4v28h-4z" fill="#1565C0"/>
               <circle cx="32" cy="16" r="5" fill="#1565C0"/>
               <path d="M20 28 Q32 22 44 28" stroke="#1565C0" strokeWidth="3" fill="none" strokeLinecap="round"/>
               <path d="M24 28 L20 44" stroke="#1565C0" strokeWidth="3" strokeLinecap="round"/>
@@ -111,9 +150,8 @@ export default function Accesibilidad() {
           <div>
             <h1 className="accesibilidad__titulo">Declaración de accesibilidad</h1>
             <p className="accesibilidad__subtitulo">
-              SaludEC está comprometido con la accesibilidad digital. Esta declaración describe
-              el estado actual de conformidad con <strong>WCAG 2.2 Nivel AA</strong> y los
-              criterios adicionales de WAI-ARIA APG, ATAG y UAAG evaluados durante la auditoría.
+              Estado real de conformidad con <strong>WCAG 2.2 Nivel AA</strong> al 13 de julio de 2026.
+              Esta página refleja honestamente lo que está implementado, lo que es parcial y lo que sigue pendiente.
             </p>
           </div>
         </header>
@@ -123,20 +161,20 @@ export default function Accesibilidad() {
           <h2 id="resumen-titulo" className="accesibilidad__section-title">Estado general</h2>
           <div className="accesibilidad__resumen-grid">
             <div className="accesibilidad__stat accesibilidad__stat--ok">
-              <span className="accesibilidad__stat-num">33</span>
+              <span className="accesibilidad__stat-num">{criteriosOk}</span>
               <span className="accesibilidad__stat-label">Criterios implementados</span>
             </div>
             <div className="accesibilidad__stat accesibilidad__stat--parcial">
-              <span className="accesibilidad__stat-num">0</span>
-              <span className="accesibilidad__stat-label">Criterios parciales</span>
+              <span className="accesibilidad__stat-num">{criteriosParcial}</span>
+              <span className="accesibilidad__stat-label">Criterios parciales o pendientes</span>
             </div>
             <div className="accesibilidad__stat accesibilidad__stat--eval">
-              <span className="accesibilidad__stat-num">100</span>
-              <span className="accesibilidad__stat-label">Lighthouse Accessibility</span>
+              <span className="accesibilidad__stat-num">92</span>
+              <span className="accesibilidad__stat-label">Lighthouse Accessibility (real 03/07/2026)</span>
             </div>
             <div className="accesibilidad__stat accesibilidad__stat--tools">
-              <span className="accesibilidad__stat-num">0</span>
-              <span className="accesibilidad__stat-label">Violaciones axe DevTools</span>
+              <span className="accesibilidad__stat-num">5</span>
+              <span className="accesibilidad__stat-label">Correcciones pendientes Sprint 2</span>
             </div>
           </div>
         </section>
@@ -150,29 +188,52 @@ export default function Accesibilidad() {
               <a href="https://vitaprevent-b2e34.web.app" target="_blank" rel="noopener noreferrer">
                 vitaprevent-b2e34.web.app
               </a>{' '}
-              cumple <strong>plenamente con WCAG 2.2 Nivel AA</strong> del{' '}
+              <strong>cumple sustancialmente con WCAG 2.2 Nivel AA</strong> del{' '}
               <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener noreferrer">
-                World Wide Web Consortium (W3C)
-              </a>.
+                W3C
+              </a>. Lighthouse Accessibility: <strong>92/100</strong> (medido el 03/07/2026 con PageSpeed Insights).
             </p>
             <p>
-              Los <strong>34 puntos</strong> identificados en la auditoría de accesibilidad y usabilidad
-              han sido implementados, cubriendo criterios WCAG 2.2, patrones WAI-ARIA APG, guías
-              ATAG (panel de administración) y compatibilidad UAAG. <strong>Todos los criterios
-              relevantes están completamente implementados</strong> sin incumplimientos que impidan
-              el acceso a información de servicios de salud pública.
+              Se han implementado <strong>{criteriosOk} de {CRITERIOS.length} criterios evaluados</strong>.
+              Quedan <strong>{criteriosParcial} criterios parciales</strong> en corrección durante el Sprint 2.
+              Ninguno de estos pendientes impide el acceso a la información de servicios públicos de salud,
+              pero se documentan aquí con plena transparencia.
             </p>
             <p className="accesibilidad__fecha">
-              <strong>Fecha de la evaluación:</strong> 1 de julio de 2026 &nbsp;·&nbsp;
-              <strong>Próxima revisión:</strong> 15 de julio de 2026
+              <strong>Fecha de evaluación:</strong> 3 de julio de 2026 &nbsp;·&nbsp;
+              <strong>Última actualización de esta declaración:</strong> 13 de julio de 2026 &nbsp;·&nbsp;
+              <strong>Próxima revisión:</strong> 20 de julio de 2026
             </p>
+          </div>
+        </section>
+
+        {/* Pendientes conocidos */}
+        <section className="accesibilidad__pendientes" aria-labelledby="pendientes-titulo">
+          <h2 id="pendientes-titulo" className="accesibilidad__section-title">
+            Limitaciones conocidas y correcciones pendientes
+          </h2>
+          <div className="accesibilidad__pendientes-list">
+            {PENDIENTES.map((p) => (
+              <div key={p.id} className="accesibilidad__pendiente-item">
+                <span className="accesibilidad__pendiente-badge" aria-label={`Criterio ${p.id}`}>
+                  {p.id}
+                </span>
+                <div>
+                  <strong>{p.titulo}</strong>
+                  <p>
+                    {p.desc}{' '}
+                    <span className="accesibilidad__eta">ETA: {p.eta}</span>
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
         {/* Herramientas de evaluación */}
         <section className="accesibilidad__herramientas" aria-labelledby="herramientas-titulo">
           <h2 id="herramientas-titulo" className="accesibilidad__section-title">
-            Herramientas y métodos de evaluación
+            Herramientas y resultados de evaluación
           </h2>
           <ul className="accesibilidad__tools-list" role="list">
             {HERRAMIENTAS.map((h) => (
@@ -195,18 +256,18 @@ export default function Accesibilidad() {
         {/* Matriz WCAG */}
         <section className="accesibilidad__matriz" aria-labelledby="matriz-titulo">
           <h2 id="matriz-titulo" className="accesibilidad__section-title">
-            Matriz de criterios WCAG 2.2
+            Matriz de criterios WCAG 2.2 evaluados
           </h2>
           <div className="accesibilidad__tabla-wrap">
             <table className="accesibilidad__tabla">
-              <caption className="sr-only">Matriz de conformidad WCAG 2.2 Nivel AA del sitio SaludEC</caption>
+              <caption className="sr-only">Matriz de conformidad WCAG 2.2 Nivel AA del sitio SaludEC al 13/07/2026</caption>
               <thead>
                 <tr>
                   <th scope="col">Criterio</th>
                   <th scope="col">Nombre</th>
                   <th scope="col">Nivel</th>
                   <th scope="col">Estado</th>
-                  <th scope="col">Aplicación</th>
+                  <th scope="col">Notas</th>
                 </tr>
               </thead>
               <tbody>
@@ -240,9 +301,9 @@ export default function Accesibilidad() {
             Reportar un problema de accesibilidad
           </h2>
           <p>
-            Si encuentras alguna barrera de accesibilidad en el sitio que no esté descrita aquí,
-            puedes notificarnos a través de nuestro formulario de contacto. Revisaremos el problema
-            y lo documentaremos en la siguiente evaluación.
+            Si encuentras una barrera de accesibilidad que no está documentada aquí, o si algún criterio
+            marcado como "implementado" no funciona en tu dispositivo o tecnología de asistencia,
+            por favor comunícanoslo. Tu reporte nos ayuda a mejorar esta declaración y el sitio.
           </p>
           <a href="/contacto" className="btn btn--primary">
             Ir al formulario de contacto
