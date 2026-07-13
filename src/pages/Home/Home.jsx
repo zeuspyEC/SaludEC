@@ -257,6 +257,17 @@ export default function Home() {
           </div>
 
           <div className="hero__visual animate-fade-in">
+            {/* Alternativa sin arrastre para WCAG 2.5.7 — visible solo para AT y teclado */}
+            <nav className="sr-only" aria-label="Acceso directo a los módulos de salud">
+              <ul>
+                {CUBE_MODS.map((f) => (
+                  <li key={f.pos}>
+                    <Link to={f.path}>{f.icon} {f.title} — {f.sub}</Link>
+                  </li>
+                ))}
+                <li><Link to={ROUTES.NOTICIAS}>📰 Noticias — Actualidad en salud</Link></li>
+              </ul>
+            </nav>
             <div aria-hidden="true" role="presentation">
               <div className="hero__orb hero__orb--1" />
               <div className="hero__orb hero__orb--2" />
