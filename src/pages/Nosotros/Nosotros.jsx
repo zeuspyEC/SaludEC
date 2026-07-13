@@ -105,6 +105,37 @@ export default function Nosotros() {
           </ul>
         </section>
 
+        {/* Video informativo */}
+        <section aria-labelledby="video-title" className="video-section">
+          <h2 id="video-title" className="nosotros-section-title">Video: Comienzos saludables, futuros esperanzadores</h2>
+          <p className="video-section__desc">
+            Contenido oficial del Ministerio de Salud Pública del Ecuador y la Organización Panamericana de la Salud (OPS)
+            sobre salud materna, neonatal e intercultural.
+          </p>
+          <div className="video-wrapper">
+            <video
+              controls
+              preload="metadata"
+              className="video-player"
+              aria-label="Video informativo: Comienzos saludables, futuros esperanzadores — MSP y OPS Ecuador 2025"
+            >
+              <source src="/media/Video-SaludEC.mp4" type="video/mp4" />
+              <track
+                src="/media/subtitulos-salud-ecuador-es.vtt"
+                kind="captions"
+                srcLang="es"
+                label="Español"
+                default
+              />
+              Tu navegador no permite reproducir videos HTML5.
+              <a href="/media/Video-SaludEC.mp4">Descargar el video</a>.
+            </video>
+          </div>
+          <p className="video-section__caption">
+            Fuente: MSP Ecuador y OPS — Día Mundial de la Salud 2025. Subtítulos en español disponibles.
+          </p>
+        </section>
+
         {/* Tecnología */}
         <section aria-labelledby="tech-title" className="tech-section">
           <h2 id="tech-title" className="nosotros-section-title">Tecnología utilizada</h2>
