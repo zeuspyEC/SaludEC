@@ -11,7 +11,6 @@ const FOOTER_LINKS = {
     { label: 'Emergencias', path: ROUTES.PREVENCION },
   ],
   recursos: [
-    { label: 'Biblioteca Digital', path: ROUTES.BIBLIOTECA },
     { label: 'Noticias', path: ROUTES.NOTICIAS },
   ],
   institucional: [

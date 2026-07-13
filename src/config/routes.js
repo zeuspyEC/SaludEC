@@ -8,7 +8,6 @@ export const ROUTES = {
   SALUD_MENTAL_ARTICULO: '/salud-mental/:slug',
   PREVENCION: '/emergencias',
   PREVENCION_ARTICULO: '/emergencias/:slug',
-  BIBLIOTECA: '/biblioteca',
   NOTICIAS: '/noticias',
   NOTICIA: '/noticias/:id',
   CONTACTO: '/contacto',
@@ -29,6 +28,5 @@ export const NAV_ITEMS = [
   { label: 'Vacunación',        path: ROUTES.ACTIVIDAD_FISICA },
   { label: 'Salud Mental',      path: ROUTES.SALUD_MENTAL },
   { label: 'Emergencias',       path: ROUTES.PREVENCION },
-  { label: 'Biblioteca',        path: ROUTES.BIBLIOTECA },
   { label: 'Noticias',          path: ROUTES.NOTICIAS },
 ]

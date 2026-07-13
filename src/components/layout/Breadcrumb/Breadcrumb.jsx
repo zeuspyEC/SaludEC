@@ -7,7 +7,6 @@ const ROUTE_LABELS = {
   'vacunacion': 'Vacunación',
   'salud-mental': 'Salud Mental',
   'emergencias': 'Emergencias',
-  'biblioteca': 'Biblioteca Digital',
   'noticias': 'Noticias',
   'contacto': 'Contacto',
   'nosotros': 'Nosotros',

@@ -92,7 +92,7 @@ function HeroCube({ noticias, paused }) {
 
   const bottomFace = noticias[1]
     ? { pos: 'bottom', icon: '🔔', title: noticias[1].titulo?.slice(0, 24) + (noticias[1].titulo?.length > 24 ? '…' : ''), sub: 'Noticia reciente', path: `/noticias/${noticias[1].id}`, bg: 'rgba(8,145,178,0.10)', glow: '#22d3ee' }
-    : { pos: 'bottom', icon: '📚', title: 'Biblioteca', sub: 'Recursos digitales',  path: ROUTES.BIBLIOTECA,  bg: 'rgba(8,145,178,0.10)', glow: '#22d3ee' }
+    : { pos: 'bottom', icon: '📰', title: 'Noticias',   sub: 'Actualidad en salud', path: ROUTES.NOTICIAS,   bg: 'rgba(8,145,178,0.10)', glow: '#22d3ee' }
 
   const faces = [...CUBE_MODS, topFace, bottomFace]
 
@@ -245,8 +245,8 @@ export default function Home() {
               <Link to={ROUTES.NUTRICION} className="btn btn--primary btn--lg">
                 Explorar contenido
               </Link>
-              <Link to={ROUTES.BIBLIOTECA} className="btn btn--outline btn--lg hero__btn-outline">
-                Ver biblioteca
+              <Link to={ROUTES.NOTICIAS} className="btn btn--outline btn--lg hero__btn-outline">
+                Ver noticias
               </Link>
             </div>
             <div className="hero__trust">
@@ -416,21 +416,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── CTA Biblioteca ── */}
+      {/* ── CTA Noticias ── */}
       <section className="section section--dark" aria-labelledby="resources-title">
         <div className="container">
           <header className="section__header">
-            <span className="section__tag" style={{ color: 'var(--color-blue-300)' }}>Recursos</span>
+            <span className="section__tag" style={{ color: 'var(--color-blue-300)' }}>Actualidad</span>
             <h2 id="resources-title" className="section__title" style={{ color: 'var(--color-white)' }}>
-              Accede a nuestra biblioteca digital
+              Mantente informado sobre salud pública
             </h2>
-            <p className="section__subtitle" style={{ color: 'rgba(255,255,255,0.65)' }}>
-              Infografías, videos, podcasts y guías descargables completamente gratuitos.
+            <p className="section__subtitle" style={{ color: 'rgba(255,255,255,0.75)' }}>
+              Noticias oficiales del MSP, OPS y ECU 911 en un solo lugar, sin barreras de acceso.
             </p>
           </header>
           <div className="home-cta-row">
-            <Link to={ROUTES.BIBLIOTECA} className="btn btn--primary btn--lg">Ver biblioteca digital</Link>
-            <Link to={ROUTES.NOTICIAS} className="btn btn--outline btn--lg home-cta-row__outline">Leer noticias de salud</Link>
+            <Link to={ROUTES.NOTICIAS} className="btn btn--primary btn--lg">Leer noticias de salud</Link>
+            <Link to={ROUTES.NOSOTROS} className="btn btn--outline btn--lg home-cta-row__outline">Conocer el equipo</Link>
           </div>
         </div>
       </section>
@@ -442,7 +442,7 @@ export default function Home() {
             <h2 id="contact-cta-title" className="home-contact-cta__title">¿Tienes preguntas sobre tu salud?</h2>
             <p className="home-contact-cta__desc">Nuestro equipo puede orientarte y recomendarte los recursos más adecuados.</p>
           </div>
-          <Link to={ROUTES.CONTACTO} className="btn btn--primary btn--lg">Contactarnos</Link>
+          <Link to={ROUTES.CONTACTO} className="btn btn--primary btn--lg">Contáctanos</Link>
         </div>
       </section>
     </PageWrapper>

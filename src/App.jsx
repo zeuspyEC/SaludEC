@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react'
-import { Routes, Route, Navigate, useParams, useLocation } from 'react-router-dom'
+import { Routes, Route, Navigate, useParams, useLocation, useNavigationType } from 'react-router-dom'
 import SkipLink from '@components/layout/SkipLink/SkipLink'
 import Navbar from '@components/layout/Navbar/Navbar'
 import Footer from '@components/layout/Footer/Footer'
@@ -15,7 +15,6 @@ const Nutricion       = lazy(() => import('@pages/Nutricion/Nutricion'))
 const ActividadFisica = lazy(() => import('@pages/ActividadFisica/ActividadFisica'))
 const SaludMental     = lazy(() => import('@pages/SaludMental/SaludMental'))
 const Prevencion      = lazy(() => import('@pages/Prevencion/Prevencion'))
-const Biblioteca      = lazy(() => import('@pages/Biblioteca/Biblioteca'))
 const Noticias        = lazy(() => import('@pages/Noticias/Noticias'))
 const Contacto        = lazy(() => import('@pages/Contacto/Contacto'))
 const Nosotros        = lazy(() => import('@pages/Nosotros/Nosotros'))
@@ -33,7 +32,10 @@ const Accesibilidad     = lazy(() => import('@pages/Accesibilidad/Accesibilidad'
 
 function ScrollToTop() {
   const { pathname } = useLocation()
-  useEffect(() => { window.scrollTo(0, 0) }, [pathname])
+  const navType = useNavigationType()
+  useEffect(() => {
+    if (navType !== 'POP') window.scrollTo(0, 0)
+  }, [pathname, navType])
   return null
 }
 
@@ -107,7 +109,7 @@ export default function App() {
                   <Route path="/actividad-fisica/:slug" element={<SlugRedirect to="/vacunacion" />} />
                   <Route path="/prevencion"             element={<Navigate to="/emergencias" replace />} />
                   <Route path="/prevencion/:slug"       element={<SlugRedirect to="/emergencias" />} />
-                  <Route path={ROUTES.BIBLIOTECA}       element={<Biblioteca />} />
+                  <Route path="/biblioteca"             element={<Navigate to="/" replace />} />
                   <Route path={ROUTES.NOTICIAS}         element={<Noticias />} />
                   <Route path="/noticias/:id"           element={<NoticiasDetalle />} />
                   <Route path={ROUTES.CONTACTO}         element={<Contacto />} />
