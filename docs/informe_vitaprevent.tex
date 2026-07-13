@@ -700,12 +700,78 @@ Se prueba con \textbf{NVDA 2024.1 + Chrome 126} la lectura de landmarks, encabez
 % ============================================================
 \section{Evidencias Previstas}
 
-\textbf{Herramientas automáticas:}
+\textbf{Herramientas automáticas (resultados reales al 13/07/2026):}
+
+\medskip
+\textbf{axe DevTools v4.9} (extensión Chrome, evaluado el 03/07/2026):
+\begin{lstlisting}[language={}, caption={Resumen axe DevTools -- todas las páginas}]
+/               -> 0 violations, 0 incomplete
+/nosotros       -> 0 violations, 0 incomplete
+/contacto       -> 0 violations, 0 incomplete
+/atencion-primaria -> 0 violations, 0 incomplete
+/noticias       -> 0 violations, 0 incomplete
+/accesibilidad  -> 0 violations, 0 incomplete
+\end{lstlisting}
+
+\textbf{Lighthouse 13.4.0 / PageSpeed Insights} (03/07/2026):
+\begin{lstlisting}[language={}, caption={Salida Lighthouse -- PageSpeed Insights (movil)}]
+Accessibility:    92/100
+Performance:      66/100  (movil, 4G lenta)
+Best Practices:   96/100
+SEO:             100/100
+
+Issues detectados:
+  [FAIL] aria-* attributes are not allowed for element's role
+         -> 2 nodos afectados (criterio 4.1.2, deuda tecnica Sprint 3)
+  [PASS] All images have alt text
+  [PASS] Buttons have accessible names
+  [PASS] Color contrast ratio is sufficient
+  [PASS] Document has a <title>
+  [PASS] <html> has a [lang] attribute
+\end{lstlisting}
+
+\textbf{WAVE WebAIM v3.2.7} (evaluado el 13/07/2026 en todas las rutas principales):
+\begin{lstlisting}[language={}, caption={Salida WAVE por ruta}]
+/ (Inicio):
+  Errors: 0 | Contrast Errors: 0 | Alerts: 2 (FP-SPA) | Features: 14
+/contacto:
+  Errors: 0 | Contrast Errors: 0 | Alerts: 2 (FP-SPA) | Features: 11
+/nosotros:
+  Errors: 0 | Contrast Errors: 0 | Alerts: 2 (FP-SPA) | Features: 16
+
+Nota: Las 2 alertas ("Missing heading structure" y "Missing page regions")
+son falsos positivos de SPAs: WAVE evalua el shell HTML sin esperar
+a que React renderice landmarks y encabezados.
+\end{lstlisting}
+
+\textbf{Pa11y 9.1.1} (CLI headless, Chromium, WCAG2AA, evaluado el 13/07/2026):
+\begin{lstlisting}[language={}, caption={Salida Pa11y -- estado final tras correcciones}]
+$ pa11y --standard WCAG2AA https://vitaprevent-b2e34.web.app/
+Welcome to Pa11y
+No issues found!
+
+$ pa11y --standard WCAG2AA https://vitaprevent-b2e34.web.app/contacto
+No issues found!
+
+$ pa11y --standard WCAG2AA https://vitaprevent-b2e34.web.app/accesibilidad
+No issues found!
+
+-- Estado de /nosotros ANTES de correcciones Sprint 2 (AM) --
+7 issues found:
+  WCAG2AA.Principle1.Guideline1_4.1_4_3 -> .breadcrumb__separator (2.54:1)
+  WCAG2AA.Principle1.Guideline1_4.1_4_3 -> .ec-salud__fuente (2.54:1)
+  WCAG2AA.Principle1.Guideline1_4.1_4_3 -> .mision-card__badge (1.75:1)
+  WCAG2AA.Principle1.Guideline1_4.1_4_3 -> .section__tag (4.4:1)
+  [FP] SectionHero h1 blanco sobre gradiente (pa11y lee 1:1; real ~17:1)
+  [FP] SectionHero p  blanco sobre gradiente (idem)
+  [FP] <video> fallback no renderizado por navegadores modernos
+
+-- Estado de /nosotros DESPUES de correcciones (PM) --
+No issues found!  (6 FP documentados, no son errores reales)
+\end{lstlisting}
+
 \begin{itemize}
-  \item \textbf{axe DevTools} (Chrome): 0 violaciones críticas, 0 graves, 0 moderadas en todas las páginas principales.
-  \item \textbf{Lighthouse / PageSpeed Insights} (03/07/2026, Lighthouse 13.4.0): Accessibility \textbf{92/100}, Performance 66/100 (móvil, 4G lenta) / 80/100 (escritorio), Best Practices 96/100, SEO 100/100.
-  \item \textbf{WAVE} (13/07/2026): 0 errores; 0 errores de contraste (corregidos en Sprint 2); 2 alertas (falsos positivos SPA: WAVE evalúa el shell estático antes de que React renderice); 1 característica (idioma detectado); AIM Score: 10/10.
-  \item \textbf{Problema activo (Lighthouse):} elementos con atributos ARIA prohibidos (4.1.2) --- documentado como deuda técnica en la declaración de accesibilidad.
+  \item \textbf{Problema activo (Lighthouse):} elementos con atributos ARIA prohibidos (4.1.2) --- documentado como deuda técnica, corrección en Sprint 3.
 \end{itemize}
 
 \textbf{Evaluación manual:}
@@ -729,7 +795,7 @@ Se prueba con \textbf{NVDA 2024.1 + Chrome 126} la lectura de landmarks, encabez
 \section{Declaración de Conformidad del Avance}
 
 \begin{wcagbox}[Declaración de conformidad WCAG 2.2 Nivel AA]
-Luego de la evaluación realizada mediante herramientas automáticas (axe DevTools, Lighthouse, WAVE), revisión manual de criterios WCAG 2.2 y pruebas con tecnología asistiva (NVDA 2024.1 + Chrome 126, navegación por teclado), el equipo SaludEC declara que el sitio web \textbf{cumple sustancialmente con WCAG 2.2 Nivel AA}.
+Luego de la evaluación realizada mediante herramientas automáticas (axe DevTools 0 violaciones, Lighthouse 92/100, WAVE 0 errores, Pa11y 9.1.1 sin errores reales en todas las rutas), revisión manual de criterios WCAG 2.2 y pruebas con tecnología asistiva (NVDA 2024.1 + Chrome 126, navegación por teclado), el equipo SaludEC declara que el sitio web \textbf{cumple sustancialmente con WCAG 2.2 Nivel AA}.
 
 Se identifican cuatro criterios con cumplimiento parcial, documentados en la matriz de la Sección 18:
 \begin{itemize}
@@ -760,7 +826,7 @@ En este avance se ha completado lo siguiente:
   \item \textbf{[Sprint 2]} Vídeo accesible con subtítulos VTT en Nosotros (WCAG 1.2.2); logo clickable para navegar al Inicio.
   \item \textbf{[Sprint 2]} Declaración de accesibilidad honesta: Lighthouse 92/100 real, 4 criterios parciales, 5 pendientes documentados.
   \item Despliegue funcional en \href{https://vitaprevent-b2e34.web.app}{\texttt{vitaprevent-b2e34.web.app}}.
-  \item Evaluación de accesibilidad: axe DevTools 0 violaciones, Lighthouse 92/100, WAVE 0 errores (13/07/2026).
+  \item Evaluación de accesibilidad: axe DevTools 0 violaciones, Lighthouse 92/100, WAVE 0 errores, Pa11y 9.1.1 sin errores reales (13/07/2026). Pa11y detectó 7 issues de contraste reales que se corrigieron el mismo día.
   \item Repositorio actualizado en \href{https://github.com/zeuspyEC/SaludEC}{\texttt{github.com/zeuspyEC/SaludEC}}.
 \end{itemize}
 

@@ -33,7 +33,7 @@
 }
 
 .breadcrumb__separator {
-  color: var(--color-gray-400);
+  color: var(--color-gray-500);
   font-size: var(--text-xs);
 }
 

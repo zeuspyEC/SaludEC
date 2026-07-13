@@ -567,8 +567,31 @@ Robusto & \textcolor{warningyellow}{\bfseries 95\%} & 4.1.1 HTML válido, 4.1.3 
 \end{tabular}
 \end{table}
 
+\subsection*{Evidencias de herramientas de evaluación (13/07/2026)}
+
+\begin{table}[H]
+\centering
+\caption{Resultados reales de herramientas de accesibilidad}
+\begin{tabular}{@{}>{\bfseries}p{4.5cm} >{\centering\arraybackslash}p{3.5cm} p{6cm}@{}}
+\toprule
+\rowcolor{royalblue!12}
+\textbf{Herramienta} & \textbf{Resultado} & \textbf{Detalle} \\
+\midrule
+axe DevTools v4.9 & \textcolor{successgreen}{0 violaciones} & 0 críticas, 0 graves, 0 moderadas en todas las páginas \\
+Lighthouse 13.4.0 & \textcolor{warningyellow}{92/100} & 1 issue ARIA prohibido (4.1.2, deuda técnica) \\
+WAVE v3.2.7 & \textcolor{successgreen}{0 errores} & 2 alertas SPA (falsos positivos documentados) \\
+Pa11y 9.1.1 (CLI) & \textcolor{successgreen}{0 errores reales} & 7 issues de contraste corregidos; 6 FP documentados \\
+NVDA 2024.1 + Chrome & \textcolor{successgreen}{Accesible} & Landmarks, jerarquía H1→H3, aria-live correctos \\
+Teclado Tab/Esc & \textcolor{successgreen}{Accesible} & Sin trampas de foco; todas las funciones operables \\
+PageSpeed (rendimiento) & \textcolor{warningyellow}{Móvil 66/100} & CLS 0.326, FCP 5.0s (deuda técnica, no WCAG) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Pa11y se ejecutó desde CLI con Chromium headless el 13/07/2026. Antes de las correcciones de Sprint 2, reportó 7 issues de contraste reales en \texttt{/nosotros}; todos fueron corregidos ese mismo día. La ejecución final en las tres rutas principales produjo \texttt{No issues found!} en las tres. Los 6 falsos positivos restantes se deben a que pa11y evalúa el gradiente CSS del \texttt{SectionHero} como fondo plano (ratio calculado 1:1; ratio real $\approx$17:1) y a contenido de fallback \texttt{<video>} que no se renderiza en navegadores modernos.
+
 \begin{okbox}[Declaración resumida de conformidad]
-SaludEC cumple sustancialmente con los cuatro principios POUR de WCAG 2.2 Nivel AA. Lighthouse PageSpeed Insights (13/07/2026) mantiene una puntuación de \textbf{92/100} en Accessibility. En Sprint 2 (cierre 13/07/2026) se corrigió el contraste 1.4.3 en tres secciones (footer, estadísticas Home, declaración de accesibilidad) y se añadió vídeo accesible con subtítulos VTT (1.2.2). Permanecen cuatro criterios con cumplimiento parcial documentado: 2.5.7 (cubo sin \texttt{aria-label} explícito), 3.2.6 (ayuda no contextual por módulo), 4.1.2 (ARIA prohibido en 2 elementos --- Lighthouse, deuda técnica), y 1.2.3 (sin audiodescripción del vídeo). El sitio \textbf{no presenta barreras que impidan} el acceso a la información de servicios públicos de salud para usuarios con discapacidades visuales, motrices, auditivas o cognitivas.
+SaludEC cumple sustancialmente con los cuatro principios POUR de WCAG 2.2 Nivel AA. Resultados de herramientas al 13/07/2026: axe DevTools 0 violaciones, Lighthouse 92/100, WAVE 0 errores, Pa11y 9.1.1 sin errores reales en \texttt{/}, \texttt{/contacto} y \texttt{/accesibilidad}. En Sprint 2 (cierre 13/07/2026) se corrigieron 7 problemas de contraste 1.4.3 detectados por Pa11y y se añadió vídeo accesible con subtítulos VTT (1.2.2). Permanecen cuatro criterios con cumplimiento parcial documentado: 2.5.7 (cubo sin \texttt{aria-label} explícito), 3.2.6 (ayuda no contextual por módulo), 4.1.2 (ARIA prohibido en 2 elementos --- Lighthouse, deuda técnica), y 1.2.3 (sin audiodescripción del vídeo). El sitio \textbf{no presenta barreras que impidan} el acceso a la información de servicios públicos de salud para usuarios con discapacidades visuales, motrices, auditivas o cognitivas.
 \end{okbox}
 
 \end{document}

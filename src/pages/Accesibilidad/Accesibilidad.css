@@ -187,13 +187,24 @@ section.accesibilidad__contacto {
 }
 
 /* Herramientas */
+.accesibilidad__tools-intro {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  margin-bottom: var(--space-5);
+  padding: var(--space-4);
+  background: var(--color-blue-50);
+  border-left: 3px solid var(--color-primary);
+  border-radius: 0 var(--radius-base) var(--radius-base) 0;
+}
+
 .accesibilidad__tools-list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-4);
 }
 
 .accesibilidad__tool-item {
@@ -206,17 +217,66 @@ section.accesibilidad__contacto {
   border-radius: var(--radius-lg);
 }
 
+.accesibilidad__tool-item--detailed {
+  flex-direction: row;
+  align-items: flex-start;
+  padding: var(--space-5);
+  gap: var(--space-4);
+}
+
 .accesibilidad__tool-check {
   color: #15803d;
   font-weight: 700;
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   line-height: 1.4;
   flex-shrink: 0;
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+.accesibilidad__tool-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1;
+  min-width: 0;
+}
+
+.accesibilidad__tool-nombre {
+  margin: 0;
+  font-size: var(--text-base);
+  color: var(--color-text);
 }
 
 .accesibilidad__tool-resultado {
+  margin: 0;
   color: var(--color-text-muted);
   font-size: var(--text-sm);
+}
+
+.accesibilidad__tool-detalle {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: 1.65;
+  padding: var(--space-3);
+  background: var(--color-bg-subtle);
+  border-radius: var(--radius-base);
+  border: 1px solid var(--color-border);
+  white-space: pre-wrap;
+  font-family: var(--font-mono, monospace);
+}
+
+.accesibilidad__tool-detalle--prose {
+  font-family: inherit;
+  white-space: normal;
+}
+
+@media (max-width: 640px) {
+  .accesibilidad__tool-item--detailed {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
 }
 
 /* Tabla WCAG */
@@ -358,6 +418,14 @@ section.accesibilidad__contacto {
   }
   .accesibilidad__stat--tools .accesibilidad__stat-num { color: var(--color-blue-300); }
   .accesibilidad__tool-check { color: #4ade80; }
+  .accesibilidad__tools-intro {
+    background: rgba(21,101,192,0.08);
+    border-left-color: var(--color-blue-300);
+  }
+  .accesibilidad__tool-detalle {
+    background: rgba(0,0,0,0.2);
+    border-color: rgba(255,255,255,0.08);
+  }
   .accesibilidad__pendiente-item {
     background: rgba(180,83,9,0.08);
     border-color: rgba(180,83,9,0.2);

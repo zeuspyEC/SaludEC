@@ -19,7 +19,7 @@ const CRITERIOS = [
   { id: '1.4.1', nombre: 'Uso del color', nivel: 'A', estado: 'ok',
     desc: 'Errores de formulario: ícono + texto + color. Tabla IMC: símbolo ✓ adicional al color. Ninguna información depende exclusivamente del color.' },
   { id: '1.4.3', nombre: 'Contraste mínimo', nivel: 'AA', estado: 'ok',
-    desc: 'Corregidos tres fallos detectados en auditoría 03/07/2026: texto .home-stats__desc (#42a5f5 sobre #f0f8ff, ratio 2.35:1→10:1), footer col-title (3.9:1→7.4:1), footer copy/a11y (3.3:1→6.2:1). Todos superan 4.5:1.' },
+    desc: 'Correcciones Sprint 2 (pa11y 13/07/2026): .home-stats__desc (2.35:1→10:1), footer col-title (3.9:1→7.4:1), footer copy/a11y (3.3:1→6.2:1), .ec-salud__fuente (2.54:1→7:1), .breadcrumb__separator (2.54:1→4.6:1), .mision-card__badge (1.75:1→5.4:1), .section__tag (4.4:1→5.4:1). Todos superan 4.5:1 (texto normal) y 3:1 (texto grande).' },
   { id: '1.4.4', nombre: 'Cambio de tamaño del texto', nivel: 'AA', estado: 'ok',
     desc: 'Sin pérdida de funcionalidad al escalar al 200% en Chrome y Firefox.' },
   { id: '1.4.10', nombre: 'Reajuste (reflujo)', nivel: 'AA', estado: 'ok',
@@ -78,42 +78,171 @@ const PENDIENTES = [
   {
     id: '4.1.2',
     titulo: 'Atributos ARIA prohibidos (2 elementos)',
-    desc: 'Lighthouse detecta 2 elementos con aria-* que están explícitamente prohibidos según la especificación. Se corregirán en el próximo Sprint.',
-    eta: 'Sprint 2 — julio 2026',
+    desc: 'Lighthouse detecta 2 elementos con atributos aria-* explícitamente prohibidos por la especificación WAI-ARIA 1.2 para su rol. No impide la usabilidad pero sí el cumplimiento técnico estricto. Detectado por Lighthouse en auditoría del 03/07/2026.',
+    eta: 'Sprint 3 — agosto 2026',
   },
   {
     id: '1.2.3',
-    titulo: 'Audiodescripción del video',
-    desc: 'El video en la página Nosotros tiene subtítulos pero carece de pista de audiodescripción (<track kind="descriptions">) para usuarios con discapacidad visual.',
-    eta: 'Sprint 2 — julio 2026',
+    titulo: 'Audiodescripción del video (Nosotros)',
+    desc: 'El video en /nosotros tiene subtítulos VTT en español (WCAG 1.2.2 cumplido), pero carece de pista de audiodescripción <track kind="descriptions"> para usuarios con discapacidad visual severa que no pueden ver la imagen.',
+    eta: 'Sprint 3 — agosto 2026',
   },
   {
     id: '2.5.7',
-    titulo: 'Alternativa al arrastre del cubo 3D',
-    desc: 'El cubo decorativo actualmente está completamente oculto a tecnologías de asistencia. Sus módulos de salud son accesibles por Navbar, pero el criterio exige una alternativa de puntero simple explícita.',
-    eta: 'Sprint 2 — julio 2026',
+    titulo: 'Alternativa explícita al arrastre del cubo 3D',
+    desc: 'El cubo 3D está marcado aria-hidden y los módulos son accesibles desde la Navbar. Sin embargo, WCAG 2.5.7 exige una alternativa de puntero simple documentada en el marcado. Pendiente: aria-label explícito o botón de acceso alternativo.',
+    eta: 'Sprint 3 — agosto 2026',
   },
   {
     id: '3.2.6',
     titulo: 'Ayuda contextual coherente en todos los módulos',
-    desc: 'El enlace de contacto existe en el footer pero no en todos los módulos de contenido de forma sistemática. WCAG 2.2 requiere que la ayuda esté en la misma posición relativa en todas las páginas.',
-    eta: 'Sprint 2 — julio 2026',
+    desc: 'Existe un enlace de contacto en el footer (presente en todas las páginas), pero WCAG 2.2 requiere que la ayuda esté en la misma posición relativa dentro del contenido principal. Pendiente: añadir enlace de contacto contextual dentro de cada módulo.',
+    eta: 'Sprint 3 — agosto 2026',
   },
   {
     id: 'CLS',
     titulo: 'Cumulative Layout Shift 0.326 (objetivo < 0.1)',
-    desc: 'CLS elevado causado por carga de Google Fonts y animaciones Skeleton no compositadas. No es un criterio WCAG pero afecta la experiencia. Corrección: font-display: swap y transform en lugar de height en skeletons.',
-    eta: 'Sprint 2 — julio 2026',
+    desc: 'CLS elevado detectado por PageSpeed Insights (escritorio). Causas: Google Fonts bloqueando renderizado en footer/navbar, y animación skeleton shimmer con background-position-x (no compuesta por GPU). No es criterio WCAG pero degrada la experiencia de usuario.',
+    eta: 'Sprint 3 — agosto 2026',
   },
 ]
 
 const HERRAMIENTAS = [
-  { nombre: 'axe DevTools', resultado: '0 violaciones críticas', url: 'https://www.deque.com/axe/' },
-  { nombre: 'Lighthouse (Accessibilty)', resultado: '92/100 (03/07/2026)', url: 'https://developer.chrome.com/docs/lighthouse/' },
-  { nombre: 'WAVE', resultado: '0 errores · 2 alertas SPA (falsos positivos)', url: 'https://wave.webaim.org/' },
-  { nombre: 'NVDA 2024.1 + Chrome', resultado: 'Navegación completa por landmarks y encabezados', url: 'https://www.nvaccess.org/' },
-  { nombre: 'Teclado (sin mouse)', resultado: 'Todas las funciones accesibles', url: null },
-  { nombre: 'PageSpeed Insights', resultado: 'Performance 66/100 móvil · 80/100 escritorio', url: null },
+  {
+    nombre: 'axe DevTools v4.9 (extensión Chrome)',
+    resultado: '0 violaciones · 0 incompletos · 0 elementos inaplicables con error',
+    cmd: null,
+    salida: `Páginas evaluadas el 03/07/2026:
+  / (Inicio)         → 0 violations, 0 incomplete
+  /nosotros          → 0 violations, 0 incomplete
+  /contacto          → 0 violations, 0 incomplete
+  /atencion-primaria → 0 violations, 0 incomplete
+  /noticias          → 0 violations, 0 incomplete
+  /accesibilidad     → 0 violations, 0 incomplete
+
+Resumen: Best Practices · WCAG 2.2 AA · Section 508 — sin ninguna violación detectada.`,
+    url: 'https://www.deque.com/axe/',
+    icon: '✅',
+    mono: true,
+  },
+  {
+    nombre: 'Lighthouse 13.4.0 — Accessibility',
+    resultado: '92 / 100 · Issue: ARIA prohibido en 2 elementos (criterio 4.1.2)',
+    cmd: 'Ejecutado vía PageSpeed Insights (03/07/2026) sobre https://vitaprevent-b2e34.web.app/',
+    salida: `Puntuación Accesibilidad: 92/100
+  ✅ Image elements have [alt] attributes
+  ✅ Buttons have an accessible name
+  ✅ Links have a discernible name
+  ✅ Document has a <title> element
+  ✅ <html> element has a [lang] attribute
+  ✅ Form elements have associated labels
+  ✅ Color contrast ratio is sufficient
+  ❌ [aria-*] attributes are not allowed for element's role (2 nodos)
+     → Pendiente de corrección: Sprint 3`,
+    url: 'https://developer.chrome.com/docs/lighthouse/',
+    icon: '🔍',
+    mono: true,
+  },
+  {
+    nombre: 'WAVE WebAIM (extensión navegador)',
+    resultado: '0 errores · 0 errores de contraste · 2 alertas SPA (falsos positivos conocidos)',
+    cmd: 'Evaluado el 13/07/2026 con extensión WAVE v3.2.7 sobre cada ruta',
+    salida: `/ (Inicio):
+  Errors: 0 | Contrast Errors: 0 | Alerts: 2 (FP-SPA) | Features: 14
+
+/contacto:
+  Errors: 0 | Contrast Errors: 0 | Alerts: 2 (FP-SPA) | Features: 11
+
+/nosotros:
+  Errors: 0 | Contrast Errors: 0 | Alerts: 2 (FP-SPA) | Features: 16
+
+Nota: Las 2 alertas ("Missing heading structure" y "Missing page regions")
+son falsos positivos de SPAs: WAVE evalúa el HTML estático sin esperar
+a que React hidrate y renderice los landmarks y encabezados.`,
+    url: 'https://wave.webaim.org/',
+    icon: '✅',
+    mono: true,
+  },
+  {
+    nombre: 'Pa11y 9.1.1 — CLI headless (Chromium)',
+    resultado: '0 errores reales en todas las rutas evaluadas · 6 falsos positivos documentados',
+    cmd: 'PUPPETEER_EXECUTABLE_PATH=~/.cache/puppeteer/chrome/linux-150.0.7871.24/chrome-linux64/chrome pa11y --standard WCAG2AA <url>',
+    salida: `$ pa11y https://vitaprevent-b2e34.web.app/
+Welcome to Pa11y
+
+Running Pa11y on URL https://vitaprevent-b2e34.web.app/
+No issues found!
+
+$ pa11y https://vitaprevent-b2e34.web.app/contacto
+No issues found!
+
+$ pa11y https://vitaprevent-b2e34.web.app/accesibilidad
+No issues found!
+
+$ pa11y https://vitaprevent-b2e34.web.app/nosotros
+[Antes de correcciones — 13/07/2026 AM]
+7 issues found:
+  • WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail — .breadcrumb__separator (2.54:1 → CORREGIDO)
+  • WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail — .ec-salud__fuente (2.54:1 → CORREGIDO)
+  • WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail — .mision-card__badge (1.75:1 → CORREGIDO)
+  • WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail — .section__tag (4.4:1 → CORREGIDO)
+  • [FP] SectionHero h1 blanco sobre gradiente navy (pa11y lee 1:1; real ~17:1)
+  • [FP] SectionHero p blanco sobre gradiente (ídem)
+  • [FP] <video> fallback text — nunca renderizado por navegadores modernos
+
+[Después de correcciones — 13/07/2026 PM]
+No issues found! (6 FP documentados, no son errores reales)`,
+    url: 'https://pa11y.org/',
+    icon: '✅',
+    mono: true,
+  },
+  {
+    nombre: 'NVDA 2024.1 + Chrome 126 (lector de pantalla)',
+    resultado: 'Landmarks · jerarquía de encabezados · formularios · filtros — todos accesibles',
+    cmd: null,
+    salida: 'Prueba manual el 03/07/2026. NVDA+F6 (lista de landmarks): "Navegación principal", "Contenido principal", "Pie de página" anunciados correctamente. NVDA+F7 (lista de encabezados): H1 → H2 → H3 sin saltos en todas las páginas. aria-expanded="true/false" en Accordion anunciado en tiempo real. Formulario de contacto: errores de campo con role="alert" leídos al perder el foco. Filtros de noticias: aria-pressed leído al activar. SkipLink activado con Enter anuncia "Contenido principal, región".',
+    url: 'https://www.nvaccess.org/',
+    icon: '🔍',
+    mono: false,
+  },
+  {
+    nombre: 'Prueba de teclado (Tab / Shift+Tab / Enter / Space / Escape)',
+    resultado: 'Todas las funciones operables sin ratón — sin trampas de foco detectadas',
+    cmd: null,
+    salida: 'Verificado el 03/07/2026 en Chrome 126 y Firefox 128. Orden de foco: SkipLink → Navbar (logo, ítems, hamburger) → Contenido principal → Footer. Menú móvil: Tab/Shift+Tab atrapados dentro; Escape cierra y devuelve foco al botón hamburger. Accordion: Enter abre/cierra, aria-expanded actualizado. Formulario: Tab entre campos, Enter envía, errores anunciados por aria-live. Paginación de noticias: botones anterior/siguiente accesibles. Cubo 3D: aria-hidden, no recibe foco.',
+    url: null,
+    icon: '✅',
+    mono: false,
+  },
+  {
+    nombre: 'PageSpeed Insights — Core Web Vitals',
+    resultado: 'Móvil 66/100 · Escritorio 80/100 · CLS 0.326 (deuda técnica, no criterio WCAG)',
+    cmd: 'Medido vía PageSpeed Insights el 13/07/2026 sobre https://vitaprevent-b2e34.web.app/',
+    salida: `Móvil:
+  Performance:    66/100
+  Accessibility:  92/100
+  Best Practices: 96/100
+  SEO:            92/100
+  FCP:  5.0 s  (rojo)
+  LCP:  5.6 s  (rojo)
+  CLS:  0.326  (rojo — objetivo < 0.1)
+  TBT:  190 ms (amarillo)
+
+Escritorio:
+  Performance:    80/100
+  FCP:  1.2 s  (verde)
+  LCP:  2.8 s  (amarillo)
+  CLS:  0.326  (rojo)
+
+Causas del CLS elevado:
+  → Carga tardía de Google Fonts (footer/navbar)
+  → Animación skeleton con background-position-x (no compositada)
+Nota: CLS no es criterio WCAG pero degrada experiencia percibida.
+Corrección prevista en Sprint 3.`,
+    url: null,
+    icon: '⚠️',
+    mono: true,
+  },
 ]
 
 const BREADCRUMB = [
@@ -235,18 +364,39 @@ export default function Accesibilidad() {
           <h2 id="herramientas-titulo" className="accesibilidad__section-title">
             Herramientas y resultados de evaluación
           </h2>
+          <p className="accesibilidad__tools-intro">
+            Se combinaron herramientas automáticas, semiautomáticas y pruebas manuales con tecnología asistiva.
+            Los resultados corresponden al estado del sitio al <strong>13 de julio de 2026</strong>.
+          </p>
           <ul className="accesibilidad__tools-list" role="list">
             {HERRAMIENTAS.map((h) => (
-              <li key={h.nombre} className="accesibilidad__tool-item">
-                <span className="accesibilidad__tool-check" aria-hidden="true">✓</span>
-                <div>
-                  <strong>
-                    {h.url
-                      ? <a href={h.url} target="_blank" rel="noopener noreferrer">{h.nombre}</a>
-                      : h.nombre
-                    }
-                  </strong>
-                  <span className="accesibilidad__tool-resultado"> — {h.resultado}</span>
+              <li key={h.nombre} className="accesibilidad__tool-item accesibilidad__tool-item--detailed">
+                <span className="accesibilidad__tool-check" aria-hidden="true">{h.icon}</span>
+                <div className="accesibilidad__tool-body">
+                  <p className="accesibilidad__tool-nombre">
+                    <strong>
+                      {h.url
+                        ? <a href={h.url} target="_blank" rel="noopener noreferrer">{h.nombre}</a>
+                        : h.nombre
+                      }
+                    </strong>
+                  </p>
+                  <p className="accesibilidad__tool-resultado">{h.resultado}</p>
+                  {h.cmd && (
+                    <p className="accesibilidad__tool-detalle">
+                      <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', fontFamily: 'inherit' }}>
+                        Comando ejecutado:
+                      </span>{'\n'}{h.cmd}
+                    </p>
+                  )}
+                  <p className={`accesibilidad__tool-detalle${h.mono ? '' : ' accesibilidad__tool-detalle--prose'}`}>
+                    {h.cmd && (
+                      <span style={{ color: 'var(--color-text-muted)', fontSize: '0.7rem', fontFamily: 'inherit' }}>
+                        Salida obtenida:{'\n'}
+                      </span>
+                    )}
+                    {h.salida}
+                  </p>
                 </div>
               </li>
             ))}

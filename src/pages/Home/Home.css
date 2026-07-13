@@ -770,7 +770,7 @@
 
 .ec-salud__fuente {
   font-size: 11px;
-  color: var(--color-gray-400);
+  color: var(--color-gray-600);
   font-style: normal;
   margin-top: var(--space-1);
 }

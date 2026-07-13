@@ -127,8 +127,10 @@ export default function Nosotros() {
                 label="Español"
                 default
               />
-              Tu navegador no permite reproducir videos HTML5.
-              <a href="/media/Video-SaludEC.mp4">Descargar el video</a>.
+              <p className="video-fallback">
+                Tu navegador no permite reproducir videos HTML5.{' '}
+                <a href="/media/Video-SaludEC.mp4" className="video-fallback__link">Descargar el video</a>.
+              </p>
             </video>
           </div>
           <p className="video-section__caption">

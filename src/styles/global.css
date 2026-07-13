@@ -126,7 +126,7 @@ a:not([class]):hover {
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   margin-bottom: var(--space-3);
 }
 
