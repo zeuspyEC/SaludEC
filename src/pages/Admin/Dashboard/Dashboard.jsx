@@ -154,7 +154,7 @@ export default function AdminDashboard() {
           </button>
         </div>
         {cleanOpen && cleanLog.length > 0 && (
-          <div ref={cleanLogRef} className="dash__seed-log" role="log" aria-label="Registro de limpieza" aria-live="polite" tabIndex={0}>
+          <div ref={cleanLogRef} className="dash__seed-log" role="log" aria-label="Registro de limpieza" tabIndex={0}>
             {cleanLog.map((line, i) => <p key={i} className="dash__seed-log-line">{line}</p>)}
           </div>
         )}
@@ -187,7 +187,6 @@ export default function AdminDashboard() {
             className="dash__seed-log"
             role="log"
             aria-label="Registro de importación"
-            aria-live="polite"
             tabIndex={0}
           >
             {seedLog.map((line, i) => (

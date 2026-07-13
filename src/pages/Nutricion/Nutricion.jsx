@@ -155,7 +155,6 @@ export default function Nutricion() {
               <div
                 className={`imc-result imc-result--${imcResult.color}`}
                 role="status"
-                aria-live="polite"
               >
                 <span className="imc-result__value" aria-label={`IMC: ${imcResult.valor}`}>
                   {imcResult.valor}

@@ -20,7 +20,7 @@ export default class ErrorBoundary extends Component {
     if (!this.state.hasError) return this.props.children
 
     return (
-      <div className="error-boundary" role="alert" aria-live="assertive">
+      <div className="error-boundary" role="alert">
         <div className="error-boundary__inner">
           <span className="error-boundary__icon" aria-hidden="true">⚠️</span>
           <h2 className="error-boundary__title">Algo salió mal</h2>
